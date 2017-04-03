@@ -33,8 +33,8 @@ il peut être intéressant de déterminer sur des portions plus petites du gén�
 de la même manière que dans le cas global, les proportions venant de telle ou 
 telle population ancestrale pour chacune de ces portions. Nous parlons dans ce 
 cas de *coefficients de métissage locaux*. Encore une fois, plusieurs logiciels 
-ont été publiés pour estimer ces coefficients : Hapmix, EILA, LAMP, loter ou 
-encore RFmix, 
+ont été proposés dans le but d'estimer ces coefficients : Hapmix [@price2009], 
+EILA [@yang2013], LAMP [@thornton2014], loter ou encore RFmix [@maples2013].
 
 
 ## Analyse en Composantes Principales locale
