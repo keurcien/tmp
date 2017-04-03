@@ -4,8 +4,6 @@ date: ' 31 octobre 2017'
 division: 'Mathematics and Natural Sciences'
 advisor: 'Michael BLUM'
 labo: "Techniques de l'Ingénierie Médicale et de la Complexité - Informatique, Mathématiques et Applications de Grenoble (TIMC-IMAG)"
-#altadvisor: 'Your Other Advisor'
-# Delete line 6 if you only have one advisor
 department: 'Ingénierie de la Santé, de la Cognition et Environnement (EDISCE)' 
 title: 'THÈSE'
 knit: "bookdown::render_book"

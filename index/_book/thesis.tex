@@ -243,7 +243,7 @@ starts here.
   table of figures, etc. should make it of great benefit to nearly anyone
   writing a thesis project.
   
-  \hypertarget{rmd-basics}{\chapter{R Markdown Basics}\label{rmd-basics}}
+  \chapter{État de l'art}\label{etat-de-lart}
   
   Here is a brief introduction into using \emph{R Markdown}.
   \emph{Markdown} is a simple formatting syntax for authoring HTML, PDF,
@@ -259,7 +259,7 @@ starts here.
   other words, there is no need to indent basic text in the Rmd document
   (in fact, it might cause your text to do funny things if you do).
   
-  \section{Lists}\label{lists}
+  \section{Contexte}\label{contexte}
   
   It's easy to create a list. It can be unordered like
   
@@ -308,14 +308,18 @@ starts here.
     \end{itemize}
   \end{enumerate}
   
-  \section{Line breaks}\label{line-breaks}
+  \section{Contrôle du taux de fausse
+  découverte}\label{controle-du-taux-de-fausse-decouverte}
   
-  Make sure to add white space between lines if you'd like to start a new
-  paragraph. Look at what happens below in the outputted document if you
-  don't:
-  
-  Here is the first sentence. Here is another sentence. Here is the last
-  sentence to end the paragraph. This should be a new paragraph.
+  \begin{itemize}
+  \tightlist
+  \item
+    Définition FDR
+  \item
+    Référence cours de Christophe Giraud
+  \item
+    Benjamini-Hochberg
+  \end{itemize}
   
   \emph{Now for the correct way:}
   
@@ -377,9 +381,8 @@ starts here.
   
   As you see with \texttt{\$2\ \textbackslash{}pi\$} above, mathematics
   can be added by surrounding the mathematical text with dollar signs.
-  More examples of this are in \protect\hyperlink{math-sci}{Mathematics
-  and Science} if you uncomment the code in
-  \protect\hyperlink{math}{Math}.
+  More examples of this are in {[}Mathematics and Science{]} if you
+  uncomment the code in \protect\hyperlink{math}{Math}.
   
   \section{Including plots}\label{including-plots}
   
@@ -604,8 +607,7 @@ starts here.
     \url{http://docs.ggplot2.org/current/}
   \end{itemize}
   
-  \hypertarget{math-sci}{\chapter{Mathematics and
-  Science}\label{math-sci}}
+  \chapter{Adaptation locale}\label{adaptation-locale}
   
   \hypertarget{math}{\section{Math}\label{math}}
   
@@ -686,15 +688,34 @@ starts here.
   (\url{http://homepages.uni-tuebingen.de/beitz/txe.html}). Be sure to
   read the proceeding chapter on graphics and tables.
   
-  \chapter{Tables, Graphics, References, and Labels}\label{ref-labels}
+  \chapter{Introgression adaptative}\label{introgression-adaptative}
+  
+  \section{Coefficients de métissage globaux et
+  locaux}\label{coefficients-de-metissage-globaux-et-locaux}
+  
+  Étant données des populations ancestrales, il est possible d'estimer
+  pour un individu donné, la proportion de son génôme provenant de chacune
+  des populations ancestrales. Ces proportions sont connues plus
+  communément sous le nom de \emph{coefficients de métissage globaux}. De
+  nombreux logiciels existent pour l'estimation de ces coefficients :
+  STRUCTURE, ADMIXTURE (Alexander, 2009), LEA (Frichot, 2015), tess3r
+  (Caye, 2016). En complément à cette information globale, il peut être
+  intéressant de déterminer sur des portions plus petites du génôme, de la
+  même manière que dans le cas global, les proportions venant de telle ou
+  telle population ancestrale pour chacune de ces portions. Nous parlons
+  dans ce cas de \emph{coefficients de métissage locaux}. Encore une fois,
+  plusieurs logiciels ont été publiés pour estimer ces coefficients :
+  Hapmix, EILA, LAMP, loter ou encore RFmix,
+  
+  \section{Analyse en Composantes Principales
+  locale}\label{analyse-en-composantes-principales-locale}
   
   \section{Tables}\label{tables}
   
   In addition to the tables that can be automatically generated from a
-  data frame in \textbf{R} that you saw in
-  \protect\hyperlink{rmd-basics}{R Markdown Basics} using the
-  \texttt{kable} function, you can also create tables using \emph{pandoc}.
-  (More information is available at
+  data frame in \textbf{R} that you saw in {[}R Markdown Basics{]} using
+  the \texttt{kable} function, you can also create tables using
+  \emph{pandoc}. (More information is available at
   \url{http://pandoc.org/README.html\#tables}.) This might be useful if
   you don't have values specifically stored in \textbf{R}, but you'd like
   to display them in table form. Below is an example. Pay careful
@@ -1032,6 +1053,10 @@ starts here.
   \setlength{\parskip}{8pt}
   
   \hypertarget{refs}{}
+  \hypertarget{ref-alexander2009}{}
+  Alexander, D. (2009). \emph{Fast model-based estimation of ancestry in
+  unrelated individuals.}
+  
   \hypertarget{ref-angel2000}{}
   Angel, E. (2000). \emph{Interactive computer graphics : A top-down
   approach with opengl}. Boston, MA: Addison Wesley Longman.
@@ -1043,6 +1068,14 @@ starts here.
   \hypertarget{ref-angel2002a}{}
   Angel, E. (2001b). \emph{Test second book by angel}. Boston, MA: Wesley
   Addison Longman.
+  
+  \hypertarget{ref-caye2016}{}
+  Caye, K. (2016). \emph{TESS3: Fast inference of spatial population
+  structure and genome scans for selection.}
+  
+  \hypertarget{ref-frichot2015}{}
+  Frichot, É. (2015). \emph{LEA: An r package for landscape and ecological
+  association studies.}
   
   \hypertarget{ref-Molina1994}{}
   Molina, S. T., \& Borkovec, T. D. (1994). The Penn State worry

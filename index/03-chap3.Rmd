@@ -20,7 +20,27 @@ flights <- read.csv("data/flights.csv")
 ```
 
 
-# Tables, Graphics, References, and Labels {#ref-labels}
+# Introgression adaptative
+
+## Coefficients de métissage globaux et locaux
+
+Étant données des populations ancestrales, il est possible d'estimer pour un
+individu donné, la proportion de son génôme provenant de chacune des populations
+ancestrales. Ces proportions sont connues plus communément sous le nom de 
+*coefficients de métissage globaux*. De nombreux logiciels existent pour 
+l'estimation de ces coefficients : STRUCTURE, ADMIXTURE [@alexander2009], LEA [@frichot2015], tess3r [@caye2016]. En complément à cette information globale, 
+il peut être intéressant de déterminer sur des portions plus petites du génôme, 
+de la même manière que dans le cas global, les proportions venant de telle ou 
+telle population ancestrale pour chacune de ces portions. Nous parlons dans ce 
+cas de *coefficients de métissage locaux*. Encore une fois, plusieurs logiciels 
+ont été publiés pour estimer ces coefficients : Hapmix, EILA, LAMP, loter ou 
+encore RFmix, 
+
+
+## Analyse en Composantes Principales locale
+
+
+
 
 ## Tables
 
