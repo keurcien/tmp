@@ -1,5 +1,10 @@
 # Adaptation locale
 
+Une population est dite localement adaptée à son environnement si elle a connu
+une évolution différente de celles qu'ont connu les autres populations de la 
+même espèce, et ce, en réponse aux pressions sélectives auxquelles elle peut 
+être confrontrée.
+
 <!-- Required to number equations in HTML files -->
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({

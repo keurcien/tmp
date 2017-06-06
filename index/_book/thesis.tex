@@ -198,66 +198,19 @@ starts here.
   \chapter*{Introduction}\label{introduction}
   \addcontentsline{toc}{chapter}{Introduction}
   
-  Welcome to the \emph{R Markdown} thesis template. This template is based
-  on (and in many places copied directly from) the Reed College LaTeX
-  template, but hopefully it will provide a nicer interface for those that
-  have never used TeX or LaTeX before. Using \emph{R Markdown} will also
-  allow you to easily keep track of your analyses in \textbf{R} chunks of
-  code, with the resulting plots and output included as well. The hope is
-  this \emph{R Markdown} template gets you in the habit of doing
-  reproducible research, which benefits you long-term as a researcher, but
-  also will greatly help anyone that is trying to reproduce or build onto
-  your results down the road.
-  
-  Hopefully, you won't have much of a learning period to go through and
-  you will reap the benefits of a nicely formatted thesis. The use of
-  LaTeX in combination with \emph{Markdown} is more consistent than the
-  output of a word processor, much less prone to corruption or crashing,
-  and the resulting file is smaller than a Word file. While you may have
-  never had problems using Word in the past, your thesis is likely going
-  to be about twice as large and complex as anything you've written
-  before, taxing Word's capabilities. After working with \emph{Markdown}
-  and \textbf{R} together for a few weeks, we are confident this will be
-  your reporting style of choice going forward.
-  
-  \textbf{Why use it?}
-  
-  \emph{R Markdown} creates a simple and straightforward way to interface
-  with the beauty of LaTeX. Packages have been written in \textbf{R} to
-  work directly with LaTeX to produce nicely formatting tables and
-  paragraphs. In addition to creating a user friendly interface to LaTeX,
-  \emph{R Markdown} also allows you to read in your data, to analyze it
-  and to visualize it using \textbf{R} functions, and also to provide the
-  documentation and commentary on the results of your project. Further, it
-  allows for \textbf{R} results to be passed inline to the commentary of
-  your results. You'll see more on this later.
-  
-  \textbf{Who should use it?}
-  
-  Anyone who needs to use data analysis, math, tables, a lot of figures,
-  complex cross-references, or who just cares about the final appearance
-  of their document should use \emph{R Markdown}. Of particular use should
-  be anyone in the sciences, but the user-friendly nature of
-  \emph{Markdown} and its ability to keep track of and easily include
-  figures, automatically generate a table of contents, index, references,
-  table of figures, etc. should make it of great benefit to nearly anyone
-  writing a thesis project.
-  
   \chapter{État de l'art}\label{etat-de-lart}
   
-  Here is a brief introduction into using \emph{R Markdown}.
-  \emph{Markdown} is a simple formatting syntax for authoring HTML, PDF,
-  and MS Word documents. \emph{R Markdown} provides the flexibility of
-  \emph{Markdown} with the implementation of \textbf{R} input and output.
-  For more details on using \emph{R Markdown} see
-  \url{http://rmarkdown.rstudio.com}.
+  \begin{itemize}
+  \item
+    ACP en génétique des populations
+  \item
+    Partie III: R package pcadapt
+  \end{itemize}
   
-  Be careful with your spacing in \emph{Markdown} documents. While
-  whitespace largely is ignored, it does at times give \emph{Markdown}
-  signals as to how to proceed. As a habit, try to keep everything left
-  aligned whenever possible, especially as you type a new paragraph. In
-  other words, there is no need to indent basic text in the Rmd document
-  (in fact, it might cause your text to do funny things if you do).
+  \section{Analyse en Composantes Principales
+  parcimonieuse}\label{analyse-en-composantes-principales-parcimonieuse}
+  
+  \section{Bootstrap ACP}\label{bootstrap-acp}
   
   \section{Contexte}\label{contexte}
   
@@ -308,18 +261,20 @@ starts here.
     \end{itemize}
   \end{enumerate}
   
+  \section{Tests multiples}\label{tests-multiples}
+  
   \section{Contrôle du taux de fausse
   découverte}\label{controle-du-taux-de-fausse-decouverte}
   
-  \begin{itemize}
-  \tightlist
-  \item
-    Définition FDR
-  \item
-    Référence cours de Christophe Giraud
-  \item
-    Benjamini-Hochberg
-  \end{itemize}
+  Le taux de fausse découverte, correspond à la proportion de faux
+  positifs parmi les positifs. En notant \(FP\) le nombre de faux
+  positifs, \(FP\) le nombre de vrais positifs, on définit le taux de
+  fausse découverte \(FDR\) par :
+  \[ FDR = \mathbb{E}\Big[\frac{FP}{TP + FP} 1_{FP+TP > 0}\Big] \] -
+  Référence cours de Christophe Giraud
+  
+  q-value, bonferroni, benjamini-hochberg La figure suivante donne les
+  comparaisons entre les différentes procédures de correction :
   
   \emph{Now for the correct way:}
   
@@ -478,7 +433,7 @@ starts here.
   \begin{Shaded}
   \begin{Highlighting}[]
   \CommentTok{# List of packages required for this analysis}
-  \NormalTok{pkg <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{, }\StringTok{"ggplot2"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{, }\StringTok{"bookdown"}\NormalTok{, }\StringTok{"devtools"}\NormalTok{)}
+  \NormalTok{pkg <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{, }\StringTok{"ggplot2"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{, }\StringTok{"bookdown"}\NormalTok{, }\StringTok{"devtools"}\NormalTok{, }\StringTok{"simulate"}\NormalTok{, }\StringTok{"data.table"}\NormalTok{)}
   \CommentTok{# Check if packages are not installed and assign the}
   \CommentTok{# names of the packages not installed to the variable new.pkg}
   \NormalTok{new.pkg <-}\StringTok{ }\NormalTok{pkg[!(pkg %in%}\StringTok{ }\KeywordTok{installed.packages}\NormalTok{())]}
@@ -588,7 +543,11 @@ starts here.
   \end{Highlighting}
   \end{Shaded}
   
+  \begin{figure}[htbp]
+  \centering
   \includegraphics{thesis_files/figure-latex/march3plot-1.pdf}
+  \caption{\label{fig:march3plot}\(\beta\)}
+  \end{figure}
   
   \section{Additional resources}\label{additional-resources}
   
@@ -608,6 +567,11 @@ starts here.
   \end{itemize}
   
   \chapter{Adaptation locale}\label{adaptation-locale}
+  
+  Une population est dite localement adaptée à son environnement si elle a
+  connu une évolution différente de celles qu'ont connu les autres
+  populations de la même espèce, et ce, en réponse des pressions
+  sélectives
   
   \hypertarget{math}{\section{Math}\label{math}}
   
@@ -708,77 +672,317 @@ starts here.
   coefficients : Hapmix (Price, 2009), EILA (Yang, 2013), LAMP (Thornton,
   2014), loter ou encore RFmix (Maples, 2013).
   
+  \section{Introgression}\label{introgression}
+  
+  L'introgression peut être détectée de différentes façons. Une première
+  approche consiste à utiliser les \emph{coefficients de métissage
+  locaux}. Les méthodes mentionnées plus haut estiment ces coefficients
+  pour chaque individu, permettant de calculer à partir de ceux-ci des
+  coefficients de métissage locaux pour chaque population.
+  
+  \section{Lien entre Analyse en Composantes Principales et métissage
+  global.}\label{lien-entre-analyse-en-composantes-principales-et-metissage-global.}
+  
+  L'un des premiers articles à établir un lien entre l'ACP et les
+  coefficients de métissage global fut sur l'interprétation généalogique
+  de l'ACP de Gil McVean (McVean, 2009):
+  
+  \includegraphics[width=250pt]{figure/mcvean.png}
+  
+  Pour chacun des 22 chromosomes,
+  
   \section{Analyse en Composantes Principales
   locale}\label{analyse-en-composantes-principales-locale}
   
-  \section{Tables}\label{tables}
+  Notant \(p\) le nombre de marqueurs génétiques, \(i\) un entier compris
+  entre \(1\) et \(p\), et \(x_i\) la position génétique (en Morgans) ou
+  la position physique (en paires de bases) du \(i\)-ème marqueur
+  génétique. Nous définissons pour cet entier \(i\) la fenêtre \(W_i^T\)
+  de taille \(T\) et centrée en \(i\) :
   
-  In addition to the tables that can be automatically generated from a
-  data frame in \textbf{R} that you saw in {[}R Markdown Basics{]} using
-  the \texttt{kable} function, you can also create tables using
-  \emph{pandoc}. (More information is available at
-  \url{http://pandoc.org/README.html\#tables}.) This might be useful if
-  you don't have values specifically stored in \textbf{R}, but you'd like
-  to display them in table form. Below is an example. Pay careful
-  attention to the alignment in the table and hyphens to create the rows
-  and columns.
+  \[W_i^T = \{ j \in [|1, p|], |x_i - x_j| \leq T/2 \}\]
   
-  \begin{longtable}[]{@{}ccc@{}}
+  \section{Sensibilité à l'imputation des données
+  manquantes}\label{sensibilite-a-limputation-des-donnees-manquantes}
+  
+  \section{Simulations}\label{simulations}
+  
+  \subsection{Données de peupliers}\label{donnees-de-peupliers}
+  
+  Le premier jeu de données est issu d'une étude d'introgression
+  adaptative chez les peupliers d'Amérique du Nord (Suarez-Gonzalez,
+  2016). La simulation d'haplotypes d'individus admixés est effectuée à
+  partir des deux populations ancestrales qui y sont présentes. La
+  première, \emph{Populus Balsamifera}, est une espèce de peupliers qui
+  peuple le nord du continent nord-américain, d'Est en Ouest, et se trouve
+  exposée à des conditions climatiques peu clémentes. La seconde,
+  \emph{Populus Trichocarpa}, est principalement localisée en Californie,
+  et bénéficie d'un climat continental.
+  
+  Chacune des simulations est constituée de \(50\) haplotypes de la souche
+  continentale, de \(50\) haplotyêpes de la souche boréale, ainsi que de
+  \(50\) haplotypes d'individus hybrides générés à partir des haplotypes
+  ancestraux. Ces haplotypes ancestraux ont été estimés à l'aide du
+  logiciel Beagle. 'A partir des positions en paires de base, une carte de
+  recombinaison génétique est générée en utilisant le taux de
+  recombinaison moyen chez le peuplier. Le taux de recombinaison, noté
+  \(\tau_r\), correspond au nombre moyen de paires de bases à parcourir
+  pour qu'ait lieu un épisode de recombinaison génétique, \emph{i.e.},
+  notant \(L\) la longueur du chromosome en Morgans (\(M\)), et \(N_{bp}\)
+  le nombre de paires de bases le constituant, le taux de recombinaison
+  génétique pour ce chromosome est donné par la relation:
+  
+  \[\tau_r = \frac{L}{N_{bp}}\]
+  
+  Dans ce scénario, les simulations ont été produites en utilisant un taux
+  de recombinaison génétique moyen \(\tau_r\) de \(0.05\) centiMorgans par
+  million de paire de bases, correspondant à la valeur utilisée par les
+  auteurs de l'étude avec le logiciel RASPberry
+  (\textit{Recombination via Ancestry Switch Probability}).
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \NormalTok{path <-}\StringTok{ "~/Documents/thesis/git/simulations/introgression/"}
+  \NormalTok{output.name <-}\StringTok{ "populus"}
+  \NormalTok{recombinationRate <-}\StringTok{ }\FloatTok{0.05} \CommentTok{# in Morgans per Megabase}
+  \NormalTok{nSNP <-}\StringTok{ }\DecValTok{50000}
+  \NormalTok{ancstrl}\FloatTok{.1} \NormalTok{<-}\StringTok{ }\DecValTok{1}
+  \NormalTok{ancstrl}\FloatTok{.2} \NormalTok{<-}\StringTok{ }\DecValTok{3}
+  \NormalTok{hyb <-}\StringTok{ }\DecValTok{4}
+  \NormalTok{intro.size <-}\StringTok{ }\DecValTok{500}
+  \NormalTok{global.ancestry <-}\StringTok{ }\FloatTok{0.1}
+  \NormalTok{inverted.ancestry <-}\StringTok{ }\FloatTok{0.5}
+  
+  \NormalTok{info.map <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(data.table::}\KeywordTok{fread}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(path, output.name, }\StringTok{".map"}\NormalTok{), }
+                                          \DataTypeTok{data.table =} \OtherTok{FALSE}\NormalTok{))}
+  \NormalTok{H1 <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(data.table::}\KeywordTok{fread}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(path, output.name, }\StringTok{"_H1"}\NormalTok{), }
+                                    \DataTypeTok{data.table =} \OtherTok{FALSE}\NormalTok{))}
+  \NormalTok{H2 <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(data.table::}\KeywordTok{fread}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(path, output.name, }\StringTok{"_H2"}\NormalTok{), }
+                                    \DataTypeTok{data.table =} \OtherTok{FALSE}\NormalTok{))}
+  \NormalTok{n.hyb <-}\StringTok{ }\KeywordTok{ncol}\NormalTok{(H1) /}\StringTok{ }\DecValTok{2} 
+  
+  \NormalTok{### Introgression region}
+  \NormalTok{idx <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\NormalTok{:nSNP, }\DataTypeTok{size =} \DecValTok{1}\NormalTok{)}
+  \NormalTok{beg.reg <-}\StringTok{ }\KeywordTok{max}\NormalTok{(}\DecValTok{1}\NormalTok{, idx -}\StringTok{ }\NormalTok{intro.size)}
+  \NormalTok{end.reg <-}\StringTok{ }\KeywordTok{min}\NormalTok{(nSNP, idx +}\StringTok{ }\NormalTok{intro.size)}
+  \NormalTok{intro.reg <-}\StringTok{ }\NormalTok{beg.reg:end.reg}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  \newpage
+  
+  \begin{figure}
+  
+  {\centering \includegraphics{thesis_files/figure-latex/unnamed-chunk-1-1} 
+  
+  }
+  
+  \caption{$\lambda = 0.1$}\label{fig:unnamed-chunk-1}
+  \end{figure}
+  
+  \begin{figure}
+  
+  {\centering \includegraphics{thesis_files/figure-latex/unnamed-chunk-2-1} 
+  
+  }
+  
+  \caption{$\lambda = 10$}\label{fig:unnamed-chunk-2}
+  \end{figure}
+  
+  \begin{figure}
+  
+  {\centering \includegraphics{thesis_files/figure-latex/unnamed-chunk-3-1} 
+  
+  }
+  
+  \caption{$\lambda = 50$}\label{fig:unnamed-chunk-3}
+  \end{figure}
+  
+  \newpage
+  
+  \subsection{Résultats de la comparaison des
+  logiciels}\label{resultats-de-la-comparaison-des-logiciels}
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \KeywordTok{setwd}\NormalTok{(}\StringTok{"~/Documents/thesis/git/simulations/introgression/"}\NormalTok{)}
+  \NormalTok{output.name <-}\StringTok{ "populus"}
+  \NormalTok{recombinationRate <-}\StringTok{ }\FloatTok{0.05} \CommentTok{# in Morgans per Megabase}
+  \NormalTok{nSNP <-}\StringTok{ }\DecValTok{50000}
+  \NormalTok{ancstrl}\FloatTok{.1} \NormalTok{<-}\StringTok{ }\DecValTok{1}
+  \NormalTok{ancstrl}\FloatTok{.2} \NormalTok{<-}\StringTok{ }\DecValTok{3}
+  \NormalTok{hyb <-}\StringTok{ }\DecValTok{4}
+  \NormalTok{intro.size <-}\StringTok{ }\DecValTok{500}
+  \NormalTok{global.ancestry <-}\StringTok{ }\FloatTok{0.1}
+  \NormalTok{inverted.ancestry <-}\StringTok{ }\FloatTok{0.5}
+  \NormalTok{N <-}\StringTok{ }\DecValTok{10}
+  \NormalTok{pop <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(ancstrl}\FloatTok{.1}\NormalTok{, }\KeywordTok{ncol}\NormalTok{(H1) /}\StringTok{ }\DecValTok{2}\NormalTok{), }
+           \KeywordTok{rep}\NormalTok{(ancstrl}\FloatTok{.2}\NormalTok{, }\KeywordTok{ncol}\NormalTok{(H2) /}\StringTok{ }\DecValTok{2}\NormalTok{), }
+           \KeywordTok{rep}\NormalTok{(}\DecValTok{4}\NormalTok{, n.hyb))}
+  \NormalTok{results <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Software =} \KeywordTok{c}\NormalTok{(}\StringTok{"pcadapt"}\NormalTok{, }\StringTok{"eila"}\NormalTok{, }\StringTok{"RFMix"}\NormalTok{), }\DataTypeTok{Power =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{), }\DataTypeTok{FDR =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+  \NormalTok{info.map <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(data.table::}\KeywordTok{fread}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(path, output.name, }\StringTok{".map"}\NormalTok{), }
+                                          \DataTypeTok{data.table =} \OtherTok{FALSE}\NormalTok{))}
+  
+  \NormalTok{compute.fdr =}\StringTok{ }\NormalTok{function(list, ground.truth)\{}
+    \NormalTok{if (}\KeywordTok{length}\NormalTok{(list) ==}\StringTok{ }\DecValTok{0}\NormalTok{)\{}
+      \NormalTok{x <-}\StringTok{ }\DecValTok{0}
+    \NormalTok{\} else \{}
+      \NormalTok{x <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(!(list %in%}\StringTok{ }\NormalTok{ground.truth)) /}\StringTok{ }\KeywordTok{length}\NormalTok{(list)}
+    \NormalTok{\}}
+    \KeywordTok{return}\NormalTok{(x)}
+  \NormalTok{\}}
+  
+  \NormalTok{compute.power =}\StringTok{ }\NormalTok{function(list, ground.truth)\{}
+    \NormalTok{if (}\KeywordTok{length}\NormalTok{(ground.truth) ==}\StringTok{ }\DecValTok{0}\NormalTok{)\{}
+      \KeywordTok{warning}\NormalTok{(}\StringTok{"The list of true positives is empty."}\NormalTok{)}
+    \NormalTok{\} else \{}
+      \NormalTok{x <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(list %in%}\StringTok{ }\NormalTok{ground.truth) /}\StringTok{ }\KeywordTok{length}\NormalTok{(ground.truth)}
+    \NormalTok{\}}
+    \KeywordTok{return}\NormalTok{(x)}
+  \NormalTok{\}}
+  
+  \NormalTok{for (n.simu in }\DecValTok{21}\NormalTok{:}\DecValTok{30}\NormalTok{)\{}
+    \NormalTok{dir.name <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{"RFMix_v1.5.4/simu"}\NormalTok{, n.simu, }\StringTok{"/"}\NormalTok{)}
+    
+    \NormalTok{input.pcadapt <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(data.table::}\KeywordTok{fread}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(dir.name, }\StringTok{"simu.pcadapt"}\NormalTok{), }\DataTypeTok{data.table =} \OtherTok{FALSE}\NormalTok{))}
+    \NormalTok{input.eila <-}\StringTok{ }\NormalTok{simulate::}\KeywordTok{eila_from_pcadapt}\NormalTok{(input.pcadapt, pop, }\DataTypeTok{anc1 =} \NormalTok{ancstrl}\FloatTok{.1}\NormalTok{, }\DataTypeTok{anc2 =} \NormalTok{ancstrl}\FloatTok{.2}\NormalTok{, }\DataTypeTok{admixed =} \NormalTok{hyb, }\DataTypeTok{position =} \NormalTok{info.map[, }\DecValTok{2}\NormalTok{])}
+    \NormalTok{param <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(dir.name, }\StringTok{"/parameters.txt"}\NormalTok{))}
+    \NormalTok{gt <-}\StringTok{ }\NormalTok{(param$begin):(param$end)}
+    
+    \NormalTok{### run pcadapt}
+    \NormalTok{wsize <-}\StringTok{ }\DecValTok{1000}
+    \NormalTok{mmaf <-}\StringTok{ }\FloatTok{0.01}
+    \NormalTok{nomap <-}\StringTok{ }\DecValTok{1}\NormalTok{:nSNP}
+    \NormalTok{maf <-}\StringTok{ }\NormalTok{pcadapt::}\KeywordTok{cmpt_minor_af}\NormalTok{(input.pcadapt, }\DecValTok{2}\NormalTok{)}
+    \NormalTok{proxy.map <-}\StringTok{ }\NormalTok{info.map[}\DecValTok{1}\NormalTok{:nSNP]}
+    \NormalTok{filtered.map <-}\StringTok{ }\NormalTok{nomap[maf >=}\StringTok{ }\NormalTok{mmaf]}
+    \NormalTok{stat.pcadapt <-}\StringTok{ }\NormalTok{pcadapt::}\KeywordTok{scan.intro}\NormalTok{(input.pcadapt, }\DataTypeTok{K =} \DecValTok{1}\NormalTok{, }\DataTypeTok{pop =} \NormalTok{pop, }
+                               \DataTypeTok{ancstrl.1 =} \NormalTok{ancstrl}\FloatTok{.2}\NormalTok{, }
+                               \DataTypeTok{ancstrl.2 =} \NormalTok{ancstrl}\FloatTok{.1}\NormalTok{,}
+                               \DataTypeTok{admxd =} \NormalTok{hyb,}
+                               \DataTypeTok{min.maf =} \NormalTok{mmaf,}
+                               \DataTypeTok{window.size =} \NormalTok{wsize,}
+                               \DataTypeTok{ploidy =} \DecValTok{2}\NormalTok{,}
+                               \DataTypeTok{side =} \StringTok{"middle"}\NormalTok{,}
+                               \DataTypeTok{map =} \NormalTok{nomap)}
+    
+    \NormalTok{### run eila }
+    \NormalTok{obj.eila <-}\StringTok{ }\NormalTok{EILA::}\KeywordTok{eila}\NormalTok{(}\DataTypeTok{admixed =} \NormalTok{input.eila$admixed, }\DataTypeTok{anc1 =} \NormalTok{input.eila$anc1,}
+                           \DataTypeTok{anc2 =} \NormalTok{input.eila$anc2, }\DataTypeTok{position =} \NormalTok{info.map[, }\DecValTok{1}\NormalTok{], }\DataTypeTok{lambda =} \FloatTok{0.1}\NormalTok{)}
+    \NormalTok{loc.anc.eila <-}\StringTok{ }\NormalTok{simulate::}\KeywordTok{haplo_to_ancestry}\NormalTok{(obj.eila$local.ancestry, }\DecValTok{1}\NormalTok{)}
+    
+    \NormalTok{### run rfmix}
+    \NormalTok{allele <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{"./simu"}\NormalTok{, n.simu, }\StringTok{"/rfmix_alleles.txt"}\NormalTok{)}
+    \NormalTok{classes <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{"./simu"}\NormalTok{, n.simu, }\StringTok{"/rfmix_classes.txt"}\NormalTok{)}
+    \NormalTok{markerLocation <-}\StringTok{  }\KeywordTok{paste0}\NormalTok{(}\StringTok{"./simu"}\NormalTok{, n.simu, }\StringTok{"/rfmix_markerLocation.txt"}\NormalTok{)}
+    \NormalTok{output <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{"simu"}\NormalTok{, n.simu, }\StringTok{"/output_simu"}\NormalTok{, n.simu)}
+    \NormalTok{window.rfmix <-}\StringTok{ }\FloatTok{0.00002}
+    \NormalTok{command <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"python2.7 RunRFMix.py PopPhased"}\NormalTok{, allele,  classes,  markerLocation, }\StringTok{"-w"}\NormalTok{, window.rfmix, }\StringTok{"-o"}\NormalTok{, output)}
+    \KeywordTok{setwd}\NormalTok{(}\StringTok{"~/Documents/thesis/git/simulations/introgression/RFMix_v1.5.4/"}\NormalTok{)}
+    \KeywordTok{system}\NormalTok{(}\DataTypeTok{command =} \NormalTok{command)}
+    \KeywordTok{setwd}\NormalTok{(}\StringTok{"~/Documents/thesis/git/simulations/introgression/"}\NormalTok{)}
+    \NormalTok{aux.rfmix <-}\StringTok{ }\NormalTok{simulate::}\KeywordTok{rfmix.local.ancestry}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"RFMix_v1.5.4/simu"}\NormalTok{, n.simu, }\StringTok{"/output_simu"}\NormalTok{, n.simu, }\StringTok{".0.Viterbi.txt"}\NormalTok{))}
+    \NormalTok{loc.anc.rfmix <-}\StringTok{ }\NormalTok{simulate::}\KeywordTok{haplo_to_ancestry}\NormalTok{(aux.rfmix, }\DecValTok{1}\NormalTok{)}
+    
+    \NormalTok{### FDR}
+    \NormalTok{interp <-}\StringTok{ }\KeywordTok{approx}\NormalTok{(filtered.map, stat.pcadapt[[}\DecValTok{1}\NormalTok{]], }\DecValTok{1}\NormalTok{:nSNP)}
+    \NormalTok{sd.pcadapt <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(interp$y, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+    \NormalTok{list.pcadapt <-}\StringTok{ }\KeywordTok{which}\NormalTok{(interp$y >}\StringTok{ }\DecValTok{3}\NormalTok{)}
+    \NormalTok{results[}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{] <-}\StringTok{ }\NormalTok{results[}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{] +}\StringTok{ }\KeywordTok{compute.fdr}\NormalTok{(list.pcadapt, gt) /}\StringTok{ }\NormalTok{N}
+    \NormalTok{results[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{] <-}\StringTok{ }\NormalTok{results[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{] +}\StringTok{ }\KeywordTok{compute.power}\NormalTok{(list.pcadapt, gt) /}\StringTok{ }\NormalTok{N}
+    
+    \NormalTok{sd.eila <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(loc.anc.eila, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+    \NormalTok{stat.eila <-}\StringTok{ }\NormalTok{(loc.anc.eila -}\StringTok{ }\KeywordTok{mean}\NormalTok{(loc.anc.eila)) /}\StringTok{ }\NormalTok{sd.eila}
+    \NormalTok{list.eila <-}\StringTok{ }\KeywordTok{which}\NormalTok{(stat.eila >}\StringTok{ }\DecValTok{3}\NormalTok{)}
+    \NormalTok{results[}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{] <-}\StringTok{ }\NormalTok{results[}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{] +}\StringTok{ }\KeywordTok{compute.fdr}\NormalTok{(list.eila, gt) /}\StringTok{ }\NormalTok{N}
+    \NormalTok{results[}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{] <-}\StringTok{ }\NormalTok{results[}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{] +}\StringTok{ }\KeywordTok{compute.power}\NormalTok{(list.eila, gt) /}\StringTok{ }\NormalTok{N}
+    
+    \NormalTok{sd.rfmix <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(loc.anc.rfmix, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+    \NormalTok{stat.rfmix <-}\StringTok{ }\NormalTok{(loc.anc.rfmix -}\StringTok{ }\KeywordTok{mean}\NormalTok{(loc.anc.rfmix)) /}\StringTok{ }\NormalTok{sd.rfmix}
+    \NormalTok{list.rfmix <-}\StringTok{ }\KeywordTok{which}\NormalTok{(stat.rfmix >}\StringTok{ }\DecValTok{3}\NormalTok{)}
+    \NormalTok{results[}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{] <-}\StringTok{ }\NormalTok{results[}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{] +}\StringTok{ }\KeywordTok{compute.fdr}\NormalTok{(list.rfmix, gt) /}\StringTok{ }\NormalTok{N}
+    \NormalTok{results[}\DecValTok{3}\NormalTok{, }\DecValTok{2}\NormalTok{] <-}\StringTok{ }\NormalTok{results[}\DecValTok{3}\NormalTok{, }\DecValTok{2}\NormalTok{] +}\StringTok{ }\KeywordTok{compute.power}\NormalTok{(list.rfmix, gt) /}\StringTok{ }\NormalTok{N}
+  \NormalTok{\}}
+  
+  
+  \NormalTok{ggres <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Software =} \KeywordTok{rep}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"pcadapt"}\NormalTok{, }\StringTok{"eila"}\NormalTok{, }\StringTok{"RFMix"}\NormalTok{), }\DecValTok{2}\NormalTok{), }\DataTypeTok{Stat =} \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{6}\NormalTok{), }\DataTypeTok{Type =} \KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\StringTok{"Power"}\NormalTok{, }\DecValTok{3}\NormalTok{), }\KeywordTok{rep}\NormalTok{(}\StringTok{"FDR"}\NormalTok{, }\DecValTok{3}\NormalTok{)), }
+                      \DataTypeTok{Percent =} \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{6}\NormalTok{))}
+  \NormalTok{ggres$Stat[}\DecValTok{1}\NormalTok{:}\DecValTok{3}\NormalTok{] <-}\StringTok{ }\NormalTok{results$Power *}\StringTok{ }\DecValTok{100}
+  \NormalTok{ggres$Stat[}\DecValTok{4}\NormalTok{:}\DecValTok{6}\NormalTok{] <-}\StringTok{ }\NormalTok{results$FDR *}\StringTok{ }\DecValTok{100}
+  \NormalTok{ggres$Percent <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{format}\NormalTok{(ggres$Stat, }\DataTypeTok{digits =} \DecValTok{2}\NormalTok{))}
+  \NormalTok{p0 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(ggres, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{Software, }\DataTypeTok{y =} \NormalTok{Stat, }\DataTypeTok{fill =} \KeywordTok{as.factor}\NormalTok{(Type)))}
+  \NormalTok{p0 <-}\StringTok{ }\NormalTok{p0 +}\StringTok{ }\KeywordTok{ggtitle}\NormalTok{(}\KeywordTok{expression}\NormalTok{(lambda ==}\StringTok{ }\DecValTok{1}\NormalTok{)) +}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{)}
+  \NormalTok{p0 <-}\StringTok{ }\NormalTok{p0 +}\StringTok{ }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{, }\DataTypeTok{position =} \KeywordTok{position_dodge}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.9}\NormalTok{))}
+  \NormalTok{p0 <-}\StringTok{ }\NormalTok{p0 +}\StringTok{ }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{fill =} \KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{title =} \StringTok{""}\NormalTok{))}
+  \NormalTok{p0 <-}\StringTok{ }\NormalTok{p0 +}\StringTok{ }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =} \NormalTok{Percent), }\DataTypeTok{position =} \KeywordTok{position_dodge}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.9}\NormalTok{), }
+                       \DataTypeTok{color =} \StringTok{"white"}\NormalTok{, }\DataTypeTok{vjust =} \FloatTok{1.4}\NormalTok{, }\DataTypeTok{size =} \DecValTok{5}\NormalTok{)}
+  \NormalTok{p0 <-}\StringTok{ }\NormalTok{p0 +}\StringTok{ }\KeywordTok{theme_bw}\NormalTok{() +}\StringTok{ }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{15}\NormalTok{),}
+                                \DataTypeTok{axis.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{15}\NormalTok{, }\DataTypeTok{face =} \StringTok{"bold"}\NormalTok{),}
+                                \DataTypeTok{title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{15}\NormalTok{, }\DataTypeTok{face =} \StringTok{"bold"}\NormalTok{),}
+                                \DataTypeTok{legend.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{15}\NormalTok{),}
+                                \DataTypeTok{legend.key.height =} \KeywordTok{unit}\NormalTok{(}\DecValTok{1}\NormalTok{, }\StringTok{"line"}\NormalTok{),}
+                                \DataTypeTok{legend.key.width =} \KeywordTok{unit}\NormalTok{(}\DecValTok{3}\NormalTok{, }\StringTok{"line"}\NormalTok{)}
+  \NormalTok{)}
+  \KeywordTok{print}\NormalTok{(p0)}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  \begin{longtable}[]{@{}lcl@{}}
   \caption{\label{tab:inher} Correlation of Inheritance Factors for Parents
   and Child}\tabularnewline
   \toprule
-  \begin{minipage}[b]{0.29\columnwidth}\centering\strut
+  \begin{minipage}[b]{0.29\columnwidth}\raggedright\strut
   Factors\strut
   \end{minipage} & \begin{minipage}[b]{0.47\columnwidth}\centering\strut
   Correlation between Parents \& Child\strut
-  \end{minipage} & \begin{minipage}[b]{0.16\columnwidth}\centering\strut
+  \end{minipage} & \begin{minipage}[b]{0.16\columnwidth}\raggedright\strut
   Inherited\strut
   \end{minipage}\tabularnewline
   \midrule
   \endfirsthead
   \toprule
-  \begin{minipage}[b]{0.29\columnwidth}\centering\strut
+  \begin{minipage}[b]{0.29\columnwidth}\raggedright\strut
   Factors\strut
   \end{minipage} & \begin{minipage}[b]{0.47\columnwidth}\centering\strut
   Correlation between Parents \& Child\strut
-  \end{minipage} & \begin{minipage}[b]{0.16\columnwidth}\centering\strut
+  \end{minipage} & \begin{minipage}[b]{0.16\columnwidth}\raggedright\strut
   Inherited\strut
   \end{minipage}\tabularnewline
   \midrule
   \endhead
-  \begin{minipage}[t]{0.29\columnwidth}\centering\strut
+  \begin{minipage}[t]{0.29\columnwidth}\raggedright\strut
   Education\strut
   \end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\centering\strut
   -0.49\strut
-  \end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\centering\strut
+  \end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright\strut
   Yes\strut
   \end{minipage}\tabularnewline
-  \begin{minipage}[t]{0.29\columnwidth}\centering\strut
+  \begin{minipage}[t]{0.29\columnwidth}\raggedright\strut
   Socio-Economic Status\strut
   \end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\centering\strut
   0.28\strut
-  \end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\centering\strut
+  \end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright\strut
   Slight\strut
   \end{minipage}\tabularnewline
-  \begin{minipage}[t]{0.29\columnwidth}\centering\strut
+  \begin{minipage}[t]{0.29\columnwidth}\raggedright\strut
   Income\strut
   \end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\centering\strut
   0.08\strut
-  \end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\centering\strut
+  \end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright\strut
   No\strut
   \end{minipage}\tabularnewline
-  \begin{minipage}[t]{0.29\columnwidth}\centering\strut
+  \begin{minipage}[t]{0.29\columnwidth}\raggedright\strut
   Family Size\strut
   \end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\centering\strut
   0.18\strut
-  \end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\centering\strut
+  \end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright\strut
   Slight\strut
   \end{minipage}\tabularnewline
-  \begin{minipage}[t]{0.29\columnwidth}\centering\strut
+  \begin{minipage}[t]{0.29\columnwidth}\raggedright\strut
   Occupational Prestige\strut
   \end{minipage} & \begin{minipage}[t]{0.47\columnwidth}\centering\strut
   0.21\strut
-  \end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\centering\strut
+  \end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright\strut
   Slight\strut
   \end{minipage}\tabularnewline
   \bottomrule
@@ -1023,19 +1227,24 @@ starts here.
   \CommentTok{# installed and loaded. This thesisdown package includes}
   \CommentTok{# the template files for the thesis and also two functions}
   \CommentTok{# used for labeling and referencing}
+  \NormalTok{opts_chunk$}\KeywordTok{set}\NormalTok{(}\DataTypeTok{cache=}\OtherTok{TRUE}\NormalTok{)}
+  
   \NormalTok{if(!}\KeywordTok{require}\NormalTok{(devtools))}
     \KeywordTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
   \NormalTok{if(!}\KeywordTok{require}\NormalTok{(dplyr))}
-      \KeywordTok{install.packages}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
+    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
   \NormalTok{if(!}\KeywordTok{require}\NormalTok{(ggplot2))}
-      \KeywordTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
+    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
   \NormalTok{if(!}\KeywordTok{require}\NormalTok{(ggplot2))}
-      \KeywordTok{install.packages}\NormalTok{(}\StringTok{"bookdown"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
+    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"bookdown"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
   \NormalTok{if(!}\KeywordTok{require}\NormalTok{(thesisdown))\{}
     \KeywordTok{library}\NormalTok{(devtools)}
     \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"ismayc/thesisdown"}\NormalTok{)}
-    \NormalTok{\}}
+  \NormalTok{\}}
   \KeywordTok{library}\NormalTok{(thesisdown)}
+  \KeywordTok{library}\NormalTok{(pcadapt)}
+  \KeywordTok{library}\NormalTok{(EILA)}
+  \KeywordTok{library}\NormalTok{(simulate)}
   \NormalTok{flights <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/flights.csv"}\NormalTok{)}
   \end{Highlighting}
   \end{Shaded}
@@ -1082,6 +1291,10 @@ starts here.
   Maples, B. K. (2013). \emph{RFMix: A discriminative modeling approach
   for rapid and robust local-ancestry inference.}
   
+  \hypertarget{ref-mcvean2009}{}
+  McVean, G. (2009). A genealogical interpretation of principal components
+  analysis.
+  
   \hypertarget{ref-Molina1994}{}
   Molina, S. T., \& Borkovec, T. D. (1994). The Penn State worry
   questionnaire: Psychometric properties and associated characteristics.
@@ -1099,6 +1312,12 @@ starts here.
   \hypertarget{ref-reedweb2007}{}
   Reed~College. (2007, march). LaTeX your document. Retrieved from
   \url{http://web.reed.edu/cis/help/LaTeX/index.html}
+  
+  \hypertarget{ref-suarez2016}{}
+  Suarez-Gonzalez, et a., Adriana. (2016). Genomic and functional
+  approaches reveal a case of adaptive introgression from populus
+  balsamifera (balsam poplar) in p. trichocarpa (black cottonwood).
+  \emph{Molecular Ecology}, 2427--2442.
   
   \hypertarget{ref-thornton2014}{}
   Thornton, T. (2014). \emph{Local and global ancestry inference, and
