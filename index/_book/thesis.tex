@@ -202,6 +202,14 @@ starts here.
   
   \begin{itemize}
   \item
+    Modèle de FLK
+  \item
+    Modèle de OutFLANK
+  \item
+    Modèle de Bayescan
+  \item
+    Fast PCA
+  \item
     ACP en génétique des populations
   \item
     Partie III: R package pcadapt
@@ -570,8 +578,8 @@ starts here.
   
   Une population est dite localement adaptée à son environnement si elle a
   connu une évolution différente de celles qu'ont connu les autres
-  populations de la même espèce, et ce, en réponse des pressions
-  sélectives
+  populations de la même espèce, et ce, en réponse aux pressions
+  sélectives auxquelles elle peut être confrontrée.
   
   \hypertarget{math}{\section{Math}\label{math}}
   
@@ -738,7 +746,40 @@ starts here.
   de recombinaison génétique moyen \(\tau_r\) de \(0.05\) centiMorgans par
   million de paire de bases, correspondant à la valeur utilisée par les
   auteurs de l'étude avec le logiciel RASPberry
-  (\textit{Recombination via Ancestry Switch Probability}).
+  (\textit{Recombination via Ancestry Switch Probability}). A partir de la
+  donnée de la position physique en paires de bases ainsi que du taux de
+  recombinaison moyen, nous générons une carte de recombinaison génétique
+  adaptée à nos simulations.
+  
+  \subsection{Génération aléatoire d'individus
+  hybrides}\label{generation-aleatoire-dindividus-hybrides}
+  
+  Pour simuler un individu métissé, il est d'abord nécessaire de simuler
+  l'emplacement des évènements de recombinaison. Pour ce faire, nous
+  utilisons le modèle décrit dans (Price, 2009), en parcourant
+  
+  \begin{figure}
+  
+  {\centering \includegraphics[width=400px,height=200px]{figure/ancestry_heatmap_lambda_0001} 
+  
+  }
+  
+  \caption{$\lambda = 0.001$}\label{fig:lambda0001}
+  \end{figure}\begin{figure}
+  
+  {\centering \includegraphics[width=400px,height=200px]{figure/ancestry_heatmap_lambda_001} 
+  
+  }
+  
+  \caption{$\lambda = 0.01$}\label{fig:lambda001}
+  \end{figure}\begin{figure}
+  
+  {\centering \includegraphics[width=400px,height=200px]{figure/ancestry_heatmap_lambda_01} 
+  
+  }
+  
+  \caption{$\lambda = 0.1$}\label{fig:lambda01}
+  \end{figure}
   
   \begin{Shaded}
   \begin{Highlighting}[]
@@ -770,33 +811,6 @@ starts here.
   \end{Shaded}
   
   \newpage
-  
-  \begin{figure}
-  
-  {\centering \includegraphics{thesis_files/figure-latex/unnamed-chunk-1-1} 
-  
-  }
-  
-  \caption{$\lambda = 0.1$}\label{fig:unnamed-chunk-1}
-  \end{figure}
-  
-  \begin{figure}
-  
-  {\centering \includegraphics{thesis_files/figure-latex/unnamed-chunk-2-1} 
-  
-  }
-  
-  \caption{$\lambda = 10$}\label{fig:unnamed-chunk-2}
-  \end{figure}
-  
-  \begin{figure}
-  
-  {\centering \includegraphics{thesis_files/figure-latex/unnamed-chunk-3-1} 
-  
-  }
-  
-  \caption{$\lambda = 50$}\label{fig:unnamed-chunk-3}
-  \end{figure}
   
   \newpage
   
@@ -1025,8 +1039,10 @@ starts here.
   \end{Highlighting}
   \end{Shaded}
   
-  \begin{figure}
-  \includegraphics[width=3.47in]{figure/reed} \caption{Reed logo}\label{fig:reedlogo}
+  \begin{figure}[htbp]
+  \centering
+  \includegraphics{figure/reed.jpg}
+  \caption{\label{fig:reedlogo}Reed logo}
   \end{figure}
   
   Here is a reference to the Reed logo: Figure \ref{fig:reedlogo}. Note
@@ -1227,7 +1243,7 @@ starts here.
   \CommentTok{# installed and loaded. This thesisdown package includes}
   \CommentTok{# the template files for the thesis and also two functions}
   \CommentTok{# used for labeling and referencing}
-  \NormalTok{opts_chunk$}\KeywordTok{set}\NormalTok{(}\DataTypeTok{cache=}\OtherTok{TRUE}\NormalTok{)}
+  \CommentTok{#opts_chunk$set(cache=TRUE)}
   
   \NormalTok{if(!}\KeywordTok{require}\NormalTok{(devtools))}
     \KeywordTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}

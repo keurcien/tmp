@@ -110,7 +110,19 @@ de recombinaison. Pour ce faire, nous utilisons le modèle décrit dans [@price2
 en parcourant
 
 
-
+```{r lambda0001, echo = FALSE, out.width = "400px", out.height="200px", fig.align = 'center', fig.cap="$\\lambda = 0.001$"}
+library(png)
+library(grid)
+#img <- readPNG("figure/ancestry_heatmap_lambda_0001.png")
+#grid.raster(img)
+include_graphics(path = "figure/ancestry_heatmap_lambda_0001.png")
+```
+```{r lambda001, echo = FALSE, out.width = "400px", out.height="200px", fig.align = 'center', fig.cap="$\\lambda = 0.01$"}
+include_graphics(path = "figure/ancestry_heatmap_lambda_001.png")
+```
+```{r lambda01, echo = FALSE, out.width = "400px", out.height="200px", fig.align = 'center', fig.cap="$\\lambda = 0.1$"}
+include_graphics(path = "figure/ancestry_heatmap_lambda_01.png")
+```
 
 
 ```{r simulations}
@@ -143,7 +155,7 @@ intro.reg <- beg.reg:end.reg
 \newpage
 
 
-```{r, echo = FALSE, fig.width = 7, fig.height = 4, fig.align = 'center', fig.cap = "$\\lambda = 0.1$"}
+```{r, eval = FALSE, echo = FALSE, fig.width = 7, fig.height = 4, fig.align = 'center', fig.cap = "$\\lambda = 0.1$"}
 lambda <- 0.1
 res <- simulate::generate_hybrid_matrix(H1, H2, alpha = global.ancestry, 
                                         beta = inverted.ancestry, 
@@ -159,7 +171,7 @@ im[res$true.ancestry.matrix == "11"] <- 0
 image(im, axes = FALSE, xlab = "", ylab = "")
 ```
 
-```{r, echo = FALSE, fig.width = 7, fig.height = 4, fig.align = 'center', fig.cap = "$\\lambda = 10$"}
+```{r, eval = FALSE, echo = FALSE, fig.width = 7, fig.height = 4, fig.align = 'center', fig.cap = "$\\lambda = 10$"}
 lambda <- 10
 res <- simulate::generate_hybrid_matrix(H1, H2, alpha = global.ancestry, 
                                         beta = inverted.ancestry, 
@@ -176,7 +188,7 @@ image(im, axes = FALSE, xlab = "", ylab = "")
 ```
 
 
-```{r, echo = FALSE, fig.width = 7, fig.height = 4, fig.align = 'center', fig.cap = "$\\lambda = 50$"}
+```{r, eval = FALSE, echo = FALSE, fig.width = 7, fig.height = 4, fig.align = 'center', fig.cap = "$\\lambda = 50$"}
 lambda <- 50
 res <- simulate::generate_hybrid_matrix(H1, H2, alpha = global.ancestry, 
                                         beta = inverted.ancestry, 
