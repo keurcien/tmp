@@ -26,6 +26,16 @@ flights <- read.csv("data/flights.csv")
 
 # Introgression adaptative
 
+## Qu'est-ce que l'introgression ?
+
+Avant de s'intéresser à la notion d'introgression, intéressons-nous d'abord à
+celle d'hybridation. L'hybridation peut être définie comme la reproduction
+entre deux individus appartenant à deux espèces ou à deux populations différentes.
+Cette définition nous amène à nous poser deux questions. La première, relative à la notion d'espèce, est souvent sujette à controverse. La seconde concerne quant à elle la désignation de populations différentes. Qu'est-ce qui fait que deux groupes d'individus sont différents ? Harrison suggère en 1990 que deux individus issus de populations différentes doivent chacun posséder des traits héritables qui les différencient [@harrison1990hybrid]. 
+
+Nous parlons d'introgression lorsqu'un certain nombre de gènes est transféré
+d'une population à une autre.
+
 ## Coefficients de métissage globaux et locaux
 
 Étant données des populations ancestrales, il est possible d'estimer pour un
@@ -106,8 +116,7 @@ génétique adaptée à nos simulations.
 ### Génération aléatoire d'individus hybrides
 
 Pour simuler un individu métissé, il est d'abord nécessaire de simuler l'emplacement des évènements
-de recombinaison. Pour ce faire, nous utilisons le modèle décrit dans [@price2009], 
-en parcourant
+de recombinaison. Pour ce faire, nous utilisons le modèle décrit dans [@price2009], en parcourant
 
 
 ```{r lambda0001, echo = FALSE, out.width = "400px", out.height="200px", fig.align = 'center', fig.cap="$\\lambda = 0.001$"}
