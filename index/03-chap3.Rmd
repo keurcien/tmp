@@ -217,128 +217,45 @@ image(im, axes = FALSE, xlab = "", ylab = "")
 
 ### Résultats de la comparaison des logiciels
 
-```{r, eval = FALSE}
-setwd("~/Documents/thesis/git/simulations/introgression/")
-output.name <- "populus"
-recombinationRate <- 0.05 # in Morgans per Megabase
-nSNP <- 50000
-ancstrl.1 <- 1
-ancstrl.2 <- 3
-hyb <- 4
-intro.size <- 500
-global.ancestry <- 0.1
-inverted.ancestry <- 0.5
-N <- 10
-pop <- c(rep(ancstrl.1, ncol(H1) / 2), 
-         rep(ancstrl.2, ncol(H2) / 2), 
-         rep(4, n.hyb))
-results <- data.frame(Software = c("pcadapt", "eila", "RFMix"), Power = c(0, 0, 0), FDR = c(0, 0, 0))
-info.map <- as.matrix(data.table::fread(paste0(path, output.name, ".map"), 
-                                        data.table = FALSE))
-
-compute.fdr = function(list, ground.truth){
-  if (length(list) == 0){
-    x <- 0
-  } else {
-    x <- sum(!(list %in% ground.truth)) / length(list)
-  }
-  return(x)
-}
-
-compute.power = function(list, ground.truth){
-  if (length(ground.truth) == 0){
-    warning("The list of true positives is empty.")
-  } else {
-    x <- sum(list %in% ground.truth) / length(ground.truth)
-  }
-  return(x)
-}
-
-for (n.simu in 21:30){
-  dir.name <- paste0("RFMix_v1.5.4/simu", n.simu, "/")
-  
-  input.pcadapt <- as.matrix(data.table::fread(paste0(dir.name, "simu.pcadapt"), data.table = FALSE))
-  input.eila <- simulate::eila_from_pcadapt(input.pcadapt, pop, anc1 = ancstrl.1, anc2 = ancstrl.2, admixed = hyb, position = info.map[, 2])
-  param <- read.table(paste0(dir.name, "/parameters.txt"))
-  gt <- (param$begin):(param$end)
-  
-  ### run pcadapt
-  wsize <- 1000
-  mmaf <- 0.01
-  nomap <- 1:nSNP
-  maf <- pcadapt::cmpt_minor_af(input.pcadapt, 2)
-  proxy.map <- info.map[1:nSNP]
-  filtered.map <- nomap[maf >= mmaf]
-  stat.pcadapt <- pcadapt::scan.intro(input.pcadapt, K = 1, pop = pop, 
-                             ancstrl.1 = ancstrl.2, 
-                             ancstrl.2 = ancstrl.1,
-                             admxd = hyb,
-                             min.maf = mmaf,
-                             window.size = wsize,
-                             ploidy = 2,
-                             side = "middle",
-                             map = nomap)
-  
-  ### run eila 
-  obj.eila <- EILA::eila(admixed = input.eila$admixed, anc1 = input.eila$anc1,
-                         anc2 = input.eila$anc2, position = info.map[, 1], lambda = 0.1)
-  loc.anc.eila <- simulate::haplo_to_ancestry(obj.eila$local.ancestry, 1)
-  
-  ### run rfmix
-  allele <- paste0("./simu", n.simu, "/rfmix_alleles.txt")
-  classes <- paste0("./simu", n.simu, "/rfmix_classes.txt")
-  markerLocation <-  paste0("./simu", n.simu, "/rfmix_markerLocation.txt")
-  output <- paste0("simu", n.simu, "/output_simu", n.simu)
-  window.rfmix <- 0.00002
-  command <- paste("python2.7 RunRFMix.py PopPhased", allele,  classes,  markerLocation, "-w", window.rfmix, "-o", output)
-  setwd("~/Documents/thesis/git/simulations/introgression/RFMix_v1.5.4/")
-  system(command = command)
-  setwd("~/Documents/thesis/git/simulations/introgression/")
-  aux.rfmix <- simulate::rfmix.local.ancestry(paste0("RFMix_v1.5.4/simu", n.simu, "/output_simu", n.simu, ".0.Viterbi.txt"))
-  loc.anc.rfmix <- simulate::haplo_to_ancestry(aux.rfmix, 1)
-  
-  ### FDR
-  interp <- approx(filtered.map, stat.pcadapt[[1]], 1:nSNP)
-  sd.pcadapt <- sd(interp$y, na.rm = TRUE)
-  list.pcadapt <- which(interp$y > 3)
-  results[1, 3] <- results[1, 3] + compute.fdr(list.pcadapt, gt) / N
-  results[1, 2] <- results[1, 2] + compute.power(list.pcadapt, gt) / N
-  
-  sd.eila <- sd(loc.anc.eila, na.rm = TRUE)
-  stat.eila <- (loc.anc.eila - mean(loc.anc.eila)) / sd.eila
-  list.eila <- which(stat.eila > 3)
-  results[2, 3] <- results[2, 3] + compute.fdr(list.eila, gt) / N
-  results[2, 2] <- results[2, 2] + compute.power(list.eila, gt) / N
-  
-  sd.rfmix <- sd(loc.anc.rfmix, na.rm = TRUE)
-  stat.rfmix <- (loc.anc.rfmix - mean(loc.anc.rfmix)) / sd.rfmix
-  list.rfmix <- which(stat.rfmix > 3)
-  results[3, 3] <- results[3, 3] + compute.fdr(list.rfmix, gt) / N
-  results[3, 2] <- results[3, 2] + compute.power(list.rfmix, gt) / N
-}
 
 
-ggres <- data.frame(Software = rep(c("pcadapt", "eila", "RFMix"), 2), Stat = rep(0, 6), Type = c(rep("Power", 3), rep("FDR", 3)), 
-                    Percent = rep(0, 6))
-ggres$Stat[1:3] <- results$Power * 100
-ggres$Stat[4:6] <- results$FDR * 100
-ggres$Percent <- as.numeric(format(ggres$Stat, digits = 2))
-p0 <- ggplot(ggres, aes(x = Software, y = Stat, fill = as.factor(Type)))
-p0 <- p0 + ggtitle(expression(lambda == 1)) + ylab("")
-p0 <- p0 + geom_bar(stat = "identity", position = position_dodge(width = 0.9))
-p0 <- p0 + guides(fill = guide_legend(title = ""))
-p0 <- p0 + geom_text(aes(label = Percent), position = position_dodge(width = 0.9), 
-                     color = "white", vjust = 1.4, size = 5)
-p0 <- p0 + theme_bw() + theme(axis.text = element_text(size = 15),
-                              axis.title = element_text(size = 15, face = "bold"),
-                              title = element_text(size = 15, face = "bold"),
-                              legend.text = element_text(size = 15),
-                              legend.key.height = unit(1, "line"),
-                              legend.key.width = unit(3, "line")
-)
-print(p0)
+### Simulations à partir de ms et Seq-Gen
+
+FIGURE AVEC LES DIFFERENTS ARBRES P1, P2, P3 ET O
+
+Décortiquons la ligne de commande *ms* permettant de générer les séquences de 
+nucléotides.
+
+```
+./ms 200 1 -I 4 50 50 50 50 -ej 1 2 1 -ej 2 3 1 -ej 3 4 1 
+-es 0.1 2 0.8 -ej 0.1 5 3 -r 50 5000 -T #background model
 ```
 
+- 200 : nombre d'individus.
+
+- 4 : nombre de populations dans lesquelles se répartissent les individus.
+
+- 50 50 50 50 : répartition des individus dans chacune des populations.
+
+- -ej 1 2 1 : 1 unité de temps auparavant, la population 2 fusionne avec la 
+population 1.
+
+- -ej 2 3 1 : 2 unités de temps auparavant, la population 3 fusionne avec la 
+population 1 (qui est désormais composée des populations 1 et 2).
+
+- -ej 3 4 1 : 3 unités de temps auparavant, la population 4 fusionne avec la 
+population 1 (constituée des populations 1, 2 et 3).
+
+- -es 0.1 2 0.8 : 0.1 unité de temps auparavant, la population 2 perd une partie
+de ses individus en faveur d'une population autre que celles déjà présentes (population 5).
+
+- -ej 0.1 5 3 : 0.1 unité de temps auparavant, la population 5 fusionne avec la 
+population 3.
+
+
+Pour utiliser *ms*, il faut définir les évènements depuis le temps présent. Pour
+comprendre le scénario démographique, il est plus aisé de reprendre les évènements 
+dans l'ordre chronologique.
 
 
 ----------------------------------------------------------------------------------

@@ -62,19 +62,6 @@ q-value, bonferroni, benjamini-hochberg
 La figure suivante donne les comparaisons entre les différentes procédures de 
 correction :
 
-*Now for the correct way:* 
-
-Here is the first sentence.  Here is another sentence.  Here is the last sentence to end the paragraph.
-
-This should be a new paragraph.
-
-## R chunks
-
-When you click the **Knit** button above a document will be generated that includes both content as well as the output of any embedded **R** code chunks within the document. You can embed an **R** code chunk like this (`cars` is a built-in **R** dataset):
-
-```{r cars}
-summary(cars)
-```
 
 ## Inline code
 

@@ -195,11 +195,369 @@ starts here.
   \mainmatter % here the regular arabic numbering starts
   \pagestyle{fancyplain} % turns page numbering back on
 
-  \chapter{thesis\_pdf\_updt: default}\label{thesis_pdf_updt-default}
+  \chapter*{Introduction}\label{introduction}
+  \addcontentsline{toc}{chapter}{Introduction}
   
   \chapter{État de l'art}\label{etat-de-lart}
   
+  \begin{itemize}
+  \item
+    Modèle de FLK
+  \item
+    Modèle de OutFLANK
+  \item
+    Modèle de Bayescan
+  \item
+    Fast PCA
+  \item
+    ACP en génétique des populations
+  \item
+    Partie III: R package pcadapt
+  \end{itemize}
+  
+  \section{Analyse en Composantes Principales
+  parcimonieuse}\label{analyse-en-composantes-principales-parcimonieuse}
+  
+  \section{Bootstrap ACP}\label{bootstrap-acp}
+  
+  \section{Contexte}\label{contexte}
+  
+  It's easy to create a list. It can be unordered like
+  
+  \begin{itemize}
+  \tightlist
+  \item
+    Item 1
+  \item
+    Item 2
+  \end{itemize}
+  
+  or it can be ordered like
+  
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Item 1
+  \item
+    Item 2
+  \end{enumerate}
+  
+  Notice that I intentionally mislabeled Item 2 as number 4.
+  \emph{Markdown} automatically figures this out! You can put any numbers
+  in the list and it will create the list. Check it out below.
+  
+  To create a sublist, just indent the values a bit (at least four spaces
+  or a tab). (Here's one case where indentation is key!)
+  
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Item 1
+  \item
+    Item 2
+  \item
+    Item 3
+  
+    \begin{itemize}
+    \tightlist
+    \item
+      Item 3a
+    \item
+      Item 3b
+    \end{itemize}
+  \end{enumerate}
+  
+  \section{Tests multiples}\label{tests-multiples}
+  
+  \section{Contrôle du taux de fausse
+  découverte}\label{controle-du-taux-de-fausse-decouverte}
+  
+  Le taux de fausse découverte, correspond à la proportion de faux
+  positifs parmi les positifs. En notant \(FP\) le nombre de faux
+  positifs, \(FP\) le nombre de vrais positifs, on définit le taux de
+  fausse découverte \(FDR\) par :
+  \[ FDR = \mathbb{E}\Big[\frac{FP}{TP + FP} 1_{FP+TP > 0}\Big] \] -
+  Référence cours de Christophe Giraud
+  
+  q-value, bonferroni, benjamini-hochberg La figure suivante donne les
+  comparaisons entre les différentes procédures de correction :
+  
+  \section{Inline code}\label{inline-code}
+  
+  If you'd like to put the results of your analysis directly into your
+  discussion, add inline code like this:
+  
+  \begin{quote}
+  The \texttt{cos} of \(2 \pi\) is 1.
+  \end{quote}
+  
+  Another example would be the direct calculation of the standard
+  deviation:
+  
+  \begin{quote}
+  The standard deviation of \texttt{speed} in \texttt{cars} is 5.2876444.
+  \end{quote}
+  
+  One last neat feature is the use of the \texttt{ifelse} conditional
+  statement which can be used to output text depending on the result of an
+  \textbf{R} calculation:
+  
+  \begin{quote}
+  The standard deviation is less than 6.
+  \end{quote}
+  
+  Note the use of \texttt{\textgreater{}} here, which signifies a
+  quotation environment that will be indented.
+  
+  As you see with \texttt{\$2\ \textbackslash{}pi\$} above, mathematics
+  can be added by surrounding the mathematical text with dollar signs.
+  More examples of this are in {[}Mathematics and Science{]} if you
+  uncomment the code in {[}Math{]}.
+  
+  \section{Including plots}\label{including-plots}
+  
+  You can also embed plots. For example, here is a way to use the base
+  \textbf{R} graphics package to produce a plot using the built-in
+  \texttt{pressure} dataset:
+  
+  \includegraphics{thesis_files/figure-latex/pressure-1.pdf}
+  
+  Note that the \texttt{echo=FALSE} parameter was added to the code chunk
+  to prevent printing of the \textbf{R} code that generated the plot.
+  There are plenty of other ways to add chunk options. More information is
+  available at \url{http://yihui.name/knitr/options/}.
+  
+  Another useful chunk option is the setting of \texttt{cache=TRUE} as you
+  see here. If document rendering becomes time consuming due to long
+  computations or plots that are expensive to generate you can use knitr
+  caching to improve performance. Later in this file, you'll see a way to
+  reference plots created in \textbf{R} or external figures.
+  
+  \hypertarget{loading-and-exploring-data}{\section{Loading and exploring
+  data}\label{loading-and-exploring-data}}
+  
+  Included in this template is a file called \texttt{flights.csv}. This
+  file includes a subset of the larger dataset of information about all
+  flights that departed from Seattle and Portland in 2014. More
+  information about this dataset and its \textbf{R} package is available
+  at \url{http://github.com/ismayc/pnwflights14}. This subset includes
+  only Portland flights and only rows that were complete with no missing
+  values. Merges were also done with the \texttt{airports} and
+  \texttt{airlines} data sets in the \texttt{pnwflights14} package to get
+  more descriptive airport and airline names.
+  
+  We can load in this data set using the following command:
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \NormalTok{flights <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/flights.csv"}\NormalTok{)}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  The data is now stored in the data frame called \texttt{flights} in
+  \textbf{R}. To get a better feel for the variables included in this
+  dataset we can use a variety of functions. Here we can see the
+  dimensions (rows by columns) and also the names of the columns.
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \KeywordTok{dim}\NormalTok{(flights)}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  \begin{verbatim}
+  ## [1] 52808    16
+  \end{verbatim}
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \KeywordTok{names}\NormalTok{(flights)}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  \begin{verbatim}
+  ##  [1] "month"        "day"          "dep_time"     "dep_delay"   
+  ##  [5] "arr_time"     "arr_delay"    "carrier"      "tailnum"     
+  ##  [9] "flight"       "dest"         "air_time"     "distance"    
+  ## [13] "hour"         "minute"       "carrier_name" "dest_name"
+  \end{verbatim}
+  
+  Another good idea is to take a look at the dataset in table form. With
+  this dataset having more than 50,000 rows, we won't explicitly show the
+  results of the command here. I recommend you enter the command into the
+  Console \textbf{\emph{after}} you have run the \textbf{R} chunks above
+  to load the data into \textbf{R}.
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \KeywordTok{View}\NormalTok{(flights)}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  While not required, it is highly recommended you use the \texttt{dplyr}
+  package to manipulate and summarize your data set as needed. It uses a
+  syntax that is easy to understand using chaining operations. Below I've
+  created a few examples of using \texttt{dplyr} to get information about
+  the Portland flights in 2014. You will also see the use of the
+  \texttt{ggplot2} package, which produces beautiful, high-quality
+  academic visuals.
+  
+  We begin by checking to ensure that needed packages are installed and
+  then we load them into our current working environment:
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \CommentTok{# List of packages required for this analysis}
+  \NormalTok{pkg <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{, }\StringTok{"ggplot2"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{, }\StringTok{"bookdown"}\NormalTok{, }\StringTok{"devtools"}\NormalTok{, }\StringTok{"simulate"}\NormalTok{, }\StringTok{"data.table"}\NormalTok{)}
+  \CommentTok{# Check if packages are not installed and assign the}
+  \CommentTok{# names of the packages not installed to the variable new.pkg}
+  \NormalTok{new.pkg <-}\StringTok{ }\NormalTok{pkg[!(pkg %in%}\StringTok{ }\KeywordTok{installed.packages}\NormalTok{())]}
+  \CommentTok{# If there are any packages in the list that aren't installed,}
+  \CommentTok{# install them}
+  \NormalTok{if (}\KeywordTok{length}\NormalTok{(new.pkg))}
+    \KeywordTok{install.packages}\NormalTok{(new.pkg, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
+  \CommentTok{# Load packages (thesisdown will load all of the packages as well)}
+  \KeywordTok{library}\NormalTok{(thesisdown)}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  \clearpage
+  
+  The example we show here does the following:
+  
+  \begin{itemize}
+  \item
+    Selects only the \texttt{carrier\_name} and \texttt{arr\_delay} from
+    the \texttt{flights} dataset and then assigns this subset to a new
+    variable called \texttt{flights2}.
+  \item
+    Using \texttt{flights2}, we determine the largest arrival delay for
+    each of the carriers.
+  \end{itemize}
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \NormalTok{flights2 <-}\StringTok{ }\NormalTok{flights %>%}\StringTok{ }
+  \StringTok{  }\KeywordTok{select}\NormalTok{(carrier_name, arr_delay)}
+  \NormalTok{max_delays <-}\StringTok{ }\NormalTok{flights2 %>%}\StringTok{ }
+  \StringTok{  }\KeywordTok{group_by}\NormalTok{(carrier_name) %>%}
+  \StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{max_arr_delay =} \KeywordTok{max}\NormalTok{(arr_delay, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{))}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  A useful function in the \texttt{knitr} package for making nice tables
+  in \emph{R Markdown} is called \texttt{kable}. It is much easier to use
+  than manually entering values into a table by copying and pasting values
+  into Excel or LaTeX. This again goes to show how nice reproducible
+  documents can be! (Note the use of \texttt{results="asis"}, which will
+  produce the table instead of the code to create the table.) The
+  \texttt{caption.short} argument is used to include a shorter title to
+  appear in the List of Tables.
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \KeywordTok{kable}\NormalTok{(max_delays, }
+        \DataTypeTok{col.names =} \KeywordTok{c}\NormalTok{(}\StringTok{"Airline"}\NormalTok{, }\StringTok{"Max Arrival Delay"}\NormalTok{),}
+        \DataTypeTok{caption =} \StringTok{"Maximum Delays by Airline"}\NormalTok{,}
+        \DataTypeTok{caption.short =} \StringTok{"Max Delays by Airline"}\NormalTok{,}
+        \DataTypeTok{longtable =} \OtherTok{TRUE}\NormalTok{,}
+        \DataTypeTok{booktabs =} \OtherTok{TRUE}\NormalTok{)}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  \begin{longtable}[t]{lr}
+  \caption[Max Delays by Airline]{\label{tab:maxdelays}Maximum Delays by Airline}\\
+  \toprule
+  Airline & Max Arrival Delay\\
+  \midrule
+  Alaska Airlines Inc. & 338\\
+  American Airlines Inc. & 1539\\
+  Delta Air Lines Inc. & 651\\
+  Frontier Airlines Inc. & 575\\
+  Hawaiian Airlines Inc. & 407\\
+  \addlinespace
+  JetBlue Airways & 273\\
+  SkyWest Airlines Inc. & 421\\
+  Southwest Airlines Co. & 694\\
+  United Air Lines Inc. & 472\\
+  US Airways Inc. & 347\\
+  Virgin America & 366\\
+  \bottomrule
+  \end{longtable}
+  
+  The last two options make the table a little easier-to-read.
+  
+  We can further look into the properties of the largest value here for
+  American Airlines Inc. To do so, we can isolate the row corresponding to
+  the arrival delay of 1539 minutes for American in our original
+  \texttt{flights} dataset.
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \NormalTok{flights %>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(arr_delay ==}\StringTok{ }\DecValTok{1539}\NormalTok{, }
+                    \NormalTok{carrier_name ==}\StringTok{ "American Airlines Inc."}\NormalTok{) %>%}
+  \StringTok{  }\KeywordTok{select}\NormalTok{(-}\KeywordTok{c}\NormalTok{(month, day, carrier, dest_name, hour, }
+              \NormalTok{minute, carrier_name, arr_delay))}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  \begin{verbatim}
+  ##   dep_time dep_delay arr_time tailnum flight dest air_time distance
+  ## 1     1403      1553     1934  N595AA   1568  DFW      182     1616
+  \end{verbatim}
+  
+  We see that the flight occurred on March 3rd and departed a little after
+  2 PM on its way to Dallas/Fort Worth. Lastly, we show how we can
+  visualize the arrival delay of all departing flights from Portland on
+  March 3rd against time of departure.
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \NormalTok{flights %>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(month ==}\StringTok{ }\DecValTok{3}\NormalTok{, day ==}\StringTok{ }\DecValTok{3}\NormalTok{) %>%}
+  \StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{dep_time, }\DataTypeTok{y =} \NormalTok{arr_delay)) +}\StringTok{ }\KeywordTok{geom_point}\NormalTok{()}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  \begin{figure}[htbp]
+  \centering
+  \includegraphics{thesis_files/figure-latex/march3plot-1.pdf}
+  \caption{\label{fig:march3plot}\(\beta\)}
+  \end{figure}
+  
+  \section{Additional resources}\label{additional-resources}
+  
+  \begin{itemize}
+  \item
+    \emph{Markdown} Cheatsheet -
+    \url{https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet}
+  \item
+    \emph{R Markdown} Reference Guide -
+    \url{https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf}
+  \item
+    Introduction to \texttt{dplyr} -
+    \url{https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html}
+  \item
+    \texttt{ggplot2} Documentation -
+    \url{http://docs.ggplot2.org/current/}
+  \end{itemize}
+  
   \chapter{Adaptation locale}\label{adaptation-locale}
+  
+  Une population est dite localement adaptée à son environnement si elle a
+  connu une évolution différente de celles qu'ont connu les autres
+  populations de la même espèce, et ce, en réponse aux pressions
+  sélectives auxquelles elle peut être confrontrée.
+  
+  \section{Biology}\label{biology}
+  
+  You will probably find the resources at
+  \url{http://www.lecb.ncifcrf.gov/~toms/latex.html} helpful, particularly
+  the links to bsts for various journals. You may also be interested in
+  TeXShade for nucleotide typesetting
+  (\url{http://homepages.uni-tuebingen.de/beitz/txe.html}). Be sure to
+  read the proceeding chapter on graphics and tables.
   
   \chapter{Introgression adaptative}\label{introgression-adaptative}
   
@@ -375,129 +733,49 @@ starts here.
   \subsection{Résultats de la comparaison des
   logiciels}\label{resultats-de-la-comparaison-des-logiciels}
   
-  \begin{Shaded}
-  \begin{Highlighting}[]
-  \KeywordTok{setwd}\NormalTok{(}\StringTok{"~/Documents/thesis/git/simulations/introgression/"}\NormalTok{)}
-  \NormalTok{output.name <-}\StringTok{ "populus"}
-  \NormalTok{recombinationRate <-}\StringTok{ }\FloatTok{0.05} \CommentTok{# in Morgans per Megabase}
-  \NormalTok{nSNP <-}\StringTok{ }\DecValTok{50000}
-  \NormalTok{ancstrl}\FloatTok{.1} \NormalTok{<-}\StringTok{ }\DecValTok{1}
-  \NormalTok{ancstrl}\FloatTok{.2} \NormalTok{<-}\StringTok{ }\DecValTok{3}
-  \NormalTok{hyb <-}\StringTok{ }\DecValTok{4}
-  \NormalTok{intro.size <-}\StringTok{ }\DecValTok{500}
-  \NormalTok{global.ancestry <-}\StringTok{ }\FloatTok{0.1}
-  \NormalTok{inverted.ancestry <-}\StringTok{ }\FloatTok{0.5}
-  \NormalTok{N <-}\StringTok{ }\DecValTok{10}
-  \NormalTok{pop <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(ancstrl}\FloatTok{.1}\NormalTok{, }\KeywordTok{ncol}\NormalTok{(H1) /}\StringTok{ }\DecValTok{2}\NormalTok{), }
-           \KeywordTok{rep}\NormalTok{(ancstrl}\FloatTok{.2}\NormalTok{, }\KeywordTok{ncol}\NormalTok{(H2) /}\StringTok{ }\DecValTok{2}\NormalTok{), }
-           \KeywordTok{rep}\NormalTok{(}\DecValTok{4}\NormalTok{, n.hyb))}
-  \NormalTok{results <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Software =} \KeywordTok{c}\NormalTok{(}\StringTok{"pcadapt"}\NormalTok{, }\StringTok{"eila"}\NormalTok{, }\StringTok{"RFMix"}\NormalTok{), }\DataTypeTok{Power =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{), }\DataTypeTok{FDR =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{))}
-  \NormalTok{info.map <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(data.table::}\KeywordTok{fread}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(path, output.name, }\StringTok{".map"}\NormalTok{), }
-                                          \DataTypeTok{data.table =} \OtherTok{FALSE}\NormalTok{))}
+  \subsection{Simulations à partir de ms et
+  Seq-Gen}\label{simulations-a-partir-de-ms-et-seq-gen}
   
-  \NormalTok{compute.fdr =}\StringTok{ }\NormalTok{function(list, ground.truth)\{}
-    \NormalTok{if (}\KeywordTok{length}\NormalTok{(list) ==}\StringTok{ }\DecValTok{0}\NormalTok{)\{}
-      \NormalTok{x <-}\StringTok{ }\DecValTok{0}
-    \NormalTok{\} else \{}
-      \NormalTok{x <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(!(list %in%}\StringTok{ }\NormalTok{ground.truth)) /}\StringTok{ }\KeywordTok{length}\NormalTok{(list)}
-    \NormalTok{\}}
-    \KeywordTok{return}\NormalTok{(x)}
-  \NormalTok{\}}
+  FIGURE AVEC LES DIFFERENTS ARBRES P1, P2, P3 ET O
   
-  \NormalTok{compute.power =}\StringTok{ }\NormalTok{function(list, ground.truth)\{}
-    \NormalTok{if (}\KeywordTok{length}\NormalTok{(ground.truth) ==}\StringTok{ }\DecValTok{0}\NormalTok{)\{}
-      \KeywordTok{warning}\NormalTok{(}\StringTok{"The list of true positives is empty."}\NormalTok{)}
-    \NormalTok{\} else \{}
-      \NormalTok{x <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(list %in%}\StringTok{ }\NormalTok{ground.truth) /}\StringTok{ }\KeywordTok{length}\NormalTok{(ground.truth)}
-    \NormalTok{\}}
-    \KeywordTok{return}\NormalTok{(x)}
-  \NormalTok{\}}
+  Décortiquons la ligne de commande \emph{ms} permettant de générer les
+  séquences de nucléotides.
   
-  \NormalTok{for (n.simu in }\DecValTok{21}\NormalTok{:}\DecValTok{30}\NormalTok{)\{}
-    \NormalTok{dir.name <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{"RFMix_v1.5.4/simu"}\NormalTok{, n.simu, }\StringTok{"/"}\NormalTok{)}
-    
-    \NormalTok{input.pcadapt <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(data.table::}\KeywordTok{fread}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(dir.name, }\StringTok{"simu.pcadapt"}\NormalTok{), }\DataTypeTok{data.table =} \OtherTok{FALSE}\NormalTok{))}
-    \NormalTok{input.eila <-}\StringTok{ }\NormalTok{simulate::}\KeywordTok{eila_from_pcadapt}\NormalTok{(input.pcadapt, pop, }\DataTypeTok{anc1 =} \NormalTok{ancstrl}\FloatTok{.1}\NormalTok{, }\DataTypeTok{anc2 =} \NormalTok{ancstrl}\FloatTok{.2}\NormalTok{, }\DataTypeTok{admixed =} \NormalTok{hyb, }\DataTypeTok{position =} \NormalTok{info.map[, }\DecValTok{2}\NormalTok{])}
-    \NormalTok{param <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(dir.name, }\StringTok{"/parameters.txt"}\NormalTok{))}
-    \NormalTok{gt <-}\StringTok{ }\NormalTok{(param$begin):(param$end)}
-    
-    \NormalTok{### run pcadapt}
-    \NormalTok{wsize <-}\StringTok{ }\DecValTok{1000}
-    \NormalTok{mmaf <-}\StringTok{ }\FloatTok{0.01}
-    \NormalTok{nomap <-}\StringTok{ }\DecValTok{1}\NormalTok{:nSNP}
-    \NormalTok{maf <-}\StringTok{ }\NormalTok{pcadapt::}\KeywordTok{cmpt_minor_af}\NormalTok{(input.pcadapt, }\DecValTok{2}\NormalTok{)}
-    \NormalTok{proxy.map <-}\StringTok{ }\NormalTok{info.map[}\DecValTok{1}\NormalTok{:nSNP]}
-    \NormalTok{filtered.map <-}\StringTok{ }\NormalTok{nomap[maf >=}\StringTok{ }\NormalTok{mmaf]}
-    \NormalTok{stat.pcadapt <-}\StringTok{ }\NormalTok{pcadapt::}\KeywordTok{scan.intro}\NormalTok{(input.pcadapt, }\DataTypeTok{K =} \DecValTok{1}\NormalTok{, }\DataTypeTok{pop =} \NormalTok{pop, }
-                               \DataTypeTok{ancstrl.1 =} \NormalTok{ancstrl}\FloatTok{.2}\NormalTok{, }
-                               \DataTypeTok{ancstrl.2 =} \NormalTok{ancstrl}\FloatTok{.1}\NormalTok{,}
-                               \DataTypeTok{admxd =} \NormalTok{hyb,}
-                               \DataTypeTok{min.maf =} \NormalTok{mmaf,}
-                               \DataTypeTok{window.size =} \NormalTok{wsize,}
-                               \DataTypeTok{ploidy =} \DecValTok{2}\NormalTok{,}
-                               \DataTypeTok{side =} \StringTok{"middle"}\NormalTok{,}
-                               \DataTypeTok{map =} \NormalTok{nomap)}
-    
-    \NormalTok{### run eila }
-    \NormalTok{obj.eila <-}\StringTok{ }\NormalTok{EILA::}\KeywordTok{eila}\NormalTok{(}\DataTypeTok{admixed =} \NormalTok{input.eila$admixed, }\DataTypeTok{anc1 =} \NormalTok{input.eila$anc1,}
-                           \DataTypeTok{anc2 =} \NormalTok{input.eila$anc2, }\DataTypeTok{position =} \NormalTok{info.map[, }\DecValTok{1}\NormalTok{], }\DataTypeTok{lambda =} \FloatTok{0.1}\NormalTok{)}
-    \NormalTok{loc.anc.eila <-}\StringTok{ }\NormalTok{simulate::}\KeywordTok{haplo_to_ancestry}\NormalTok{(obj.eila$local.ancestry, }\DecValTok{1}\NormalTok{)}
-    
-    \NormalTok{### run rfmix}
-    \NormalTok{allele <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{"./simu"}\NormalTok{, n.simu, }\StringTok{"/rfmix_alleles.txt"}\NormalTok{)}
-    \NormalTok{classes <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{"./simu"}\NormalTok{, n.simu, }\StringTok{"/rfmix_classes.txt"}\NormalTok{)}
-    \NormalTok{markerLocation <-}\StringTok{  }\KeywordTok{paste0}\NormalTok{(}\StringTok{"./simu"}\NormalTok{, n.simu, }\StringTok{"/rfmix_markerLocation.txt"}\NormalTok{)}
-    \NormalTok{output <-}\StringTok{ }\KeywordTok{paste0}\NormalTok{(}\StringTok{"simu"}\NormalTok{, n.simu, }\StringTok{"/output_simu"}\NormalTok{, n.simu)}
-    \NormalTok{window.rfmix <-}\StringTok{ }\FloatTok{0.00002}
-    \NormalTok{command <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"python2.7 RunRFMix.py PopPhased"}\NormalTok{, allele,  classes,  markerLocation, }\StringTok{"-w"}\NormalTok{, window.rfmix, }\StringTok{"-o"}\NormalTok{, output)}
-    \KeywordTok{setwd}\NormalTok{(}\StringTok{"~/Documents/thesis/git/simulations/introgression/RFMix_v1.5.4/"}\NormalTok{)}
-    \KeywordTok{system}\NormalTok{(}\DataTypeTok{command =} \NormalTok{command)}
-    \KeywordTok{setwd}\NormalTok{(}\StringTok{"~/Documents/thesis/git/simulations/introgression/"}\NormalTok{)}
-    \NormalTok{aux.rfmix <-}\StringTok{ }\NormalTok{simulate::}\KeywordTok{rfmix.local.ancestry}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"RFMix_v1.5.4/simu"}\NormalTok{, n.simu, }\StringTok{"/output_simu"}\NormalTok{, n.simu, }\StringTok{".0.Viterbi.txt"}\NormalTok{))}
-    \NormalTok{loc.anc.rfmix <-}\StringTok{ }\NormalTok{simulate::}\KeywordTok{haplo_to_ancestry}\NormalTok{(aux.rfmix, }\DecValTok{1}\NormalTok{)}
-    
-    \NormalTok{### FDR}
-    \NormalTok{interp <-}\StringTok{ }\KeywordTok{approx}\NormalTok{(filtered.map, stat.pcadapt[[}\DecValTok{1}\NormalTok{]], }\DecValTok{1}\NormalTok{:nSNP)}
-    \NormalTok{sd.pcadapt <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(interp$y, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
-    \NormalTok{list.pcadapt <-}\StringTok{ }\KeywordTok{which}\NormalTok{(interp$y >}\StringTok{ }\DecValTok{3}\NormalTok{)}
-    \NormalTok{results[}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{] <-}\StringTok{ }\NormalTok{results[}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{] +}\StringTok{ }\KeywordTok{compute.fdr}\NormalTok{(list.pcadapt, gt) /}\StringTok{ }\NormalTok{N}
-    \NormalTok{results[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{] <-}\StringTok{ }\NormalTok{results[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{] +}\StringTok{ }\KeywordTok{compute.power}\NormalTok{(list.pcadapt, gt) /}\StringTok{ }\NormalTok{N}
-    
-    \NormalTok{sd.eila <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(loc.anc.eila, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
-    \NormalTok{stat.eila <-}\StringTok{ }\NormalTok{(loc.anc.eila -}\StringTok{ }\KeywordTok{mean}\NormalTok{(loc.anc.eila)) /}\StringTok{ }\NormalTok{sd.eila}
-    \NormalTok{list.eila <-}\StringTok{ }\KeywordTok{which}\NormalTok{(stat.eila >}\StringTok{ }\DecValTok{3}\NormalTok{)}
-    \NormalTok{results[}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{] <-}\StringTok{ }\NormalTok{results[}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{] +}\StringTok{ }\KeywordTok{compute.fdr}\NormalTok{(list.eila, gt) /}\StringTok{ }\NormalTok{N}
-    \NormalTok{results[}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{] <-}\StringTok{ }\NormalTok{results[}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{] +}\StringTok{ }\KeywordTok{compute.power}\NormalTok{(list.eila, gt) /}\StringTok{ }\NormalTok{N}
-    
-    \NormalTok{sd.rfmix <-}\StringTok{ }\KeywordTok{sd}\NormalTok{(loc.anc.rfmix, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
-    \NormalTok{stat.rfmix <-}\StringTok{ }\NormalTok{(loc.anc.rfmix -}\StringTok{ }\KeywordTok{mean}\NormalTok{(loc.anc.rfmix)) /}\StringTok{ }\NormalTok{sd.rfmix}
-    \NormalTok{list.rfmix <-}\StringTok{ }\KeywordTok{which}\NormalTok{(stat.rfmix >}\StringTok{ }\DecValTok{3}\NormalTok{)}
-    \NormalTok{results[}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{] <-}\StringTok{ }\NormalTok{results[}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{] +}\StringTok{ }\KeywordTok{compute.fdr}\NormalTok{(list.rfmix, gt) /}\StringTok{ }\NormalTok{N}
-    \NormalTok{results[}\DecValTok{3}\NormalTok{, }\DecValTok{2}\NormalTok{] <-}\StringTok{ }\NormalTok{results[}\DecValTok{3}\NormalTok{, }\DecValTok{2}\NormalTok{] +}\StringTok{ }\KeywordTok{compute.power}\NormalTok{(list.rfmix, gt) /}\StringTok{ }\NormalTok{N}
-  \NormalTok{\}}
+  \begin{verbatim}
+  ./ms 200 1 -I 4 50 50 50 50 -ej 1 2 1 -ej 2 3 1 -ej 3 4 1 
+  -es 0.1 2 0.8 -ej 0.1 5 3 -r 50 5000 -T #background model
+  \end{verbatim}
   
+  \begin{itemize}
+  \item
+    200 : nombre d'individus.
+  \item
+    4 : nombre de populations dans lesquelles se répartissent les
+    individus.
+  \item
+    50 50 50 50 : répartition des individus dans chacune des populations.
+  \item
+    -ej 1 2 1 : 1 unité de temps auparavant, la population 2 fusionne avec
+    la population 1.
+  \item
+    -ej 2 3 1 : 2 unités de temps auparavant, la population 3 fusionne
+    avec la population 1 (qui est désormais composée des populations 1 et
+    2).
+  \item
+    -ej 3 4 1 : 3 unités de temps auparavant, la population 4 fusionne
+    avec la population 1 (constituée des populations 1, 2 et 3).
+  \item
+    -es 0.1 2 0.8 : 0.1 unité de temps auparavant, la population 2 perd
+    une partie de ses individus en faveur d'une population autre que
+    celles déjà présentes (population 5).
+  \item
+    -ej 0.1 5 3 : 0.1 unité de temps auparavant, la population 5 fusionne
+    avec la population 3.
+  \end{itemize}
   
-  \NormalTok{ggres <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Software =} \KeywordTok{rep}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"pcadapt"}\NormalTok{, }\StringTok{"eila"}\NormalTok{, }\StringTok{"RFMix"}\NormalTok{), }\DecValTok{2}\NormalTok{), }\DataTypeTok{Stat =} \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{6}\NormalTok{), }\DataTypeTok{Type =} \KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\StringTok{"Power"}\NormalTok{, }\DecValTok{3}\NormalTok{), }\KeywordTok{rep}\NormalTok{(}\StringTok{"FDR"}\NormalTok{, }\DecValTok{3}\NormalTok{)), }
-                      \DataTypeTok{Percent =} \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{6}\NormalTok{))}
-  \NormalTok{ggres$Stat[}\DecValTok{1}\NormalTok{:}\DecValTok{3}\NormalTok{] <-}\StringTok{ }\NormalTok{results$Power *}\StringTok{ }\DecValTok{100}
-  \NormalTok{ggres$Stat[}\DecValTok{4}\NormalTok{:}\DecValTok{6}\NormalTok{] <-}\StringTok{ }\NormalTok{results$FDR *}\StringTok{ }\DecValTok{100}
-  \NormalTok{ggres$Percent <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{format}\NormalTok{(ggres$Stat, }\DataTypeTok{digits =} \DecValTok{2}\NormalTok{))}
-  \NormalTok{p0 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(ggres, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{Software, }\DataTypeTok{y =} \NormalTok{Stat, }\DataTypeTok{fill =} \KeywordTok{as.factor}\NormalTok{(Type)))}
-  \NormalTok{p0 <-}\StringTok{ }\NormalTok{p0 +}\StringTok{ }\KeywordTok{ggtitle}\NormalTok{(}\KeywordTok{expression}\NormalTok{(lambda ==}\StringTok{ }\DecValTok{1}\NormalTok{)) +}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{)}
-  \NormalTok{p0 <-}\StringTok{ }\NormalTok{p0 +}\StringTok{ }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{, }\DataTypeTok{position =} \KeywordTok{position_dodge}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.9}\NormalTok{))}
-  \NormalTok{p0 <-}\StringTok{ }\NormalTok{p0 +}\StringTok{ }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{fill =} \KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{title =} \StringTok{""}\NormalTok{))}
-  \NormalTok{p0 <-}\StringTok{ }\NormalTok{p0 +}\StringTok{ }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =} \NormalTok{Percent), }\DataTypeTok{position =} \KeywordTok{position_dodge}\NormalTok{(}\DataTypeTok{width =} \FloatTok{0.9}\NormalTok{), }
-                       \DataTypeTok{color =} \StringTok{"white"}\NormalTok{, }\DataTypeTok{vjust =} \FloatTok{1.4}\NormalTok{, }\DataTypeTok{size =} \DecValTok{5}\NormalTok{)}
-  \NormalTok{p0 <-}\StringTok{ }\NormalTok{p0 +}\StringTok{ }\KeywordTok{theme_bw}\NormalTok{() +}\StringTok{ }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{15}\NormalTok{),}
-                                \DataTypeTok{axis.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{15}\NormalTok{, }\DataTypeTok{face =} \StringTok{"bold"}\NormalTok{),}
-                                \DataTypeTok{title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{15}\NormalTok{, }\DataTypeTok{face =} \StringTok{"bold"}\NormalTok{),}
-                                \DataTypeTok{legend.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{15}\NormalTok{),}
-                                \DataTypeTok{legend.key.height =} \KeywordTok{unit}\NormalTok{(}\DecValTok{1}\NormalTok{, }\StringTok{"line"}\NormalTok{),}
-                                \DataTypeTok{legend.key.width =} \KeywordTok{unit}\NormalTok{(}\DecValTok{3}\NormalTok{, }\StringTok{"line"}\NormalTok{)}
-  \NormalTok{)}
-  \KeywordTok{print}\NormalTok{(p0)}
-  \end{Highlighting}
-  \end{Shaded}
+  Pour utiliser \emph{ms}, il faut définir les évènements depuis le temps
+  présent. Pour comprendre le scénario démographique, il est plus aisé de
+  reprendre les évènements dans l'ordre chronologique.
   
   \begin{longtable}[]{@{}lcl@{}}
   \caption{\label{tab:inher} Correlation of Inheritance Factors for Parents
@@ -561,11 +839,12 @@ starts here.
   \end{longtable}
   
   We can also create a link to the table by doing the following: Table
-  \ref{tab:inher}. If you go back to {[}Loading and exploring data{]} and
-  look at the \texttt{kable} table, we can create a reference to this max
-  delays table too: Table \ref{tab:maxdelays}. The addition of the
-  \texttt{(\textbackslash{}\#tab:inher)} option to the end of the table
-  caption allows us to then make a reference to Table
+  \ref{tab:inher}. If you go back to
+  \protect\hyperlink{loading-and-exploring-data}{Loading and exploring
+  data} and look at the \texttt{kable} table, we can create a reference to
+  this max delays table too: Table \ref{tab:maxdelays}. The addition of
+  the \texttt{(\textbackslash{}\#tab:inher)} option to the end of the
+  table caption allows us to then make a reference to Table
   \texttt{\textbackslash{}@ref(tab:label)}. Note that this reference could
   appear anywhere throughout the document after the table has appeared.
   
@@ -758,15 +1037,99 @@ starts here.
   \chapter*{Conclusion}\label{conclusion}
   \addcontentsline{toc}{chapter}{Conclusion}
   
+  If we don't want Conclusion to have a chapter number next to it, we can
+  add the \texttt{\{-\}} attribute.
+  
+  \textbf{More info}
+  
+  And here's some other random info: the first paragraph after a chapter
+  title or section head \emph{shouldn't be} indented, because indents are
+  to tell the reader that you're starting a new paragraph. Since that's
+  obvious after a chapter or section title, proper typesetting doesn't add
+  an indent there.
+  
+  \appendix
+  
   \chapter{The First Appendix}\label{the-first-appendix}
+  
+  This first appendix includes all of the R chunks of code that were
+  hidden throughout the document (using the \texttt{include\ =\ FALSE}
+  chunk tag) to help with readibility and/or setup.
+  
+  \textbf{In the main Rmd file}
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \CommentTok{# This chunk ensures that the thesisdown package is}
+  \CommentTok{# installed and loaded. This thesisdown package includes}
+  \CommentTok{# the template files for the thesis.}
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(devtools))}
+    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(thesisdown))}
+    \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"ismayc/thesisdown"}\NormalTok{)}
+  \KeywordTok{library}\NormalTok{(thesisdown)}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  \textbf{In Chapter \ref{ref-labels}:}
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \CommentTok{# This chunk ensures that the thesisdown package is}
+  \CommentTok{# installed and loaded. This thesisdown package includes}
+  \CommentTok{# the template files for the thesis and also two functions}
+  \CommentTok{# used for labeling and referencing}
+  \CommentTok{#opts_chunk$set(cache=TRUE)}
+  
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(devtools))}
+    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(dplyr))}
+    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(ggplot2))}
+    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(ggplot2))}
+    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"bookdown"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(thesisdown))\{}
+    \KeywordTok{library}\NormalTok{(devtools)}
+    \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"ismayc/thesisdown"}\NormalTok{)}
+  \NormalTok{\}}
+  \KeywordTok{library}\NormalTok{(thesisdown)}
+  \KeywordTok{library}\NormalTok{(pcadapt)}
+  \KeywordTok{library}\NormalTok{(EILA)}
+  \KeywordTok{library}\NormalTok{(simulate)}
+  \NormalTok{flights <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/flights.csv"}\NormalTok{)}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  \chapter{The Second Appendix, for
+  Fun}\label{the-second-appendix-for-fun}
+  
+  \backmatter
   
   \chapter*{References}\label{references}
   \addcontentsline{toc}{chapter}{References}
+  
+  \noindent
+  
+  \setlength{\parindent}{-0.20in} \setlength{\leftskip}{0.20in}
+  \setlength{\parskip}{8pt}
   
   \hypertarget{refs}{}
   \hypertarget{ref-alexander2009}{}
   Alexander, D. (2009). \emph{Fast model-based estimation of ancestry in
   unrelated individuals.}
+  
+  \hypertarget{ref-angel2000}{}
+  Angel, E. (2000). \emph{Interactive computer graphics : A top-down
+  approach with opengl}. Boston, MA: Addison Wesley Longman.
+  
+  \hypertarget{ref-angel2001}{}
+  Angel, E. (2001a). \emph{Batch-file computer graphics : A bottom-up
+  approach with quicktime}. Boston, MA: Wesley Addison Longman.
+  
+  \hypertarget{ref-angel2002a}{}
+  Angel, E. (2001b). \emph{Test second book by angel}. Boston, MA: Wesley
+  Addison Longman.
   
   \hypertarget{ref-caye2016}{}
   Caye, K. (2016). \emph{TESS3: Fast inference of spatial population
