@@ -1,0 +1,6 @@
+# Introduction {.unnumbered}
+
+## Données en grande dimension  {-}
+
+L'accumulation de données, aussi bien en termes d'observations qu'en termes de variables, laisse à penser que le traitement de celles-ci pourrait permettre de détecter efficacement les variables qui sont responsables ou qui influencent un phénomène particulier. Cela pourrait être par exemple l'utilisation de bases de données automobiles pour prédire la durée de vie de véhicules neufs, ou encore celle de données météorologiques pour savoir s'il pleuvra ou non dans les jours qui viennent. Cette accumulation massive s'accompagne tout de même d'un phénomène bien connu en statistiques, phénomène qui porte le nom de "curse of dimensionality" [@giraud2014introduction]. 
+

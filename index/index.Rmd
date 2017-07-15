@@ -23,67 +23,57 @@ output:
 #  thesisdown::thesis_gitbook: default
 #  thesisdown::thesis_word: default
 #  thesisdown::thesis_epub: default
-# If you are creating a PDF you'll need to write your preliminary content here or
-# use code similar to line 20 for the files.  If you are producing in a different
-# format than PDF, you can delete or ignore lines 20-31 in this YAML header.
+
 abstract: >
   `r if(knitr:::is_latex_output()) paste(readLines("00-abstract.Rmd"), collapse = ' ')`
-# If you'd rather include the preliminary content in files instead of inline
-# like below, use a command like that for the abstract above.  Note that a tab is 
-# needed on the line after the >.
 acknowledgements: >
-  Je tiens à remercier mes collègues Kevin Caye, Thomas Dias-Alves, Thomas Karaouzène et Florian Privé, avec qui j'ai partagé ces trois années de thèse et de qui j'ai beaucoup appris.
+  `r if(knitr:::is_latex_output()) paste(readLines("00-acknowledgements.Rmd"), collapse = ' ')`
 preface: >
-  This is an example of a thesis setup to use the reed thesis document class
-  (for LaTeX) and the R bookdown package, in general.
+  `r if(knitr:::is_latex_output()) paste(readLines("00-preface.Rmd"), collapse = ' ')`
 bibliography: bib/thesis.bib
-# Download your specific bibliography database file and refer to it in the line above.
 csl: csl/apa.csl
-# Download your specific csl file and refer to it in the line above.
 lot: true
 lof: true
 #space_between_paragraphs: true
-# Delete the # at the beginning of the previous line if you'd like
-# to have a blank new line between each paragraph
-#header-includes:
-#- \usepackage{tikz}
 ---
-
-<!--
-Above is the YAML (YAML Ain't Markup Language) header that includes a lot of metadata used to produce the document.  Be careful with spacing in this header!
-
-If you'd prefer to not include a Dedication, for example, simply delete lines 17 and 18 above or add a # before them to comment them out.  If you have other LaTeX packages you would like to include, delete the # before header-includes and list the packages after hyphens on new lines.
-
-If you'd like to include a comment that won't be produced in your resulting file enclose it in a block like this.
--->
-
-<!--
-If you receive a duplicate label error after knitting, make sure to delete the index.Rmd file and then knit again.
--->
 
 ```{r include_packages, include = FALSE}
 # This chunk ensures that the thesisdown package is
 # installed and loaded. This thesisdown package includes
-# the template files for the thesis.
-if(!require(devtools))
+# the template files for the thesis and also two functions
+# used for labeling and referencing
+#opts_chunk$set(cache=TRUE)
+
+if(!require(devtools)){
   install.packages("devtools", repos = "http://cran.rstudio.com")
-if(!require(thesisdown))
+}
+
+if(!require(dplyr)){
+  install.packages("dplyr", repos = "http://cran.rstudio.com")
+}
+
+if(!require(ggplot2)){
+  install.packages("ggplot2", repos = "http://cran.rstudio.com")
+}
+
+if(!require(bookdown)){
+  install.packages("bookdown", repos = "http://cran.rstudio.com")
+}
+
+if(!require(thesisdown)){
+  library(devtools)
   devtools::install_github("ismayc/thesisdown")
-library(thesisdown)
+}
+
+if(!require(data.table)){
+  install.packages("data.table", repos = "http://cran.rstudio.com")
+}
+
+if(!require(pcadapt)){
+  devtools::install_github("bcm-uga/pcadapt")
+}
+
+if(!require(simulate)){
+  devtools::install_github("keurcien/simulate")
+}
 ```
-
-<!-- You'll need to include the order that you'd like Rmd files to appear in the _bookdown.yml file for
-PDF files and also delete the # before rmd_files: there.  You'll want to not include 00(two-hyphens)prelim.Rmd
-and 00-abstract.Rmd since they are handled in the YAML above differently for the PDF version.
--->
-
-<!-- The {.unnumbered} option here means that the introduction will be "Chapter 0." You can also use {-} for no numbers
-on chapters.
--->
-
-# Introduction {.unnumbered}
-
-## Données en grande dimension
-
-L'accumulation de données, aussi bien en termes d'observations qu'en termes de variables, laisse à penser que le traitement de celles-ci pourrait permettre de détecter efficacement les variables qui sont responsables ou qui influencent un phénomène particulier. Cela pourrait être par exemple l'utilisation de bases de données automobiles pour prédire la durée de vie de véhicules neufs, ou encore celle de données météorologiques pour savoir s'il pleuvra ou non dans les jours qui viennent. Cette accumulation massive s'accompagne tout de même d'un phénomène bien connu en statistiques, phénomène qui porte le nom de "curse of dimensionality" [@giraud2014introduction]. 
-

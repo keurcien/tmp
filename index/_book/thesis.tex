@@ -58,7 +58,6 @@
 %\usepackage{biblatex-chicago}
 %\bibliography{thesis}
 
-
 % Added by CII (Thanks, Hadley!)
 % Use ref for internal links
 \renewcommand{\hyperref}[2][???]{\autoref{#1}}
@@ -73,7 +72,6 @@
 % End of CII addition
 
 % \usepackage{times} % other fonts are available like times, bookman, charter, palatino
-
 
 % To pass between YAML and LaTeX the dollar signs are added by CII
 \title{THÈSE}
@@ -123,9 +121,8 @@ Mathématiques et Applications de Grenoble (TIMC-IMAG)}
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 \Acknowledgements{
-Je tiens à remercier mes collègues Kevin Caye, Thomas Dias-Alves, Thomas
-Karaouzène et Florian Privé, avec qui j'ai partagé ces trois années de
-thèse et de qui j'ai beaucoup appris.
+The preface pretty much says it all. \par  Second paragraph of abstract
+starts here.
 }
 
 \Dedication{
@@ -133,8 +130,7 @@ thèse et de qui j'ai beaucoup appris.
 }
 
 \Preface{
-This is an example of a thesis setup to use the reed thesis document
-class (for LaTeX) and the R bookdown package, in general.
+The preface pretty much says it all. \par
 }
 
 \Abstract{
@@ -148,17 +144,6 @@ starts here.
 %%
 %
 
-\usepackage{amsthm}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}{Lemma}[section]
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{corollary}{Corollary}[section]
-\newtheorem{proposition}{Proposition}[section]
-\theoremstyle{definition}
-\newtheorem{example}{Example}[section]
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
 \begin{document}
 
 % Everything below added by CII
@@ -168,14 +153,12 @@ starts here.
   \pagestyle{empty} % this removes page numbers from the frontmatter
 
       \begin{acknowledgements}
-      Je tiens à remercier mes collègues Kevin Caye, Thomas Dias-Alves, Thomas
-      Karaouzène et Florian Privé, avec qui j'ai partagé ces trois années de
-      thèse et de qui j'ai beaucoup appris.
+      The preface pretty much says it all. \par  Second paragraph of abstract
+      starts here.
     \end{acknowledgements}
   
       \begin{preface}
-      This is an example of a thesis setup to use the reed thesis document
-      class (for LaTeX) and the R bookdown package, in general.
+      The preface pretty much says it all. \par
     \end{preface}
   
       \hypersetup{linkcolor=black}
@@ -198,7 +181,9 @@ starts here.
   \chapter*{Introduction}\label{introduction}
   \addcontentsline{toc}{chapter}{Introduction}
   
-  \section{Données en grande dimension}\label{donnees-en-grande-dimension}
+  \section*{Données en grande
+  dimension}\label{donnees-en-grande-dimension}
+  \addcontentsline{toc}{section}{Données en grande dimension}
   
   L'accumulation de données, aussi bien en termes d'observations qu'en
   termes de variables, laisse à penser que le traitement de celles-ci
@@ -557,42 +542,42 @@ starts here.
   \begin{Highlighting}[]
   \CommentTok{# This chunk ensures that the thesisdown package is}
   \CommentTok{# installed and loaded. This thesisdown package includes}
-  \CommentTok{# the template files for the thesis.}
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(devtools))}
-    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(thesisdown))}
-    \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"ismayc/thesisdown"}\NormalTok{)}
-  \KeywordTok{library}\NormalTok{(thesisdown)}
-  \end{Highlighting}
-  \end{Shaded}
-  
-  \textbf{In Chapter \ref{ref-labels}:}
-  
-  \begin{Shaded}
-  \begin{Highlighting}[]
-  \CommentTok{# This chunk ensures that the thesisdown package is}
-  \CommentTok{# installed and loaded. This thesisdown package includes}
   \CommentTok{# the template files for the thesis and also two functions}
   \CommentTok{# used for labeling and referencing}
   \CommentTok{#opts_chunk$set(cache=TRUE)}
   
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(devtools))}
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(devtools))\{}
     \KeywordTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(dplyr))}
+  \NormalTok{\}}
+  
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(dplyr))\{}
     \KeywordTok{install.packages}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(ggplot2))}
+  \NormalTok{\}}
+  
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(ggplot2))\{}
     \KeywordTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(ggplot2))}
+  \NormalTok{\}}
+  
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(bookdown))\{}
     \KeywordTok{install.packages}\NormalTok{(}\StringTok{"bookdown"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
+  \NormalTok{\}}
+  
   \NormalTok{if(!}\KeywordTok{require}\NormalTok{(thesisdown))\{}
     \KeywordTok{library}\NormalTok{(devtools)}
     \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"ismayc/thesisdown"}\NormalTok{)}
   \NormalTok{\}}
-  \KeywordTok{library}\NormalTok{(thesisdown)}
-  \KeywordTok{library}\NormalTok{(data.table)}
-  \KeywordTok{library}\NormalTok{(pcadapt)}
-  \KeywordTok{library}\NormalTok{(EILA)}
-  \KeywordTok{library}\NormalTok{(simulate)}
+  
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(data.table))\{}
+    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"data.table"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
+  \NormalTok{\}}
+  
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(pcadapt))\{}
+    \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"bcm-uga/pcadapt"}\NormalTok{)}
+  \NormalTok{\}}
+  
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(simulate))\{}
+    \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"keurcien/simulate"}\NormalTok{)}
+  \NormalTok{\}}
   \end{Highlighting}
   \end{Shaded}
   
@@ -675,8 +660,7 @@ starts here.
   Yang, J. J., Li, J., Buu, A., \& Williams, L. K. (2013). Efficient
   inference of local ancestry. \emph{Bioinformatics}, \emph{29}(21),
   2750--2756.
-
-
+  
   % Index?
 
 \end{document}
