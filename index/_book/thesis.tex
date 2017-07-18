@@ -565,9 +565,9 @@ starts here.
                       \DataTypeTok{outgroup =} \KeywordTok{c}\NormalTok{(}\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{))}
   
   \NormalTok{knitr::}\KeywordTok{kable}\NormalTok{(im.df, }
-        \DataTypeTok{col.names =} \KeywordTok{c}\NormalTok{(}\StringTok{"Statistique"}\NormalTok{, }
-                      \StringTok{"Nombre de populations"}\NormalTok{, }
-                      \StringTok{"Dont Outgroup"}\NormalTok{))}
+               \DataTypeTok{col.names =} \KeywordTok{c}\NormalTok{(}\StringTok{"Statistique"}\NormalTok{, }
+                             \StringTok{"Nombre de populations"}\NormalTok{, }
+                             \StringTok{"Dont Outgroup"}\NormalTok{))}
   \end{Highlighting}
   \end{Shaded}
   
@@ -591,8 +591,91 @@ starts here.
   détermination de coefficients de métissage local.
   
   \begin{figure}
-  \includegraphics[width=500px]{figure/results_admixture_setting_100_gen} \caption{100 generations}\label{fig:ras100g}
+  \includegraphics[width=500px]{figure/facet_admixture_setting_10_gen} \caption{10 generations}\label{fig:ras10g}
   \end{figure}
+  
+  \begin{figure}
+  \includegraphics[width=500px]{figure/facet_admixture_setting_100_gen} \caption{100 generations}\label{fig:ras100g}
+  \end{figure}
+  
+  \begin{figure}
+  \includegraphics[width=500px]{figure/facet_admixture_setting_1000_gen} \caption{1000 generations}\label{fig:ras1000g}
+  \end{figure}
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \KeywordTok{library}\NormalTok{(magrittr)}
+  \KeywordTok{source}\NormalTok{(}\StringTok{"R/summarySE.R"}\NormalTok{)}
+  
+  \NormalTok{res.tp <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"data/results_admixture_setting_1000_tp.txt"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+  \NormalTok{res.fp <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"data/results_admixture_setting_1000_fp.txt"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+  
+  \NormalTok{power <-}\StringTok{ }\DecValTok{100} \NormalTok{*}\StringTok{ }\NormalTok{res.tp$true_positives /}\StringTok{ }\DecValTok{5}
+  \NormalTok{res.pow <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(res.tp, power)}
+  \KeywordTok{colnames}\NormalTok{(res.pow) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{colnames}\NormalTok{(res.tp), }\StringTok{"value"}\NormalTok{)}
+  \NormalTok{fdr <-}\StringTok{ }\DecValTok{100} \NormalTok{*}\StringTok{ }\NormalTok{res.fp$false_positives /}\StringTok{ }\NormalTok{(res.tp$true_positives +}\StringTok{ }\NormalTok{res.fp$false_positives)}
+  \NormalTok{fdr[}\KeywordTok{is.na}\NormalTok{(fdr)] <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(fdr, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+  \NormalTok{res.fdr <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(res.fp, fdr)}
+  \KeywordTok{colnames}\NormalTok{(res.fdr) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{colnames}\NormalTok{(res.fp), }\StringTok{"value"}\NormalTok{)}
+  
+  \NormalTok{pdf <-}\StringTok{ }\KeywordTok{summarySE}\NormalTok{(res.pow, }\DataTypeTok{measurevar =} \StringTok{"value"}\NormalTok{, }\DataTypeTok{groupvars =} \KeywordTok{c}\NormalTok{(}\StringTok{"method"}\NormalTok{, }\StringTok{"delta_p"}\NormalTok{))}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  \begin{verbatim}
+  ## -------------------------------------------------------------------------
+  \end{verbatim}
+  
+  \begin{verbatim}
+  ## You have loaded plyr after dplyr - this is likely to cause problems.
+  ## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+  ## library(plyr); library(dplyr)
+  \end{verbatim}
+  
+  \begin{verbatim}
+  ## -------------------------------------------------------------------------
+  \end{verbatim}
+  
+  \begin{verbatim}
+  ## 
+  ## Attaching package: 'plyr'
+  \end{verbatim}
+  
+  \begin{verbatim}
+  ## The following objects are masked from 'package:dplyr':
+  ## 
+  ##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+  ##     summarize
+  \end{verbatim}
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \NormalTok{fdf <-}\StringTok{ }\KeywordTok{summarySE}\NormalTok{(res.fdr, }\DataTypeTok{measurevar =} \StringTok{"value"}\NormalTok{, }\DataTypeTok{groupvars =} \KeywordTok{c}\NormalTok{(}\StringTok{"method"}\NormalTok{, }\StringTok{"delta_p"}\NormalTok{))}
+  
+  \NormalTok{p0 <-}\StringTok{ }\NormalTok{dplyr::}\KeywordTok{bind_rows}\NormalTok{(}
+    \KeywordTok{mutate}\NormalTok{(pdf, }\DataTypeTok{stat =} \StringTok{"Power"}\NormalTok{),}
+    \KeywordTok{mutate}\NormalTok{(fdf, }\DataTypeTok{stat =} \StringTok{"False Discovery Rate"}\NormalTok{)}
+  \NormalTok{) %>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{stat_f =}  \KeywordTok{factor}\NormalTok{(stat, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{"Power"}\NormalTok{, }\StringTok{"False Discovery Rate"}\NormalTok{))}
+  \NormalTok{) %>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{delta_p, }\DataTypeTok{y =} \NormalTok{value, }\DataTypeTok{colour =} \NormalTok{method)) +}\StringTok{ }
+  \StringTok{  }\KeywordTok{geom_errorbar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{ymin =} \NormalTok{value -}\StringTok{ }\NormalTok{se, }\DataTypeTok{ymax =} \NormalTok{value +}\StringTok{ }\NormalTok{se), }
+                  \DataTypeTok{width =}\NormalTok{.}\DecValTok{05}\NormalTok{, }\DataTypeTok{size =} \FloatTok{1.5}\NormalTok{) +}
+  \StringTok{  }\KeywordTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{105}\NormalTok{) +}\StringTok{ }\KeywordTok{facet_grid}\NormalTok{(~stat_f, }\DataTypeTok{margins =} \StringTok{"am"}\NormalTok{) +}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{) +}\StringTok{ }\KeywordTok{xlab}\NormalTok{(}\KeywordTok{expression}\NormalTok{(}\KeywordTok{atop}\NormalTok{(}\KeywordTok{bold}\NormalTok{(}\StringTok{"Difference of ancestry between introgressed"}\NormalTok{), }\KeywordTok{bold}\NormalTok{(}\StringTok{"and non-introgressed regions"}\NormalTok{)))) +}
+  \StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{size =} \DecValTok{2}\NormalTok{) +}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{size =} \FloatTok{1.5}\NormalTok{) +}\StringTok{ }
+  \StringTok{  }\KeywordTok{scale_x_reverse}\NormalTok{() +}
+  \StringTok{  }\KeywordTok{theme_bw}\NormalTok{() +}\StringTok{ }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{colour =} \KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Method"}\NormalTok{)) +}
+  \StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{20}\NormalTok{, }\DataTypeTok{face =} \StringTok{"bold"}\NormalTok{),}
+          \DataTypeTok{axis.title.x =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{margin =} \KeywordTok{margin}\NormalTok{(}\DataTypeTok{t =} \DecValTok{20}\NormalTok{, }\DataTypeTok{r =} \DecValTok{0}\NormalTok{, }\DataTypeTok{b =} \DecValTok{0}\NormalTok{, }\DataTypeTok{l =} \DecValTok{0}\NormalTok{)),}
+          \DataTypeTok{axis.title=}\KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{20}\NormalTok{, }\DataTypeTok{face =} \StringTok{"bold"}\NormalTok{),}
+          \DataTypeTok{title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{20}\NormalTok{, }\DataTypeTok{face =} \StringTok{"bold"}\NormalTok{),}
+          \DataTypeTok{strip.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{20}\NormalTok{, }\DataTypeTok{face =} \StringTok{"bold"}\NormalTok{),}
+          \DataTypeTok{legend.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{20}\NormalTok{),}
+          \DataTypeTok{legend.key.height =} \KeywordTok{unit}\NormalTok{(}\DecValTok{3}\NormalTok{, }\StringTok{"line"}\NormalTok{),}
+          \DataTypeTok{legend.key.width =} \KeywordTok{unit}\NormalTok{(}\DecValTok{3}\NormalTok{, }\StringTok{"line"}\NormalTok{))}
+  \KeywordTok{print}\NormalTok{(p0)}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  \includegraphics{thesis_files/figure-latex/unnamed-chunk-5-1.pdf}
   
   \paragraph{Scénario à flux de gènes}\label{scenario-a-flux-de-genes-1}
   

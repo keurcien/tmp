@@ -287,17 +287,65 @@ im.df <- data.frame(methods = c("RNDmin", "Bdf", "D", "pcadapt"),
                     outgroup = c("Oui", "Oui", "Oui", "Oui"))
 
 knitr::kable(im.df, 
-      col.names = c("Statistique", 
-                    "Nombre de populations", 
-                    "Dont Outgroup"))
+             col.names = c("Statistique", 
+                           "Nombre de populations", 
+                           "Dont Outgroup"))
 ```
 
 ##### Scénario de métissage
 
 Nous comparons ici notre méthode au logiciel RFMix destiné à la détermination de coefficients de métissage local. 
 
-```{r ras100g, results="asis", echo=FALSE, fig.cap="100 generations", out.width = "500px"}
-include_graphics("figure/results_admixture_setting_100_gen.pdf")
+```{r ras10g, results="asis", echo=FALSE, fig.cap="10 generations", out.width="500px"}
+include_graphics("figure/facet_admixture_setting_10_gen.pdf")
+```
+
+```{r ras100g, results="asis", echo=FALSE, fig.cap="100 generations", out.width="500px"}
+include_graphics("figure/facet_admixture_setting_100_gen.pdf")
+```
+
+```{r ras1000g, results="asis", echo=FALSE, fig.cap="1000 generations", out.width="500px"}
+include_graphics("figure/facet_admixture_setting_1000_gen.pdf")
+```
+
+```{r}
+library(magrittr)
+source("R/summarySE.R")
+
+res.tp <- read.table("data/results_admixture_setting_1000_tp.txt", header = TRUE)
+res.fp <- read.table("data/results_admixture_setting_1000_fp.txt", header = TRUE)
+
+power <- 100 * res.tp$true_positives / 5
+res.pow <- cbind(res.tp, power)
+colnames(res.pow) <- c(colnames(res.tp), "value")
+fdr <- 100 * res.fp$false_positives / (res.tp$true_positives + res.fp$false_positives)
+fdr[is.na(fdr)] <- mean(fdr, na.rm = TRUE)
+res.fdr <- cbind(res.fp, fdr)
+colnames(res.fdr) <- c(colnames(res.fp), "value")
+
+pdf <- summarySE(res.pow, measurevar = "value", groupvars = c("method", "delta_p"))
+fdf <- summarySE(res.fdr, measurevar = "value", groupvars = c("method", "delta_p"))
+
+p0 <- dplyr::bind_rows(
+  mutate(pdf, stat = "Power"),
+  mutate(fdf, stat = "False Discovery Rate")
+) %>% mutate(stat_f =  factor(stat, levels=c("Power", "False Discovery Rate"))
+) %>% ggplot(aes(x = delta_p, y = value, colour = method)) + 
+  geom_errorbar(aes(ymin = value - se, ymax = value + se), 
+                width =.05, size = 1.5) +
+  ylim(0, 105) + facet_grid(~stat_f, margins = "am") + ylab("") + xlab(expression(atop(bold("Difference of ancestry between introgressed"), bold("and non-introgressed regions")))) +
+  geom_line(size = 2) + geom_point(size = 1.5) + 
+  scale_x_reverse() +
+  theme_bw() + guides(colour = guide_legend(title = "Method")) +
+  theme(axis.text = element_text(size = 20, face = "bold"),
+        axis.title.x = element_text(margin = margin(t = 20, r = 0, b = 0, l = 0)),
+        axis.title=element_text(size = 20, face = "bold"),
+        title = element_text(size = 20, face = "bold"),
+        strip.text = element_text(size=20, face = "bold"),
+        legend.text = element_text(size = 20),
+        legend.key.height = unit(3, "line"),
+        legend.key.width = unit(3, "line"))
+print(p0)
 ```
 
 ##### Scénario à flux de gènes
