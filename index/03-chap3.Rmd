@@ -10,6 +10,9 @@ Cette définition nous amène à nous poser deux questions. La première, relati
 Nous parlons d'introgression lorsqu'un certain nombre de gènes est transféré
 d'une population à une autre.
 
+L'étude de régions génomiques présentant des caractéristiques d'introgression ou de divergence peut se révéler intéressante pour plusieurs raisons. 
+
+
 ## Coefficients de métissage globaux et locaux
 
 Étant données des populations ancestrales, il est possible d'estimer pour un
@@ -39,7 +42,7 @@ L'un des premiers articles à établir un lien entre l'ACP et les coefficients
 de métissage global fut sur l'interprétation généalogique de l'ACP de Gil McVean 
 [@mcvean2009genealogical]: 
 
-```{r mcvean, results="asis", echo=FALSE, fig.cap="Coefficients de métissage et ACP", out.width = "200px", fig.align='center'}
+```{r mcvean, results="asis", echo=FALSE, fig.cap="Coefficients de métissage et ACP", out.width = "300px", fig.align='center'}
 include_graphics("figure/mcvean.png")
 ```
 
@@ -55,6 +58,58 @@ entier $i$ la fenêtre $W_i^T$ de taille $T$ et centrée en $i$ :
 $$W_i^T = \{ j \in [|1, p|], |x_i - x_j| \leq T/2 \}$$
 
 ## Sensibilité à l'imputation des données manquantes
+
+\newpage
+
+### Méthodes de détection
+
+#### Etat de l'art
+
+##### Scénario à flux de gènes
+
+###### La statistique D de Patterson
+
+La statistique $D$ de Patterson [@durand2011testing] demeure aujourd'hui la méthode la plus utilisée pour détecter la trace de flux de gènes dans une population. La méthode repose sur l'observation de motifs portant les noms *ABBA* et *BABA*, en référence aux différents types de généalogie possible pour un site nucléotidique.
+
+$$ D = \displaystyle \frac{\sum_i C_{ABBA}(i) - C_{BABA}(i)}{\sum_i C_{ABBA}(i) + C_{BABA}(i)} $$
+
+###### RNDmin
+
+[Descriptif de RNDmin]
+
+Pour comprendre la récente méthode proposée par [@rosenzweig2016powerful], il est nécessaire de définir un certain nombre de statistiques dont $RND_{\text{min}}$ dérive.
+
+&nbsp;
+
+- $d_{xy}$ est la distance de Hamming entre la séquence $X$ de la population $1$ et la séquence $Y$ de la population $2$. Ainsi, si $x = (x_i)_{1 \leq i \leq n}$ et $y = (y_i)_{1 \leq i \leq n}$, alors : 
+
+$$d_{xy} = \text{Card}(\{i \in [|1, n|] \; | \; x_i \neq y_i \})$$
+
+Cette statistique est ainsi définie pour une paire de séquences ($x$, $y$). Pour quantifier la dissimilarité entre deux ensembles de séquences, deux approches sont possibles. La première consiste à calculer la distance moyenne $d_{XY}$. De par sa définition, cette distance présente néanmoins le défaut d'être peu sensible aux épisodes récents d'introgression [@geneva2015new].
+En effet, les faibles valeurs de $d_{xy}$ correspondant à des évènements de divergence récents peuvent voir leur influence diminuée en cas de présence d'évènements de divergence plus anciens.
+Pour pallier à ce problème, considérer la distance minimale entre les deux ensembles de séquences [@joly2009statistical] constitue une solution intéressante.
+
+[Expliquer pourquoi on définit $d_{\text{out}}$ et $RND$]
+
+En définissant $d_{out} = \frac{1}{2}(d_{XO} + d_{YO})$, il est possible de définir de la même 
+façon $RND_{min}$ :
+
+$$RND_{\text{min}} = \frac{d_{\text{min}}}{d_{\text{out}}}$$
+
+Pour récapituler, $RND_{\text{min}}$ est une statistique robuste aux variations de taux de mutation et qui reste sensible aux récents évènements d'introgression. En pratique, l'introduction de $d_{\text{out}}$ requiert ainsi la donnée d'une population ancestrale commune aux deux populations d'intérêt.
+
+###### Bdf
+
+##### Analyse Linéaire Discriminante
+
+#### Régression linéaire, régression logistique, forêts aléatoires et importance des variables
+
+#### Régression locale, package mgcv, locfit, Backward selection strategy
+
+#### ACP locale et espace de formes
+
+\newpage
+
 
 ## Simulations
 
@@ -106,7 +161,7 @@ include_graphics(path = "figure/ancestry_heatmap_lambda_01.png")
 ```
 
 
-```{r simulations}
+```{r simulations, echo=FALSE}
 path <- "~/Documents/thesis/git/simulations/introgression/"
 output.name <- "populus"
 recombinationRate <- 0.05 # in Morgans per Megabase
@@ -191,78 +246,60 @@ im[res$true.ancestry.matrix == "11"] <- 0
 image(im, axes = FALSE, xlab = "", ylab = "")
 ```
 
-\newpage
-
-### Méthodes de détection
-
-#### Etat de l'art
-
-##### Scénario à flux de gènes
-
-###### La statistique D de Pattersion
-
-###### RNDmin
-
-###### BDF
-
-##### Scénario de métissage
-
-
-
-##### Analyse Linéaire Discriminante
-
-#### Régression linéaire, régression logistique, forêts aléatoires et importance des variables
-
-#### Régression locale, package mgcv, locfit, Backward selection strategy
-
-#### ACP locale et espace de formes
-
-
-### Résultats de la comparaison des logiciels
-
-Dans ce paragraphe, nous allons comparer notre statistique de test à un ensemble de statistiques implémentées dans le package R *PopGenome* : la statistique $D$ de Patterson, RNDmin [@rosenzweig2016powerful] et BDF [@pfeifer2017estimates].
 
 ### Simulations à partir de ms et Seq-Gen
 
-FIGURE AVEC LES DIFFERENTS ARBRES P1, P2, P3 ET O
+Dans le scénario d'introgression via flux de gènes, nous nous inspirons des modèles de simulation décrits dans [@martin2000]. Ces modèles sont largement repris dans la littérature pour l'évaluation de statistiques telles que $RND_{min}$ [@rosenzweig2016powerful] et $Bd_f$ [@pfeifer2017estimates]. Chaque simulation est constituée de 100 individus. Un individu est généré en concaténant un certain nombre de séquences de nucléotides, d'une longueur fixée à 5000 paires de bases par séquence. Chacune de ces séquences est elle-même simulée suivant un modèle neutre ou alternatif. Le modèle neutre décrit un scénario démographique classique de populations divergentes. Le modèle alternatif décrit quant à lui un scénario légèrement différent, et servira à caractériser les séquences *introgressées*. Les lignes de commande *ms* permettant de générer les séquences de nucléotides pour le modèle neutre ainsi que pour le modèle alternatif sont données ci-dessous : 
 
-Décortiquons la ligne de commande *ms* permettant de générer les séquences de 
-nucléotides.
+&nbsp;
+
+- Modèle neutre :
 
 ```
 ./ms 200 1 -I 4 50 50 50 50 -ej 1 2 1 -ej 2 3 1 -ej 3 4 1 
--es 0.1 2 0.8 -ej 0.1 5 3 -r 50 5000 -T #background model
+-r 50 5000 -T 
 ```
 
-- 200 : nombre d'individus.
+```{r background, results="asis", echo=FALSE, out.extra="scale=0.5", fig.align = 'center', fig.cap="Modèle neutre. $12N$ genérations auparavant, premier épisode de divergence donnant naissance à P1 et à O. $8N$ générations auparavant, deuxième épisode de divergence voyant l'apparition de P3. $4N$ générations auparavant, dernier épisode de divergence et apparition de P2."}
+include_graphics("figure/background.pdf")
+```
 
-- 4 : nombre de populations dans lesquelles se répartissent les individus.
+&nbsp;
 
-- 50 50 50 50 : répartition des individus dans chacune des populations.
+- Modèle alternatif :
 
-- -ej 1 2 1 : 1 unité de temps auparavant, la population 2 fusionne avec la 
-population 1.
+```
+./ms 200 1 -I 4 50 50 50 50 -ej 1 2 1 -ej 2 3 1 -ej 3 4 1 
+-es 0.1 2 0.8 -ej 0.1 5 3 -r 50 5000 -T
+```
 
-- -ej 2 3 1 : 2 unités de temps auparavant, la population 3 fusionne avec la 
-population 1 (qui est désormais composée des populations 1 et 2).
-
-- -ej 3 4 1 : 3 unités de temps auparavant, la population 4 fusionne avec la 
-population 1 (constituée des populations 1, 2 et 3).
-
-- -es 0.1 2 0.8 : 0.1 unité de temps auparavant, la population 2 perd une partie
-de ses individus en faveur d'une population autre que celles déjà présentes (population 5).
-Pour chaque individu initialement présent dans la population 2, sa probabilité d'y
-rester est 0.80.
-
-- -ej 0.1 5 3 : 0.1 unité de temps auparavant, la population 5 fusionne avec la 
-population 3.
-
-Pour utiliser *ms*, il faut définir les évènements depuis le temps présent. Pour
-comprendre le scénario démographique, il est plus aisé de reprendre les évènements 
-dans l'ordre chronologique.
-
-```{r alternate, results="asis", echo=FALSE, fig.cap="Alternate model", out.extra="scale=0.5"}
+```{r alternate, results="asis", echo=FALSE, out.extra="scale=0.5", fig.align = 'center', fig.cap="Modèle alternatif. $12N$ genérations auparavant, premier épisode de divergence donnant naissance à P1 et à O. $8N$ générations auparavant, deuxième épisode de divergence voyant l'apparition de P3. $4N$ générations auparavant, dernier épisode de divergence et apparition de P2. $t$ unités de temps auparavant, épisode de flux de gènes de P3 vers la population P2."}
 include_graphics("figure/alternate.pdf")
 ```
 
-Nous observons sur la figure \@ref(fig:alternate),
+La variable $f$ présente en figure \@ref(fig:alternate) représente le taux d'introgression, elle quantifie la proportion d'haplotypes présents dans la population P2 et qui proviennent de la population P3. Ainsi, une valeur de $f$ égale à $1$ reviendrait à simuler un épisode de divergence de la population P3, duquel découlerait la naissance de la population P2. La valeur de $f$ utilisée ci-dessus est $0.2$, signifiant que 20% des haplotypes présents dans la population 2 sont issus de la population P3.
+
+### Résultats de la comparaison des logiciels
+
+```{r}
+im.df <- data.frame(methods = c("RNDmin", "Bdf", "D", "pcadapt"),
+                    nb_of_pop = c("3", "4", "4", ">= 3"),
+                    outgroup = c("Oui", "Oui", "Oui", "Oui"))
+
+knitr::kable(im.df, 
+      col.names = c("Statistique", 
+                    "Nombre de populations", 
+                    "Dont Outgroup"))
+```
+
+##### Scénario de métissage
+
+Nous comparons ici notre méthode au logiciel RFMix destiné à la détermination de coefficients de métissage local. 
+
+```{r ras100g, results="asis", echo=FALSE, fig.cap="100 generations", out.width = "500px"}
+include_graphics("figure/results_admixture_setting_100_gen.pdf")
+```
+
+##### Scénario à flux de gènes
+
+Dans ce paragraphe, nous comparons notre statistique de test à un ensemble de statistiques implémentées dans le package R *PopGenome* : la statistique $D$ de Patterson, RNDmin [@rosenzweig2016powerful] et BDF [@pfeifer2017estimates].

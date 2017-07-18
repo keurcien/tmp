@@ -264,6 +264,10 @@ starts here.
   Nous parlons d'introgression lorsqu'un certain nombre de gènes est
   transféré d'une population à une autre.
   
+  L'étude de régions génomiques présentant des caractéristiques
+  d'introgression ou de divergence peut se révéler intéressante pour
+  plusieurs raisons.
+  
   \section{Coefficients de métissage globaux et
   locaux}\label{coefficients-de-metissage-globaux-et-locaux}
   
@@ -301,7 +305,7 @@ starts here.
   
   \begin{figure}
   
-  {\centering \includegraphics[width=200px]{figure/mcvean} 
+  {\centering \includegraphics[width=300px]{figure/mcvean} 
   
   }
   
@@ -323,6 +327,91 @@ starts here.
   
   \section{Sensibilité à l'imputation des données
   manquantes}\label{sensibilite-a-limputation-des-donnees-manquantes}
+  
+  \newpage
+  
+  \subsection{Méthodes de détection}\label{methodes-de-detection}
+  
+  \subsubsection{Etat de l'art}\label{etat-de-lart-1}
+  
+  \paragraph{Scénario à flux de gènes}\label{scenario-a-flux-de-genes}
+  
+  \subparagraph{La statistique D de
+  Patterson}\label{la-statistique-d-de-patterson}
+  
+  La statistique \(D\) de Patterson (Durand, Patterson, Reich, \& Slatkin,
+  2011) demeure aujourd'hui la méthode la plus utilisée pour détecter la
+  trace de flux de gènes dans une population. La méthode repose sur
+  l'observation de motifs portant les noms \emph{ABBA} et \emph{BABA}, en
+  référence aux différents types de généalogie possible pour un site
+  nucléotidique.
+  
+  \[ D = \displaystyle \frac{\sum_i C_{ABBA}(i) - C_{BABA}(i)}{\sum_i C_{ABBA}(i) + C_{BABA}(i)} \]
+  
+  \subparagraph{RNDmin}\label{rndmin}
+  
+  {[}Descriptif de RNDmin{]}
+  
+  Pour comprendre la récente méthode proposée par (Rosenzweig, Pease,
+  Besansky, \& Hahn, 2016), il est nécessaire de définir un certain nombre
+  de statistiques dont \(RND_{\text{min}}\) dérive.
+  
+  ~
+  
+  \begin{itemize}
+  \tightlist
+  \item
+    \(d_{xy}\) est la distance de Hamming entre la séquence \(X\) de la
+    population \(1\) et la séquence \(Y\) de la population \(2\). Ainsi,
+    si \(x = (x_i)_{1 \leq i \leq n}\) et \(y = (y_i)_{1 \leq i \leq n}\),
+    alors :
+  \end{itemize}
+  
+  \[d_{xy} = \text{Card}(\{i \in [|1, n|] \; | \; x_i \neq y_i \})\]
+  
+  Cette statistique est ainsi définie pour une paire de séquences (\(x\),
+  \(y\)). Pour quantifier la dissimilarité entre deux ensembles de
+  séquences, deux approches sont possibles. La première consiste à
+  calculer la distance moyenne \(d_{XY}\). De par sa définition, cette
+  distance présente néanmoins le défaut d'être peu sensible aux épisodes
+  récents d'introgression (Geneva, Muirhead, Kingan, \& Garrigan, 2015).
+  En effet, les faibles valeurs de \(d_{xy}\) correspondant à des
+  évènements de divergence récents peuvent voir leur influence diminuée en
+  cas de présence d'évènements de divergence plus anciens. Pour pallier à
+  ce problème, considérer la distance minimale entre les deux ensembles de
+  séquences (Joly, McLenachan, \& Lockhart, 2009) constitue une solution
+  intéressante.
+  
+  {[}Expliquer pourquoi on définit \(d_{\text{out}}\) et \(RND\){]}
+  
+  En définissant \(d_{out} = \frac{1}{2}(d_{XO} + d_{YO})\), il est
+  possible de définir de la même façon \(RND_{min}\) :
+  
+  \[RND_{\text{min}} = \frac{d_{\text{min}}}{d_{\text{out}}}\]
+  
+  Pour récapituler, \(RND_{\text{min}}\) est une statistique robuste aux
+  variations de taux de mutation et qui reste sensible aux récents
+  évènements d'introgression. En pratique, l'introduction de
+  \(d_{\text{out}}\) requiert ainsi la donnée d'une population ancestrale
+  commune aux deux populations d'intérêt.
+  
+  \subparagraph{Bdf}\label{bdf}
+  
+  \paragraph{Analyse Linéaire
+  Discriminante}\label{analyse-lineaire-discriminante}
+  
+  \subsubsection{Régression linéaire, régression logistique, forêts
+  aléatoires et importance des
+  variables}\label{regression-lineaire-regression-logistique-forets-aleatoires-et-importance-des-variables}
+  
+  \subsubsection{Régression locale, package mgcv, locfit, Backward
+  selection
+  strategy}\label{regression-locale-package-mgcv-locfit-backward-selection-strategy}
+  
+  \subsubsection{ACP locale et espace de
+  formes}\label{acp-locale-et-espace-de-formes}
+  
+  \newpage
   
   \section{Simulations}\label{simulations}
   
@@ -392,127 +481,125 @@ starts here.
   \caption{$\lambda = 0.1$}\label{fig:lambda01}
   \end{figure}
   
-  \begin{Shaded}
-  \begin{Highlighting}[]
-  \NormalTok{path <-}\StringTok{ "~/Documents/thesis/git/simulations/introgression/"}
-  \NormalTok{output.name <-}\StringTok{ "populus"}
-  \NormalTok{recombinationRate <-}\StringTok{ }\FloatTok{0.05} \CommentTok{# in Morgans per Megabase}
-  \NormalTok{nSNP <-}\StringTok{ }\DecValTok{50000}
-  \NormalTok{ancstrl}\FloatTok{.1} \NormalTok{<-}\StringTok{ }\DecValTok{1}
-  \NormalTok{ancstrl}\FloatTok{.2} \NormalTok{<-}\StringTok{ }\DecValTok{3}
-  \NormalTok{hyb <-}\StringTok{ }\DecValTok{4}
-  \NormalTok{intro.size <-}\StringTok{ }\DecValTok{500}
-  \NormalTok{global.ancestry <-}\StringTok{ }\FloatTok{0.1}
-  \NormalTok{inverted.ancestry <-}\StringTok{ }\FloatTok{0.5}
-  
-  \NormalTok{info.map <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(}\KeywordTok{fread}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(path, output.name, }\StringTok{".map"}\NormalTok{), }
-                              \DataTypeTok{data.table =} \OtherTok{FALSE}\NormalTok{))}
-  \NormalTok{H1 <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(}\KeywordTok{fread}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(path, output.name, }\StringTok{"_H1"}\NormalTok{), }
-                        \DataTypeTok{data.table =} \OtherTok{FALSE}\NormalTok{))}
-  \NormalTok{H2 <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(}\KeywordTok{fread}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(path, output.name, }\StringTok{"_H2"}\NormalTok{), }
-                        \DataTypeTok{data.table =} \OtherTok{FALSE}\NormalTok{))}
-  \NormalTok{n.hyb <-}\StringTok{ }\KeywordTok{ncol}\NormalTok{(H1) /}\StringTok{ }\DecValTok{2} 
-  
-  \NormalTok{### Introgression region}
-  \NormalTok{idx <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\NormalTok{:nSNP, }\DataTypeTok{size =} \DecValTok{1}\NormalTok{)}
-  \NormalTok{beg.reg <-}\StringTok{ }\KeywordTok{max}\NormalTok{(}\DecValTok{1}\NormalTok{, idx -}\StringTok{ }\NormalTok{intro.size)}
-  \NormalTok{end.reg <-}\StringTok{ }\KeywordTok{min}\NormalTok{(nSNP, idx +}\StringTok{ }\NormalTok{intro.size)}
-  \NormalTok{intro.reg <-}\StringTok{ }\NormalTok{beg.reg:end.reg}
-  \end{Highlighting}
-  \end{Shaded}
-  
   \newpage
-  
-  \newpage
-  
-  \subsection{Méthodes de détection}\label{methodes-de-detection}
-  
-  \subsubsection{Etat de l'art}\label{etat-de-lart-1}
-  
-  \paragraph{Scénario à flux de gènes}\label{scenario-a-flux-de-genes}
-  
-  \subparagraph{La statistique D de
-  Pattersion}\label{la-statistique-d-de-pattersion}
-  
-  \subparagraph{RNDmin}\label{rndmin}
-  
-  \subparagraph{BDF}\label{bdf}
-  
-  \paragraph{Scénario de métissage}\label{scenario-de-metissage}
-  
-  \paragraph{Analyse Linéaire
-  Discriminante}\label{analyse-lineaire-discriminante}
-  
-  \subsubsection{Régression linéaire, régression logistique, forêts
-  aléatoires et importance des
-  variables}\label{regression-lineaire-regression-logistique-forets-aleatoires-et-importance-des-variables}
-  
-  \subsubsection{Régression locale, package mgcv, locfit, Backward
-  selection
-  strategy}\label{regression-locale-package-mgcv-locfit-backward-selection-strategy}
-  
-  \subsubsection{ACP locale et espace de
-  formes}\label{acp-locale-et-espace-de-formes}
-  
-  \subsection{Résultats de la comparaison des
-  logiciels}\label{resultats-de-la-comparaison-des-logiciels}
-  
-  Dans ce paragraphe, nous allons comparer notre statistique de test à un
-  ensemble de statistiques implémentées dans le package R \emph{PopGenome}
-  : la statistique \(D\) de Patterson, RNDmin (Rosenzweig, Pease,
-  Besansky, \& Hahn, 2016) et BDF (Pfeifer \& Kapan, 2017).
   
   \subsection{Simulations à partir de ms et
   Seq-Gen}\label{simulations-a-partir-de-ms-et-seq-gen}
   
-  FIGURE AVEC LES DIFFERENTS ARBRES P1, P2, P3 ET O
+  Dans le scénario d'introgression via flux de gènes, nous nous inspirons
+  des modèles de simulation décrits dans (Martin \& Jiggins, 2015). Ces
+  modèles sont largement repris dans la littérature pour l'évaluation de
+  statistiques telles que \(RND_{min}\) (Rosenzweig et al., 2016) et
+  \(Bd_f\) (Pfeifer \& Kapan, 2017). Chaque simulation est constituée de
+  100 individus. Un individu est généré en concaténant un certain nombre
+  de séquences de nucléotides, d'une longueur fixée à 5000 paires de bases
+  par séquence. Chacune de ces séquences est elle-même simulée suivant un
+  modèle neutre ou alternatif. Le modèle neutre décrit un scénario
+  démographique classique de populations divergentes. Le modèle alternatif
+  décrit quant à lui un scénario légèrement différent, et servira à
+  caractériser les séquences \emph{introgressées}. Les lignes de commande
+  \emph{ms} permettant de générer les séquences de nucléotides pour le
+  modèle neutre ainsi que pour le modèle alternatif sont données
+  ci-dessous :
   
-  Décortiquons la ligne de commande \emph{ms} permettant de générer les
-  séquences de nucléotides.
+  ~
+  
+  \begin{itemize}
+  \tightlist
+  \item
+    Modèle neutre :
+  \end{itemize}
   
   \begin{verbatim}
   ./ms 200 1 -I 4 50 50 50 50 -ej 1 2 1 -ej 2 3 1 -ej 3 4 1 
-  -es 0.1 2 0.8 -ej 0.1 5 3 -r 50 5000 -T #background model
+  -r 50 5000 -T 
   \end{verbatim}
   
-  \begin{itemize}
-  \item
-    200 : nombre d'individus.
-  \item
-    4 : nombre de populations dans lesquelles se répartissent les
-    individus.
-  \item
-    50 50 50 50 : répartition des individus dans chacune des populations.
-  \item
-    -ej 1 2 1 : 1 unité de temps auparavant, la population 2 fusionne avec
-    la population 1.
-  \item
-    -ej 2 3 1 : 2 unités de temps auparavant, la population 3 fusionne
-    avec la population 1 (qui est désormais composée des populations 1 et
-    2).
-  \item
-    -ej 3 4 1 : 3 unités de temps auparavant, la population 4 fusionne
-    avec la population 1 (constituée des populations 1, 2 et 3).
-  \item
-    -es 0.1 2 0.8 : 0.1 unité de temps auparavant, la population 2 perd
-    une partie de ses individus en faveur d'une population autre que
-    celles déjà présentes (population 5). Pour chaque individu
-    initialement présent dans la population 2, sa probabilité d'y rester
-    est 0.80.
-  \item
-    -ej 0.1 5 3 : 0.1 unité de temps auparavant, la population 5 fusionne
-    avec la population 3.
-  \end{itemize}
-  
-  Pour utiliser \emph{ms}, il faut définir les évènements depuis le temps
-  présent. Pour comprendre le scénario démographique, il est plus aisé de
-  reprendre les évènements dans l'ordre chronologique.
-  
   \begin{figure}
-  \includegraphics[scale=0.5]{figure/alternate} \caption{Alternate model}\label{fig:alternate}
+  
+  {\centering \includegraphics[scale=0.5]{figure/background} 
+  
+  }
+  
+  \caption{Modèle neutre. $12N$ genérations auparavant, premier épisode de divergence donnant naissance à P1 et à O. $8N$ générations auparavant, deuxième épisode de divergence voyant l'apparition de P3. $4N$ générations auparavant, dernier épisode de divergence et apparition de P2.}\label{fig:background}
   \end{figure}
   
-  Nous observons sur la figure \ref{fig:alternate},
+  ~
+  
+  \begin{itemize}
+  \tightlist
+  \item
+    Modèle alternatif :
+  \end{itemize}
+  
+  \begin{verbatim}
+  ./ms 200 1 -I 4 50 50 50 50 -ej 1 2 1 -ej 2 3 1 -ej 3 4 1 
+  -es 0.1 2 0.8 -ej 0.1 5 3 -r 50 5000 -T
+  \end{verbatim}
+  
+  \begin{figure}
+  
+  {\centering \includegraphics[scale=0.5]{figure/alternate} 
+  
+  }
+  
+  \caption{Modèle alternatif. $12N$ genérations auparavant, premier épisode de divergence donnant naissance à P1 et à O. $8N$ générations auparavant, deuxième épisode de divergence voyant l'apparition de P3. $4N$ générations auparavant, dernier épisode de divergence et apparition de P2. $t$ unités de temps auparavant, épisode de flux de gènes de P3 vers la population P2.}\label{fig:alternate}
+  \end{figure}
+  
+  La variable \(f\) présente en figure \ref{fig:alternate} représente le
+  taux d'introgression, elle quantifie la proportion d'haplotypes présents
+  dans la population P2 et qui proviennent de la population P3. Ainsi, une
+  valeur de \(f\) égale à \(1\) reviendrait à simuler un épisode de
+  divergence de la population P3, duquel découlerait la naissance de la
+  population P2. La valeur de \(f\) utilisée ci-dessus est \(0.2\),
+  signifiant que 20\% des haplotypes présents dans la population 2 sont
+  issus de la population P3.
+  
+  \subsection{Résultats de la comparaison des
+  logiciels}\label{resultats-de-la-comparaison-des-logiciels}
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \NormalTok{im.df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{methods =} \KeywordTok{c}\NormalTok{(}\StringTok{"RNDmin"}\NormalTok{, }\StringTok{"Bdf"}\NormalTok{, }\StringTok{"D"}\NormalTok{, }\StringTok{"pcadapt"}\NormalTok{),}
+                      \DataTypeTok{nb_of_pop =} \KeywordTok{c}\NormalTok{(}\StringTok{"3"}\NormalTok{, }\StringTok{"4"}\NormalTok{, }\StringTok{"4"}\NormalTok{, }\StringTok{">= 3"}\NormalTok{),}
+                      \DataTypeTok{outgroup =} \KeywordTok{c}\NormalTok{(}\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{))}
+  
+  \NormalTok{knitr::}\KeywordTok{kable}\NormalTok{(im.df, }
+        \DataTypeTok{col.names =} \KeywordTok{c}\NormalTok{(}\StringTok{"Statistique"}\NormalTok{, }
+                      \StringTok{"Nombre de populations"}\NormalTok{, }
+                      \StringTok{"Dont Outgroup"}\NormalTok{))}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  \begin{tabular}{l|l|l}
+  \hline
+  Statistique & Nombre de populations & Dont Outgroup\\
+  \hline
+  RNDmin & 3 & Oui\\
+  \hline
+  Bdf & 4 & Oui\\
+  \hline
+  D & 4 & Oui\\
+  \hline
+  pcadapt & >= 3 & Oui\\
+  \hline
+  \end{tabular}
+  
+  \paragraph{Scénario de métissage}\label{scenario-de-metissage}
+  
+  Nous comparons ici notre méthode au logiciel RFMix destiné à la
+  détermination de coefficients de métissage local.
+  
+  \begin{figure}
+  \includegraphics[width=500px]{figure/results_admixture_setting_100_gen} \caption{100 generations}\label{fig:ras100g}
+  \end{figure}
+  
+  \paragraph{Scénario à flux de gènes}\label{scenario-a-flux-de-genes-1}
+  
+  Dans ce paragraphe, nous comparons notre statistique de test à un
+  ensemble de statistiques implémentées dans le package R \emph{PopGenome}
+  : la statistique \(D\) de Patterson, RNDmin (Rosenzweig et al., 2016) et
+  BDF (Pfeifer \& Kapan, 2017).
   
   \chapter*{Conclusion}\label{conclusion}
   \addcontentsline{toc}{chapter}{Conclusion}
@@ -606,10 +693,20 @@ starts here.
   for selection. \emph{Molecular Ecology Resources}, \emph{16}(2),
   540--548.
   
+  \hypertarget{ref-durand2011testing}{}
+  Durand, E. Y., Patterson, N., Reich, D., \& Slatkin, M. (2011). Testing
+  for ancient admixture between closely related populations.
+  \emph{Molecular Biology and Evolution}, \emph{28}(8), 2239--2252.
+  
   \hypertarget{ref-frichot2015lea}{}
   Frichot, E., \& François, O. (2015). LEA: An r package for landscape and
   ecological association studies. \emph{Methods in Ecology and Evolution},
   \emph{6}(8), 925--929.
+  
+  \hypertarget{ref-geneva2015new}{}
+  Geneva, A. J., Muirhead, C. A., Kingan, S. B., \& Garrigan, D. (2015). A
+  new method to scan genomes for introgression in a secondary contact
+  model. \emph{PloS One}, \emph{10}(4), e0118621.
   
   \hypertarget{ref-giraud2014introduction}{}
   Giraud, C. (2014). \emph{Introduction to high-dimensional statistics}
@@ -620,11 +717,21 @@ starts here.
   evolutionary process. \emph{Oxford Surveys in Evolutionary Biology},
   \emph{7}, 69--128.
   
+  \hypertarget{ref-joly2009statistical}{}
+  Joly, S., McLenachan, P. A., \& Lockhart, P. J. (2009). A statistical
+  approach for distinguishing hybridization and incomplete lineage
+  sorting. \emph{The American Naturalist}, \emph{174}(2), E54--E70.
+  
   \hypertarget{ref-maples2013rfmix}{}
   Maples, B. K., Gravel, S., Kenny, E. E., \& Bustamante, C. D. (2013).
   RFMix: A discriminative modeling approach for rapid and robust
   local-ancestry inference. \emph{The American Journal of Human Genetics},
   \emph{93}(2), 278--288.
+  
+  \hypertarget{ref-martin2000}{}
+  Martin, J. W. D., Simon H., \& Jiggins, C. D. (2015). Evaluating the use
+  of abba--BABA statistics to locate introgressed loci. \emph{Molecular
+  Biology and Evolution}, 244--257.
   
   \hypertarget{ref-mcvean2009genealogical}{}
   McVean, G. (2009). A genealogical interpretation of principal components
