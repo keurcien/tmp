@@ -245,6 +245,8 @@ starts here.
   \section{Cas d'étude utilisant
   pcadapt}\label{cas-detude-utilisant-pcadapt}
   
+  \section{POOP}\label{poop}
+  
   \chapter{Introgression adaptative}\label{introgression-adaptative}
   
   \section{Qu'est-ce que l'introgression
@@ -303,14 +305,7 @@ starts here.
   coefficients de métissage global fut sur l'interprétation généalogique
   de l'ACP de Gil McVean (McVean, 2009):
   
-  \begin{figure}
-  
-  {\centering \includegraphics[width=300px]{figure/mcvean} 
-  
-  }
-  
-  \caption{Coefficients de métissage et ACP}\label{fig:mcvean}
-  \end{figure}
+  Coefficients de métissage et ACP
   
   Pour chacun des 22 chromosomes,
   
@@ -423,7 +418,7 @@ starts here.
   partir des deux populations ancestrales qui y sont présentes. La
   première, \emph{Populus Balsamifera}, est une espèce de peupliers qui
   peuple le nord du continent nord-américain, d'Est en Ouest, et se trouve
-  exposée à des conditions climatiques peu clémentes. La seconde,
+  exposée à des conditions climatiques peu clémentes.La seconde,
   \emph{Populus Trichocarpa}, est principalement localisée en Californie,
   et bénéficie d'un climat continental.
   
@@ -431,7 +426,7 @@ starts here.
   continentale, de \(50\) haplotyêpes de la souche boréale, ainsi que de
   \(50\) haplotypes d'individus hybrides générés à partir des haplotypes
   ancestraux. Ces haplotypes ancestraux ont été estimés à l'aide du
-  logiciel Beagle. 'A partir des positions en paires de base, une carte de
+  logiciel Beagle. A partir des positions en paires de base, une carte de
   recombinaison génétique est générée en utilisant le taux de
   recombinaison moyen chez le peuplier. Le taux de recombinaison, noté
   \(\tau_r\), correspond au nombre moyen de paires de bases à parcourir
@@ -458,28 +453,11 @@ starts here.
   l'emplacement des évènements de recombinaison. Pour ce faire, nous
   utilisons le modèle décrit dans (Price et al., 2009), en parcourant
   
-  \begin{figure}
+  \(\lambda = 0.001\)
   
-  {\centering \includegraphics[width=400px,height=200px]{figure/ancestry_heatmap_lambda_0001} 
+  \(\lambda = 0.01\)
   
-  }
-  
-  \caption{$\lambda = 0.001$}\label{fig:lambda0001}
-  \end{figure}\begin{figure}
-  
-  {\centering \includegraphics[width=400px,height=200px]{figure/ancestry_heatmap_lambda_001} 
-  
-  }
-  
-  \caption{$\lambda = 0.01$}\label{fig:lambda001}
-  \end{figure}\begin{figure}
-  
-  {\centering \includegraphics[width=400px,height=200px]{figure/ancestry_heatmap_lambda_01} 
-  
-  }
-  
-  \caption{$\lambda = 0.1$}\label{fig:lambda01}
-  \end{figure}
+  \(\lambda = 0.1\)
   
   \newpage
   
@@ -515,14 +493,11 @@ starts here.
   -r 50 5000 -T 
   \end{verbatim}
   
-  \begin{figure}
-  
-  {\centering \includegraphics[scale=0.5]{figure/background} 
-  
-  }
-  
-  \caption{Modèle neutre. $12N$ genérations auparavant, premier épisode de divergence donnant naissance à P1 et à O. $8N$ générations auparavant, deuxième épisode de divergence voyant l'apparition de P3. $4N$ générations auparavant, dernier épisode de divergence et apparition de P2.}\label{fig:background}
-  \end{figure}
+  Modèle neutre. \(12N\) genérations auparavant, premier épisode de
+  divergence donnant naissance à P1 et à O. \(8N\) générations auparavant,
+  deuxième épisode de divergence voyant l'apparition de P3. \(4N\)
+  générations auparavant, dernier épisode de divergence et apparition de
+  P2.
   
   ~
   
@@ -537,14 +512,12 @@ starts here.
   -es 0.1 2 0.8 -ej 0.1 5 3 -r 50 5000 -T
   \end{verbatim}
   
-  \begin{figure}
-  
-  {\centering \includegraphics[scale=0.5]{figure/alternate} 
-  
-  }
-  
-  \caption{Modèle alternatif. $12N$ genérations auparavant, premier épisode de divergence donnant naissance à P1 et à O. $8N$ générations auparavant, deuxième épisode de divergence voyant l'apparition de P3. $4N$ générations auparavant, dernier épisode de divergence et apparition de P2. $t$ unités de temps auparavant, épisode de flux de gènes de P3 vers la population P2.}\label{fig:alternate}
-  \end{figure}
+  Modèle alternatif. \(12N\) genérations auparavant, premier épisode de
+  divergence donnant naissance à P1 et à O. \(8N\) générations auparavant,
+  deuxième épisode de divergence voyant l'apparition de P3. \(4N\)
+  générations auparavant, dernier épisode de divergence et apparition de
+  P2. \(t\) unités de temps auparavant, épisode de flux de gènes de P3
+  vers la population P2.
   
   La variable \(f\) présente en figure \ref{fig:alternate} représente le
   taux d'introgression, elle quantifie la proportion d'haplotypes présents
@@ -571,36 +544,28 @@ starts here.
   \end{Highlighting}
   \end{Shaded}
   
-  \begin{tabular}{l|l|l}
-  \hline
-  Statistique & Nombre de populations & Dont Outgroup\\
-  \hline
-  RNDmin & 3 & Oui\\
-  \hline
-  Bdf & 4 & Oui\\
-  \hline
-  D & 4 & Oui\\
-  \hline
-  pcadapt & >= 3 & Oui\\
-  \hline
-  \end{tabular}
+  \begin{longtable}[]{@{}lll@{}}
+  \toprule
+  Statistique & Nombre de populations & Dont Outgroup\tabularnewline
+  \midrule
+  \endhead
+  RNDmin & 3 & Oui\tabularnewline
+  Bdf & 4 & Oui\tabularnewline
+  D & 4 & Oui\tabularnewline
+  pcadapt & \textgreater{}= 3 & Oui\tabularnewline
+  \bottomrule
+  \end{longtable}
   
   \paragraph{Scénario de métissage}\label{scenario-de-metissage}
   
   Nous comparons ici notre méthode au logiciel RFMix destiné à la
   détermination de coefficients de métissage local.
   
-  \begin{figure}
-  \includegraphics[width=500px]{figure/facet_admixture_setting_10_gen} \caption{10 generations}\label{fig:ras10g}
-  \end{figure}
+  10 generations
   
-  \begin{figure}
-  \includegraphics[width=500px]{figure/facet_admixture_setting_100_gen} \caption{100 generations}\label{fig:ras100g}
-  \end{figure}
+  100 generations
   
-  \begin{figure}
-  \includegraphics[width=500px]{figure/facet_admixture_setting_1000_gen} \caption{1000 generations}\label{fig:ras1000g}
-  \end{figure}
+  1000 generations
   
   \begin{Shaded}
   \begin{Highlighting}[]
@@ -638,7 +603,7 @@ starts here.
   
   \begin{verbatim}
   ## 
-  ## Attaching package: 'plyr'
+  ## Attachement du package : 'plyr'
   \end{verbatim}
   
   \begin{verbatim}
@@ -675,8 +640,6 @@ starts here.
   \end{Highlighting}
   \end{Shaded}
   
-  \includegraphics{thesis_files/figure-latex/unnamed-chunk-5-1.pdf}
-  
   \paragraph{Scénario à flux de gènes}\label{scenario-a-flux-de-genes-1}
   
   Dans ce paragraphe, nous comparons notre statistique de test à un
@@ -698,7 +661,8 @@ starts here.
   obvious after a chapter or section title, proper typesetting doesn't add
   an indent there.
   
-  \appendix
+  \chapter*{(APPENDIX) Appendix}\label{appendix-appendix}
+  \addcontentsline{toc}{chapter}{(APPENDIX) Appendix}
   
   \chapter{The First Appendix}\label{the-first-appendix}
   
@@ -707,49 +671,6 @@ starts here.
   chunk tag) to help with readibility and/or setup.
   
   \textbf{In the main Rmd file}
-  
-  \begin{Shaded}
-  \begin{Highlighting}[]
-  \CommentTok{# This chunk ensures that the thesisdown package is}
-  \CommentTok{# installed and loaded. This thesisdown package includes}
-  \CommentTok{# the template files for the thesis and also two functions}
-  \CommentTok{# used for labeling and referencing}
-  \CommentTok{#opts_chunk$set(cache=TRUE)}
-  
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(devtools))\{}
-    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
-  \NormalTok{\}}
-  
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(dplyr))\{}
-    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
-  \NormalTok{\}}
-  
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(ggplot2))\{}
-    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
-  \NormalTok{\}}
-  
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(bookdown))\{}
-    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"bookdown"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
-  \NormalTok{\}}
-  
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(thesisdown))\{}
-    \KeywordTok{library}\NormalTok{(devtools)}
-    \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"ismayc/thesisdown"}\NormalTok{)}
-  \NormalTok{\}}
-  
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(data.table))\{}
-    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"data.table"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
-  \NormalTok{\}}
-  
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(pcadapt))\{}
-    \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"bcm-uga/pcadapt"}\NormalTok{)}
-  \NormalTok{\}}
-  
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(simulate))\{}
-    \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"keurcien/simulate"}\NormalTok{)}
-  \NormalTok{\}}
-  \end{Highlighting}
-  \end{Shaded}
   
   \chapter{The Second Appendix, for
   Fun}\label{the-second-appendix-for-fun}
