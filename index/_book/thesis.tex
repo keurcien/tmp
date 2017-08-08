@@ -533,28 +533,35 @@ starts here.
   
   \begin{Shaded}
   \begin{Highlighting}[]
-  \NormalTok{im.df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{methods =} \KeywordTok{c}\NormalTok{(}\StringTok{"RNDmin"}\NormalTok{, }\StringTok{"Bdf"}\NormalTok{, }\StringTok{"D"}\NormalTok{, }\StringTok{"pcadapt"}\NormalTok{),}
-                      \DataTypeTok{nb_of_pop =} \KeywordTok{c}\NormalTok{(}\StringTok{"3"}\NormalTok{, }\StringTok{"4"}\NormalTok{, }\StringTok{"4"}\NormalTok{, }\StringTok{">= 3"}\NormalTok{),}
-                      \DataTypeTok{outgroup =} \KeywordTok{c}\NormalTok{(}\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{))}
+  \NormalTok{im.df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{methods =} \KeywordTok{c}\NormalTok{(}\StringTok{"Bdf"}\NormalTok{, }\StringTok{"D"}\NormalTok{, }\StringTok{"f_d"}\NormalTok{, }\StringTok{"pcadapt"}\NormalTok{, }\StringTok{"RNDmin"}\NormalTok{),}
+                      \DataTypeTok{input =} \KeywordTok{c}\NormalTok{(}\StringTok{"genoytpes"}\NormalTok{, }\StringTok{"genoytpes"}\NormalTok{, }\StringTok{"genoytpes"}\NormalTok{, }\StringTok{"genoytpes"}\NormalTok{, }\StringTok{"haplotypes"}\NormalTok{),}
+                      \DataTypeTok{nb_of_pop =} \KeywordTok{c}\NormalTok{(}\StringTok{"4"}\NormalTok{, }\StringTok{"4"}\NormalTok{, }\StringTok{"4"}\NormalTok{, }\StringTok{">= 3"}\NormalTok{, }\StringTok{"3"}\NormalTok{),}
+                      \DataTypeTok{outgroup =} \KeywordTok{c}\NormalTok{(}\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{))}
   
   \NormalTok{knitr::}\KeywordTok{kable}\NormalTok{(im.df, }
                \DataTypeTok{col.names =} \KeywordTok{c}\NormalTok{(}\StringTok{"Statistique"}\NormalTok{, }
+                             \StringTok{"Format"}\NormalTok{,}
                              \StringTok{"Nombre de populations"}\NormalTok{, }
-                             \StringTok{"Dont Outgroup"}\NormalTok{))}
+                             \StringTok{"Dont Outgroup"}\NormalTok{), }
+               \DataTypeTok{format =} \StringTok{"latex"}\NormalTok{)}
   \end{Highlighting}
   \end{Shaded}
   
-  \begin{longtable}[]{@{}lll@{}}
-  \toprule
-  Statistique & Nombre de populations & Dont Outgroup\tabularnewline
-  \midrule
-  \endhead
-  RNDmin & 3 & Oui\tabularnewline
-  Bdf & 4 & Oui\tabularnewline
-  D & 4 & Oui\tabularnewline
-  pcadapt & \textgreater{}= 3 & Oui\tabularnewline
-  \bottomrule
-  \end{longtable}
+  \begin{tabular}{l|l|l|l}
+  \hline
+  Statistique & Format & Nombre de populations & Dont Outgroup\\
+  \hline
+  Bdf & genoytpes & 4 & Oui\\
+  \hline
+  D & genoytpes & 4 & Oui\\
+  \hline
+  f\_d & genoytpes & 4 & Oui\\
+  \hline
+  pcadapt & genoytpes & >= 3 & Oui\\
+  \hline
+  RNDmin & haplotypes & 3 & Oui\\
+  \hline
+  \end{tabular}
   
   \paragraph{Scénario de métissage}\label{scenario-de-metissage}
   
@@ -646,6 +653,17 @@ starts here.
   ensemble de statistiques implémentées dans le package R \emph{PopGenome}
   : la statistique \(D\) de Patterson, RNDmin (Rosenzweig et al., 2016) et
   BDF (Pfeifer \& Kapan, 2017).
+  
+  \chapter{Aspect computationnel}\label{aspect-computationnel}
+  
+  Dans cette partie, nous nous intéresserons brièvement à l'aspect
+  computationnel des méthodes qui ont été présentées dans les chapitres
+  précédents. Le développement d'outils logiciels destinés à l'exploration
+  de données génétiques volumineuses requiert qu'une attention toute
+  particulière soit portée à l'utilisation des ressources de calcul.
+  
+  Blockwise computation of covariance matrix Random SVD Storage in binary
+  format Memory-mapping
   
   \chapter*{Conclusion}\label{conclusion}
   \addcontentsline{toc}{chapter}{Conclusion}
