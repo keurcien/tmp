@@ -39,6 +39,7 @@
 \usepackage{longtable,booktabs,setspace}
 \usepackage{chemarr} %% Useful for one reaction arrow, useless if you're not a chem major
 \usepackage[hyphens]{url}
+\usepackage{pdfpages}
 \usepackage{tikz}
 \usetikzlibrary{calc}
 \newcommand\HRule{\rule{\textwidth}{1pt}}
@@ -191,24 +192,104 @@ starts here.
   responsables ou qui influencent un phénomène particulier. Cela pourrait
   être par exemple l'utilisation de bases de données automobiles pour
   prédire la durée de vie de véhicules neufs, ou encore celle de données
-  météorologiques pour savoir s'il pleuvra ou non dans les jours qui
-  viennent. Cette accumulation massive s'accompagne tout de même d'un
-  phénomène bien connu en statistiques, phénomène qui porte le nom de
-  ``curse of dimensionality'' (Giraud, 2014).
+  climatiques pour estimer les variations de température auxquelles
+  pourrait être sujette notre planète. Cette accumulation massive
+  s'accompagne tout de même d'un phénomène bien connu en statistiques,
+  phénomène qui porte le nom de ``curse of dimensionality'' (Giraud,
+  2014).
+  
+  Dérive génétique Environnement hétérogène
   
   \chapter{État de l'art}\label{etat-de-lart}
   
+  \section{L'indice de fixation}\label{lindice-de-fixation}
+  
+  En se différenciant génétiquement, les populations voient leurs
+  fréquences d'allèles évoluer de façon indépendante. L'indice de fixation
+  est une statistique permettant de quantifier pour un allèle donné,
+  l'écart de la fréquence observée dans une sous-population à la fréquence
+  théorique
+  
+  \section{Modèle de FLK}\label{modele-de-flk}
+  
+  Le modèle de FLK estime le modèle neutre d'un SNP bi-allélique lorsque
+  celui-ci est uniquement soumis à la dérive génétique. À l'instant
+  \(t = 0\), le SNP a une fréquence \(p_0\). Notant \(F_t\) l'indice de
+  fixation de cet allèle, \(p(t)\) sa fréquence après \(t\) générations,
+  et en supposant que \(F_t\) soit suffisamment petit, ce qui devrait être
+  le cas dans le cas neutre. (Nicholson et al., 2002) :
+  
+  \begin{equation} 
+    p(t) \sim N(p_0, F_t p_0 (1-p_0)) 
+    \label{eq:frequency-law}
+  \end{equation}
+  
+  De la loi \eqref{eq:frequency-law} nous tirons
+  \(\text{Var}(p(t)) = F_t p_0 (1-p_0)\).
+  
+  La statistique FLK (Bonhomme et al., 2010) requiert d'estimer au
+  préalable deux paramètres que sont la fréquence allélique initiale
+  \(p_0\) et la matrice d'apparentement \(V\), \(V \in M_K(\mathbb{R})\)
+  où \(K\) est le nombre de populations observées. Notant
+  \(\boldsymbol{p} = (p_1, p_2, \dots, p_K) \in \mathbb{R}^K\),
+  \(\boldsymbol{p_0} = (p_0, p_0, \dots, p_0) \in \mathbb{R}^K\),
+  \(\boldsymbol{r} = N(0, V)\), le modèle neutre pour \(\boldsymbol{p}\)
+  est donné par la relation suivante :
+  
+  \begin{equation} 
+    \boldsymbol{p} = \boldsymbol{p_0} + \boldsymbol{r} 
+    \label{eq:flk_neutral_model}
+  \end{equation}
+  
+  Bonhomme \textit{et al.} proposent pour ce modèle de mesurer une
+  statistique de qualité de l'ajustement pour quantifier la déviance d'un
+  allèle par rapport au modèle neutre :
+  
+  \begin{equation} 
+    FLK = (\boldsymbol{p - \hat{p}_0})^T V (\boldsymbol{p - \hat{p}_0})                                \label{eq:flk-statistic}
+  \end{equation}
+  
+  Sous l'hypothèse neutre et suivant \eqref{eq:flk-statistic},
+  \(FLK \sim \chi^2 (K - 1)\).
+  
+  \section{Modèle de OutFLANK}\label{modele-de-outflank}
+  
+  En reprenant le modèle proposé par Lewontin et Krakauer (Lewontin \&
+  Krakauer, 1973) et en y apportant les corrections nécessaires afin de
+  prendre en compte les erreurs d'échantillonnage, Whitlock
+  \textit{et al.} proposent une méthode permettant de détecter les allèles
+  sous sélection en environnement hétérogène (Whitlock \& Lotterhos,
+  2015). Ainsi, la quantité
+  
+  \begin{equation} 
+    X = k \frac{F_{ST}^{\prime}}{\bar{{F_{ST}^{\prime}}}}  
+    \label{eq:OutFLANK-statistic}
+  \end{equation}
+  
+  \section{Modèle de Bayescan}\label{modele-de-bayescan}
+  
+  \section{Fast PCA}\label{fast-pca}
+  
   \begin{itemize}
-  \item
-    Modèle de FLK
-  \item
-    Modèle de OutFLANK
-  \item
-    Modèle de Bayescan
-  \item
-    Fast PCA
+  \tightlist
   \item
     ACP en génétique des populations
+  \end{itemize}
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \ImportTok{import} \NormalTok{numpy }\ImportTok{as} \NormalTok{np}
+  \NormalTok{l }\OperatorTok{=} \NormalTok{[]}
+  \BuiltInTok{print}\NormalTok{(l)}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  \begin{verbatim}
+  ## []
+  \end{verbatim}
+  
+  \begin{itemize}
+  \tightlist
   \item
     Partie III: R package pcadapt
   \end{itemize}
@@ -245,7 +326,32 @@ starts here.
   \section{Cas d'étude utilisant
   pcadapt}\label{cas-detude-utilisant-pcadapt}
   
-  \section{POOP}\label{poop}
+  \section{Simulations et modèles
+  démographiques}\label{simulations-et-modeles-demographiques}
+  
+  \subsection{Modèle en île}\label{modele-en-ile}
+  
+  \subsection{Modèle de divergence}\label{modele-de-divergence}
+  
+  \subsection{Modèle d'expansion
+  spatiale}\label{modele-dexpansion-spatiale}
+  
+  \section{La communalité}\label{la-communalite}
+  
+  \newpage
+  
+  \includepdf[pages=-]{article/msv334.pdf}
+  
+  \newpage
+  
+  \section{La distance robuste de
+  Mahalanobis}\label{la-distance-robuste-de-mahalanobis}
+  
+  \newpage
+  
+  \includepdf[pages=-]{article/Luu_et_al-2017-Molecular_Ecology_Resources.pdf}
+  
+  \newpage
   
   \chapter{Introgression adaptative}\label{introgression-adaptative}
   
@@ -574,79 +680,6 @@ starts here.
   
   1000 generations
   
-  \begin{Shaded}
-  \begin{Highlighting}[]
-  \KeywordTok{library}\NormalTok{(magrittr)}
-  \KeywordTok{source}\NormalTok{(}\StringTok{"R/summarySE.R"}\NormalTok{)}
-  
-  \NormalTok{res.tp <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"data/results_admixture_setting_1000_tp.txt"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
-  \NormalTok{res.fp <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"data/results_admixture_setting_1000_fp.txt"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
-  
-  \NormalTok{power <-}\StringTok{ }\DecValTok{100} \NormalTok{*}\StringTok{ }\NormalTok{res.tp$true_positives /}\StringTok{ }\DecValTok{5}
-  \NormalTok{res.pow <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(res.tp, power)}
-  \KeywordTok{colnames}\NormalTok{(res.pow) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{colnames}\NormalTok{(res.tp), }\StringTok{"value"}\NormalTok{)}
-  \NormalTok{fdr <-}\StringTok{ }\DecValTok{100} \NormalTok{*}\StringTok{ }\NormalTok{res.fp$false_positives /}\StringTok{ }\NormalTok{(res.tp$true_positives +}\StringTok{ }\NormalTok{res.fp$false_positives)}
-  \NormalTok{fdr[}\KeywordTok{is.na}\NormalTok{(fdr)] <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(fdr, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
-  \NormalTok{res.fdr <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(res.fp, fdr)}
-  \KeywordTok{colnames}\NormalTok{(res.fdr) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{colnames}\NormalTok{(res.fp), }\StringTok{"value"}\NormalTok{)}
-  
-  \NormalTok{pdf <-}\StringTok{ }\KeywordTok{summarySE}\NormalTok{(res.pow, }\DataTypeTok{measurevar =} \StringTok{"value"}\NormalTok{, }\DataTypeTok{groupvars =} \KeywordTok{c}\NormalTok{(}\StringTok{"method"}\NormalTok{, }\StringTok{"delta_p"}\NormalTok{))}
-  \end{Highlighting}
-  \end{Shaded}
-  
-  \begin{verbatim}
-  ## -------------------------------------------------------------------------
-  \end{verbatim}
-  
-  \begin{verbatim}
-  ## You have loaded plyr after dplyr - this is likely to cause problems.
-  ## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
-  ## library(plyr); library(dplyr)
-  \end{verbatim}
-  
-  \begin{verbatim}
-  ## -------------------------------------------------------------------------
-  \end{verbatim}
-  
-  \begin{verbatim}
-  ## 
-  ## Attachement du package : 'plyr'
-  \end{verbatim}
-  
-  \begin{verbatim}
-  ## The following objects are masked from 'package:dplyr':
-  ## 
-  ##     arrange, count, desc, failwith, id, mutate, rename, summarise,
-  ##     summarize
-  \end{verbatim}
-  
-  \begin{Shaded}
-  \begin{Highlighting}[]
-  \NormalTok{fdf <-}\StringTok{ }\KeywordTok{summarySE}\NormalTok{(res.fdr, }\DataTypeTok{measurevar =} \StringTok{"value"}\NormalTok{, }\DataTypeTok{groupvars =} \KeywordTok{c}\NormalTok{(}\StringTok{"method"}\NormalTok{, }\StringTok{"delta_p"}\NormalTok{))}
-  
-  \NormalTok{p0 <-}\StringTok{ }\NormalTok{dplyr::}\KeywordTok{bind_rows}\NormalTok{(}
-    \KeywordTok{mutate}\NormalTok{(pdf, }\DataTypeTok{stat =} \StringTok{"Power"}\NormalTok{),}
-    \KeywordTok{mutate}\NormalTok{(fdf, }\DataTypeTok{stat =} \StringTok{"False Discovery Rate"}\NormalTok{)}
-  \NormalTok{) %>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{stat_f =}  \KeywordTok{factor}\NormalTok{(stat, }\DataTypeTok{levels=}\KeywordTok{c}\NormalTok{(}\StringTok{"Power"}\NormalTok{, }\StringTok{"False Discovery Rate"}\NormalTok{))}
-  \NormalTok{) %>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{delta_p, }\DataTypeTok{y =} \NormalTok{value, }\DataTypeTok{colour =} \NormalTok{method)) +}\StringTok{ }
-  \StringTok{  }\KeywordTok{geom_errorbar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{ymin =} \NormalTok{value -}\StringTok{ }\NormalTok{se, }\DataTypeTok{ymax =} \NormalTok{value +}\StringTok{ }\NormalTok{se), }
-                  \DataTypeTok{width =}\NormalTok{.}\DecValTok{05}\NormalTok{, }\DataTypeTok{size =} \FloatTok{1.5}\NormalTok{) +}
-  \StringTok{  }\KeywordTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{105}\NormalTok{) +}\StringTok{ }\KeywordTok{facet_grid}\NormalTok{(~stat_f, }\DataTypeTok{margins =} \StringTok{"am"}\NormalTok{) +}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{) +}\StringTok{ }\KeywordTok{xlab}\NormalTok{(}\KeywordTok{expression}\NormalTok{(}\KeywordTok{atop}\NormalTok{(}\KeywordTok{bold}\NormalTok{(}\StringTok{"Difference of ancestry between introgressed"}\NormalTok{), }\KeywordTok{bold}\NormalTok{(}\StringTok{"and non-introgressed regions"}\NormalTok{)))) +}
-  \StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{size =} \DecValTok{2}\NormalTok{) +}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{size =} \FloatTok{1.5}\NormalTok{) +}\StringTok{ }
-  \StringTok{  }\KeywordTok{scale_x_reverse}\NormalTok{() +}
-  \StringTok{  }\KeywordTok{theme_bw}\NormalTok{() +}\StringTok{ }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{colour =} \KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Method"}\NormalTok{)) +}
-  \StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{20}\NormalTok{, }\DataTypeTok{face =} \StringTok{"bold"}\NormalTok{),}
-          \DataTypeTok{axis.title.x =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{margin =} \KeywordTok{margin}\NormalTok{(}\DataTypeTok{t =} \DecValTok{20}\NormalTok{, }\DataTypeTok{r =} \DecValTok{0}\NormalTok{, }\DataTypeTok{b =} \DecValTok{0}\NormalTok{, }\DataTypeTok{l =} \DecValTok{0}\NormalTok{)),}
-          \DataTypeTok{axis.title=}\KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{20}\NormalTok{, }\DataTypeTok{face =} \StringTok{"bold"}\NormalTok{),}
-          \DataTypeTok{title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{20}\NormalTok{, }\DataTypeTok{face =} \StringTok{"bold"}\NormalTok{),}
-          \DataTypeTok{strip.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size=}\DecValTok{20}\NormalTok{, }\DataTypeTok{face =} \StringTok{"bold"}\NormalTok{),}
-          \DataTypeTok{legend.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{20}\NormalTok{),}
-          \DataTypeTok{legend.key.height =} \KeywordTok{unit}\NormalTok{(}\DecValTok{3}\NormalTok{, }\StringTok{"line"}\NormalTok{),}
-          \DataTypeTok{legend.key.width =} \KeywordTok{unit}\NormalTok{(}\DecValTok{3}\NormalTok{, }\StringTok{"line"}\NormalTok{))}
-  \KeywordTok{print}\NormalTok{(p0)}
-  \end{Highlighting}
-  \end{Shaded}
-  
   \paragraph{Scénario à flux de gènes}\label{scenario-a-flux-de-genes-1}
   
   Dans ce paragraphe, nous comparons notre statistique de test à un
@@ -709,6 +742,12 @@ starts here.
   estimation of ancestry in unrelated individuals. \emph{Genome Research},
   \emph{19}(9), 1655--1664.
   
+  \hypertarget{ref-bonhomme2010detecting}{}
+  Bonhomme, M., Chevalet, C., Servin, B., Boitard, S., Abdallah, J.,
+  Blott, S., \& SanCristobal, M. (2010). Detecting selection in population
+  trees: The lewontin and krakauer test extended. \emph{Genetics},
+  \emph{186}(1), 241--262.
+  
   \hypertarget{ref-caye2016tess3}{}
   Caye, K., Deist, T. M., Martins, H., Michel, O., \& François, O. (2016).
   TESS3: Fast inference of spatial population structure and genome scans
@@ -744,6 +783,11 @@ starts here.
   approach for distinguishing hybridization and incomplete lineage
   sorting. \emph{The American Naturalist}, \emph{174}(2), E54--E70.
   
+  \hypertarget{ref-lewontin1973distribution}{}
+  Lewontin, R., \& Krakauer, J. (1973). Distribution of gene frequency as
+  a test of the theory of the selective neutrality of polymorphisms.
+  \emph{Genetics}, \emph{74}(1), 175--195.
+  
   \hypertarget{ref-maples2013rfmix}{}
   Maples, B. K., Gravel, S., Kenny, E. E., \& Bustamante, C. D. (2013).
   RFMix: A discriminative modeling approach for rapid and robust
@@ -758,6 +802,13 @@ starts here.
   \hypertarget{ref-mcvean2009genealogical}{}
   McVean, G. (2009). A genealogical interpretation of principal components
   analysis. \emph{PLoS Genetics}, \emph{5}(10), e1000686.
+  
+  \hypertarget{ref-nicholson2002assessing}{}
+  Nicholson, G., Smith, A. V., Jónsson, F., Gústafsson, Ó., Stefánsson,
+  K., \& Donnelly, P. (2002). Assessing population differentiation and
+  isolation from single-nucleotide polymorphism data. \emph{Journal of the
+  Royal Statistical Society: Series B (Statistical Methodology)},
+  \emph{64}(4), 695--715.
   
   \hypertarget{ref-pfeifer2017estimates}{}
   Pfeifer, B., \& Kapan, D. D. (2017). Estimates of introgression as a
@@ -784,6 +835,12 @@ starts here.
   Thornton, T. A., \& Bermejo, J. L. (2014). Local and global ancestry
   inference and applications to genetic association analysis for admixed
   populations. \emph{Genetic Epidemiology}, \emph{38}(S1).
+  
+  \hypertarget{ref-whitlock2015reliable}{}
+  Whitlock, M. C., \& Lotterhos, K. E. (2015). Reliable detection of loci
+  responsible for local adaptation: Inference of a null model through
+  trimming the distribution of f st. \emph{The American Naturalist},
+  \emph{186}(S1), S24--S36.
   
   \hypertarget{ref-yang2013efficient}{}
   Yang, J. J., Li, J., Buu, A., \& Williams, L. K. (2013). Efficient

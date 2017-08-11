@@ -4,6 +4,26 @@ Une population est dite localement adaptée à son environnement si elle a connu
 
 ## Cas d'étude utilisant pcadapt
 
-## POOP
+## Simulations et modèles démographiques
 
+### Modèle en île
 
+### Modèle de divergence
+
+### Modèle d'expansion spatiale
+
+## La communalité
+
+\newpage
+
+\includepdf[pages=-]{article/msv334.pdf}
+
+\newpage
+
+## La distance robuste de Mahalanobis
+
+\newpage
+
+\includepdf[pages=-]{article/Luu_et_al-2017-Molecular_Ecology_Resources.pdf}
+
+\newpage

@@ -9,15 +9,59 @@ The {#rmd-basics} text after the chapter declaration will allow us to link throu
 
 # État de l'art
 
-- Modèle de FLK
+## L'indice de fixation
 
-- Modèle de OutFLANK
+En se différenciant génétiquement, les populations voient leurs fréquences d'allèles évoluer de façon indépendante. L'indice de fixation est une statistique permettant de quantifier pour un allèle donné, l'écart de la fréquence observée dans une sous-population à la fréquence théorique
 
-- Modèle de Bayescan
+## Modèle de FLK
 
-- Fast PCA
+Le modèle de FLK estime le modèle neutre d'un SNP bi-allélique lorsque celui-ci est uniquement soumis à la dérive génétique. À l'instant $t = 0$, le SNP a une fréquence $p_0$. Notant $F_t$ l'indice de fixation de cet allèle, $p(t)$ sa fréquence après $t$ générations, et en supposant que $F_t$ soit suffisamment petit, ce qui devrait être le cas dans le cas neutre. [@nicholson2002assessing] : 
+
+\begin{equation} 
+  p(t) \sim N(p_0, F_t p_0 (1-p_0)) 
+  \label{eq:frequency-law}
+\end{equation}
+
+De la loi \@ref(eq:frequency-law) nous tirons $\text{Var}(p(t)) = F_t p_0 (1-p_0)$.
+
+La statistique FLK [@bonhomme2010detecting] requiert d'estimer au préalable deux paramètres que sont la fréquence allélique initiale $p_0$ et la matrice d'apparentement $V$, $V \in M_K(\mathbb{R})$ où $K$ est le nombre de populations observées.
+Notant $\boldsymbol{p} = (p_1, p_2, \dots, p_K) \in \mathbb{R}^K$, $\boldsymbol{p_0} = (p_0, p_0, \dots, p_0) \in \mathbb{R}^K$, $\boldsymbol{r} = N(0, V)$, le modèle neutre pour $\boldsymbol{p}$ est donné par la relation suivante : 
+
+\begin{equation} 
+  \boldsymbol{p} = \boldsymbol{p_0} + \boldsymbol{r} 
+  \label{eq:flk_neutral_model}
+\end{equation}
+
+Bonhomme \textit{et al.} proposent pour ce modèle de mesurer une statistique de qualité de l'ajustement pour quantifier la déviance d'un allèle par rapport au modèle neutre : 
+
+\begin{equation} 
+  FLK = (\boldsymbol{p - \hat{p}_0})^T V (\boldsymbol{p - \hat{p}_0})                                \label{eq:flk-statistic}
+\end{equation}
+
+Sous l'hypothèse neutre et suivant \@ref(eq:flk-statistic), $FLK \sim \chi^2 (K - 1)$.
+
+## Modèle de OutFLANK
+
+En reprenant le modèle proposé par Lewontin et Krakauer [@lewontin1973distribution] et en y apportant les corrections nécessaires afin de prendre en compte les erreurs d'échantillonnage, 
+Whitlock \textit{et al.} proposent une méthode permettant de détecter les allèles sous sélection en environnement hétérogène [@whitlock2015reliable]. Ainsi, la quantité 
+
+\begin{equation} 
+  X = k \frac{F_{ST}^{\prime}}{\bar{{F_{ST}^{\prime}}}}  
+  \label{eq:OutFLANK-statistic}
+\end{equation}
+
+
+## Modèle de Bayescan
+
+## Fast PCA
 
 - ACP en génétique des populations
+
+```{python}
+import numpy as np
+l = []
+print(l)
+```
 
 - Partie III: R package pcadapt
 
