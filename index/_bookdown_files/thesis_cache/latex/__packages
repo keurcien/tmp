@@ -1,0 +1,17 @@
+base
+methods
+datasets
+utils
+grDevices
+graphics
+stats
+devtools
+dplyr
+ggplot2
+bookdown
+knitr
+thesisdown
+data.table
+pcadapt
+vcfR
+simulate

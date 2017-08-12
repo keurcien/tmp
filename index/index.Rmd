@@ -76,7 +76,5 @@ if(!require(pcadapt)){
 if(!require(simulate)){
   devtools::install_github("keurcien/simulate")
 }
-
-knitr::opts_knit$set(kable.force.latex = TRUE)
 ```
 

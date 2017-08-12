@@ -182,9 +182,34 @@ starts here.
   \chapter*{Introduction}\label{introduction}
   \addcontentsline{toc}{chapter}{Introduction}
   
-  \section*{Données en grande
-  dimension}\label{donnees-en-grande-dimension}
-  \addcontentsline{toc}{section}{Données en grande dimension}
+  « Je me propose de passer brièvement en revue les progrès de l'opinion
+  relativement à l'origine des espèces. Jusque tout récemment, la plupart
+  des naturalistes croyaient que les espèces sont des productions
+  immuables créées séparément. De nombreux savants ont habilement soutenu
+  cette hypothèse. Quelques autres, au contraire, ont admis que les
+  espèces éprouvent des modifications et que les formes actuelles
+  descendent de formes préexistantes par voie de génération régulière. »
+  
+  C'est de cette manière qu'en 1920, Edmond Barbier, dans sa notice
+  relative à la traduction française de \textit{L'Origine des espèces}
+  (Darwin, 1980), décide de présenter le contexte dans lequel il a été
+  amené à effectuer ce travail de traduction. Ce constat qu'il partage,
+  réalisé il y a presque cent ans, semble pourtant valoir encore
+  aujourd'hui. Si bien que chaque sortie de l'Église catholique affirmant
+  la compatibilité entre la religion et la théorie évolutionniste apporte
+  son lot de débats et de controverses.
+  
+  \section{Qu'est-ce que la génétique ?}\label{quest-ce-que-la-genetique}
+  
+  À cette question nous pourrions reprendre en guise de réponse la
+  formulation de Cavalli-Sforza, traduite de l'italien (Cavalli-Sforza,
+  1994): « La génétique est la science de l'hérédité. Elle est la clé de
+  toute la biologie, parce qu'elle explique les mécanismes qui sont
+  responsables de la reproduction des êtres vivants, du fonctionnement et
+  de la transmission du matériel héréditaire, des différences entre les
+  individus, de l'évolution biologique. »
+  
+  \section{Données en grande dimension}\label{donnees-en-grande-dimension}
   
   L'accumulation de données, aussi bien en termes d'observations qu'en
   termes de variables, laisse à penser que le traitement de celles-ci
@@ -217,7 +242,7 @@ starts here.
   \(t = 0\), le SNP a une fréquence \(p_0\). Notant \(F_t\) l'indice de
   fixation de cet allèle, \(p(t)\) sa fréquence après \(t\) générations,
   et en supposant que \(F_t\) soit suffisamment petit, ce qui devrait être
-  le cas dans le cas neutre. (Nicholson et al., 2002) :
+  vérifié dans le cas neutre. (Nicholson et al., 2002) :
   
   \begin{equation} 
     p(t) \sim N(p_0, F_t p_0 (1-p_0)) 
@@ -230,11 +255,19 @@ starts here.
   La statistique FLK (Bonhomme et al., 2010) requiert d'estimer au
   préalable deux paramètres que sont la fréquence allélique initiale
   \(p_0\) et la matrice d'apparentement \(V\), \(V \in M_K(\mathbb{R})\)
-  où \(K\) est le nombre de populations observées. Notant
-  \(\boldsymbol{p} = (p_1, p_2, \dots, p_K) \in \mathbb{R}^K\),
-  \(\boldsymbol{p_0} = (p_0, p_0, \dots, p_0) \in \mathbb{R}^K\),
-  \(\boldsymbol{r} = N(0, V)\), le modèle neutre pour \(\boldsymbol{p}\)
-  est donné par la relation suivante :
+  où \(K\) est le nombre de populations observées. Notant :
+  
+  \begin{itemize}
+  \item
+    \(\boldsymbol{p} = (p_1, p_2, \dots, p_K) \in \mathbb{R}^K\),
+  \item
+    \(\boldsymbol{p_0} = (p_0, p_0, \dots, p_0) \in \mathbb{R}^K\),
+  \item
+    \(\boldsymbol{r} = N(0, V)\),
+  \end{itemize}
+  
+  le modèle neutre pour \(\boldsymbol{p}\) est donné par la relation
+  suivante :
   
   \begin{equation} 
     \boldsymbol{p} = \boldsymbol{p_0} + \boldsymbol{r} 
@@ -262,11 +295,28 @@ starts here.
   2015). Ainsi, la quantité
   
   \begin{equation} 
-    X = k \frac{F_{ST}^{\prime}}{\bar{{F_{ST}^{\prime}}}}  
+    k \frac{F_{ST}^{\prime}}{\bar{{F_{ST}^{\prime}}}}  
     \label{eq:OutFLANK-statistic}
   \end{equation}
   
-  \section{Modèle de Bayescan}\label{modele-de-bayescan}
+  où \(k\) représente le nombre de degrés de libertés.
+  
+  \section{Modèle du logiciel Bayescan}\label{modele-du-logiciel-bayescan}
+  
+  Bayescan est aujourd'hui encore un des logiciels les plus utilisés pour
+  détecter l'adaptation locale. Le modèle employé suppose que les
+  sous-populations observées proviennent toutes d'une même population
+  ancestrale. Pour une sous-population donnée et un SNP donné, la
+  statistique de \(F_{ST}\) peut être estimée en utilisant la
+  vraisemblance d'un modèle multinomial-Dirichlet (Beaumont \& Balding,
+  2004). \(F_{ST} \in [0, 1]\) est une quantité qui peut être interprété
+  comme proportionnel à la probabilité que deux individus aient un ancêtre
+  commun dans la sous-population
+  
+  \begin{equation} 
+    \log \left( \frac{F_{ST}}{1 - F_{ST}} \right) = \alpha_j + \beta_i + \gamma_{ij}
+    \label{eq:Bayescan-statistic}
+  \end{equation}
   
   \section{Fast PCA}\label{fast-pca}
   
@@ -274,24 +324,6 @@ starts here.
   \tightlist
   \item
     ACP en génétique des populations
-  \end{itemize}
-  
-  \begin{Shaded}
-  \begin{Highlighting}[]
-  \ImportTok{import} \NormalTok{numpy }\ImportTok{as} \NormalTok{np}
-  \NormalTok{l }\OperatorTok{=} \NormalTok{[]}
-  \BuiltInTok{print}\NormalTok{(l)}
-  \end{Highlighting}
-  \end{Shaded}
-  
-  \begin{verbatim}
-  ## []
-  \end{verbatim}
-  
-  \begin{itemize}
-  \tightlist
-  \item
-    Partie III: R package pcadapt
   \end{itemize}
   
   \section{Analyse en Composantes Principales
@@ -332,6 +364,140 @@ starts here.
   \subsection{Modèle en île}\label{modele-en-ile}
   
   \subsection{Modèle de divergence}\label{modele-de-divergence}
+  
+  Nous adaptons une version du script Python utilisé dans (Roux et al.,
+  2012), basé sur le module de simulation simuPOP (Peng \& Kimmel, 2005).
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \CommentTok{#!/usr/bin/env python}
+  \ImportTok{from} \NormalTok{__future__ }\ImportTok{import} \NormalTok{division}
+  \ImportTok{import} \NormalTok{simuOpt, types, os, sys, time}
+  \NormalTok{simuOpt.setOptions(alleleType }\OperatorTok{=} \StringTok{'long'}\NormalTok{)}
+  \ImportTok{from} \NormalTok{operator }\ImportTok{import} \NormalTok{itemgetter}
+  \ImportTok{import} \NormalTok{numpy }\ImportTok{as} \NormalTok{np}
+  \ImportTok{from} \NormalTok{simuPOP }\ImportTok{import} \OperatorTok{*}
+  \ImportTok{from} \NormalTok{simuPOP.utils }\ImportTok{import} \OperatorTok{*}
+  \ImportTok{from} \NormalTok{simuPOP.sampling }\ImportTok{import} \NormalTok{drawRandomSample}
+  
+  \KeywordTok{def} \NormalTok{simulate(Ne, Nsam, T1, T2, T3, s10, s11):}
+      \NormalTok{pop }\OperatorTok{=} \NormalTok{Population(size }\OperatorTok{=} \NormalTok{Ne, }
+                       \NormalTok{ploidy }\OperatorTok{=} \DecValTok{2}\NormalTok{, }
+                       \NormalTok{loci }\OperatorTok{=} \NormalTok{[}\DecValTok{1}\NormalTok{], }
+                       \NormalTok{infoFields }\OperatorTok{=} \NormalTok{[}\StringTok{'fitness'}\NormalTok{, }\StringTok{'migrate_to'}\NormalTok{])}
+                       
+      \KeywordTok{def} \NormalTok{getfitness10(geno):}
+          \ControlFlowTok{if} \NormalTok{geno[}\DecValTok{0}\NormalTok{] }\OperatorTok{+} \NormalTok{geno[}\DecValTok{1}\NormalTok{] }\OperatorTok{==} \DecValTok{0} \NormalTok{:}
+              \ControlFlowTok{return} \DecValTok{1} \OperatorTok{-} \DecValTok{2} \OperatorTok{*} \NormalTok{s10}
+          \ControlFlowTok{if} \NormalTok{geno[}\DecValTok{0}\NormalTok{] }\OperatorTok{+} \NormalTok{geno[}\DecValTok{1}\NormalTok{] }\OperatorTok{==} \DecValTok{1} \NormalTok{:}
+              \ControlFlowTok{return} \DecValTok{1} \OperatorTok{-} \NormalTok{s10}
+          \ControlFlowTok{else} \NormalTok{:}
+              \ControlFlowTok{return} \DecValTok{1}
+  
+      \KeywordTok{def} \NormalTok{getfitness11(geno):}
+          \ControlFlowTok{if} \NormalTok{geno[}\DecValTok{0}\NormalTok{] }\OperatorTok{+} \NormalTok{geno[}\DecValTok{1}\NormalTok{] }\OperatorTok{==} \DecValTok{0} \NormalTok{:}
+              \ControlFlowTok{return} \DecValTok{1} \OperatorTok{-} \DecValTok{2} \OperatorTok{*} \NormalTok{s11}
+          \ControlFlowTok{if} \NormalTok{geno[}\DecValTok{0}\NormalTok{] }\OperatorTok{+} \NormalTok{geno[}\DecValTok{1}\NormalTok{] }\OperatorTok{==} \DecValTok{1} \NormalTok{:}
+              \ControlFlowTok{return} \DecValTok{1} \OperatorTok{-} \NormalTok{s11}
+          \ControlFlowTok{else} \NormalTok{:}
+              \ControlFlowTok{return} \DecValTok{1}
+              
+      \NormalTok{pop.evolve( }
+          \NormalTok{initOps }\OperatorTok{=} \NormalTok{[}
+              \NormalTok{InitSex(),}
+              \NormalTok{InitGenotype(loci }\OperatorTok{=} \NormalTok{ALL_AVAIL, }
+                           \NormalTok{freq }\OperatorTok{=} \NormalTok{[}\FloatTok{0.5}\NormalTok{, }\FloatTok{0.5}\NormalTok{],  }
+                           \NormalTok{begin }\OperatorTok{=} \DecValTok{0}\NormalTok{, }
+                           \NormalTok{end }\OperatorTok{=} \DecValTok{1}\NormalTok{)}
+          \NormalTok{],}
+          
+          \NormalTok{preOps }\OperatorTok{=} \NormalTok{[}
+              \CommentTok{# resize the ancestral population at the time immediatly }
+              \CommentTok{# before the split}
+              \NormalTok{ResizeSubPops([}\DecValTok{0}\NormalTok{], }
+                            \NormalTok{sizes }\OperatorTok{=} \NormalTok{[Ne }\OperatorTok{+} \NormalTok{Ne], }
+                            \NormalTok{at }\OperatorTok{=} \NormalTok{T1 }\OperatorTok{-} \DecValTok{1}\NormalTok{),}
+                                
+              \NormalTok{ResizeSubPops([}\StringTok{"S1_1"}\NormalTok{], }
+                            \NormalTok{sizes }\OperatorTok{=} \NormalTok{[Ne }\OperatorTok{+} \NormalTok{Ne], }
+                            \NormalTok{at }\OperatorTok{=} \NormalTok{T1 }\OperatorTok{+} \NormalTok{T2 }\OperatorTok{-} \DecValTok{1}\NormalTok{),}
+                                
+              \CommentTok{# split populations in 2 subpopulations }
+              \NormalTok{SplitSubPops(subPops }\OperatorTok{=} \NormalTok{[}\DecValTok{0}\NormalTok{], }
+                           \NormalTok{sizes }\OperatorTok{=} \NormalTok{[Ne, Ne], }
+                           \NormalTok{names }\OperatorTok{=} \NormalTok{[}\StringTok{"S1_0"}\NormalTok{, }\StringTok{"S1_1"}\NormalTok{], }
+                           \NormalTok{at }\OperatorTok{=} \NormalTok{T1),}
+                               
+              \NormalTok{SplitSubPops(subPops }\OperatorTok{=} \NormalTok{[}\StringTok{"S1_1"}\NormalTok{], }
+                           \NormalTok{sizes }\OperatorTok{=} \NormalTok{[Ne, Ne], }
+                           \NormalTok{at }\OperatorTok{=} \NormalTok{T1 }\OperatorTok{+} \NormalTok{T2, }
+                           \NormalTok{names }\OperatorTok{=} \NormalTok{[}\StringTok{"S2_0"}\NormalTok{, }\StringTok{"S2_1"}\NormalTok{]),}
+                           
+              \CommentTok{# apply selection by invoking function getfitness}
+              \NormalTok{PySelector(loci }\OperatorTok{=} \NormalTok{[}\DecValTok{0}\NormalTok{], }
+                         \NormalTok{func }\OperatorTok{=} \NormalTok{getfitness11, }
+                         \NormalTok{begin }\OperatorTok{=} \NormalTok{T1 }\OperatorTok{+} \NormalTok{T2,}
+                         \NormalTok{subPops }\OperatorTok{=} \NormalTok{[}\StringTok{"S2_1"}\NormalTok{]),}
+                     
+              \NormalTok{PySelector(loci }\OperatorTok{=} \NormalTok{[}\DecValTok{0}\NormalTok{],}
+                         \NormalTok{func }\OperatorTok{=} \NormalTok{getfitness10, }
+                         \NormalTok{begin }\OperatorTok{=} \NormalTok{T1, }
+                         \NormalTok{subPops }\OperatorTok{=} \NormalTok{[}\StringTok{"S1_0"}\NormalTok{], }
+                         \NormalTok{end }\OperatorTok{=} \NormalTok{T1 }\OperatorTok{+} \NormalTok{T2 }\OperatorTok{+} \NormalTok{T3 }\OperatorTok{-} \DecValTok{1}\NormalTok{)}
+          \NormalTok{],}
+          
+          \NormalTok{matingScheme }\OperatorTok{=} \NormalTok{RandomMating(ops }\OperatorTok{=} \NormalTok{[}
+                                          \NormalTok{Recombinator(intensity }\OperatorTok{=} \DecValTok{1}\NormalTok{)}
+                                      \NormalTok{]),}
+                         
+          \NormalTok{gen }\OperatorTok{=} \NormalTok{T1 }\OperatorTok{+} \NormalTok{T2 }\OperatorTok{+} \NormalTok{T3 }
+        
+      \NormalTok{)}
+      
+      \NormalTok{sample }\OperatorTok{=} \NormalTok{drawRandomSample(pop, sizes }\OperatorTok{=} \NormalTok{[Nsam, Nsam, Nsam])}
+      
+      \ControlFlowTok{return} \NormalTok{sample}
+  
+      
+  \NormalTok{Ne }\OperatorTok{=} \DecValTok{1000}
+  \NormalTok{Nsam }\OperatorTok{=} \DecValTok{25}
+  \NormalTok{T1 }\OperatorTok{=} \DecValTok{10}
+  \NormalTok{T2 }\OperatorTok{=} \DecValTok{100}
+  \NormalTok{T3 }\OperatorTok{=} \DecValTok{100}
+  \NormalTok{s }\OperatorTok{=} \FloatTok{0.1}
+  \NormalTok{nSNP }\OperatorTok{=} \DecValTok{10}
+  
+  \NormalTok{G  }\OperatorTok{=} \NormalTok{np.zeros([}\DecValTok{3} \OperatorTok{*} \NormalTok{Nsam, nSNP])}
+  
+  \ControlFlowTok{for} \NormalTok{i }\OperatorTok{in} \BuiltInTok{range}\NormalTok{(nSNP):}
+      \ControlFlowTok{if} \NormalTok{i }\OperatorTok{<} \DecValTok{1}\NormalTok{:}
+          \NormalTok{s10 }\OperatorTok{=} \DecValTok{2} \OperatorTok{*} \NormalTok{s}
+          \NormalTok{s11 }\OperatorTok{=} \FloatTok{0.0}
+      \ControlFlowTok{elif} \NormalTok{i }\OperatorTok{<} \DecValTok{2}\NormalTok{:}
+          \NormalTok{s10 }\OperatorTok{=} \FloatTok{0.0}
+          \NormalTok{s11 }\OperatorTok{=} \NormalTok{s}
+      \ControlFlowTok{else}\NormalTok{:}
+          \NormalTok{s10 }\OperatorTok{=} \FloatTok{0.0}
+          \NormalTok{s11 }\OperatorTok{=} \FloatTok{0.0}
+      \NormalTok{res }\OperatorTok{=} \NormalTok{simulate(Ne, Nsam, T1, T2, T3, s10, s11)}
+      \ControlFlowTok{for} \NormalTok{j }\OperatorTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{3}\NormalTok{):}
+          \NormalTok{Sj }\OperatorTok{=} \NormalTok{res.genotype(j)}
+          \ControlFlowTok{for} \NormalTok{k }\OperatorTok{in} \BuiltInTok{range}\NormalTok{(}\BuiltInTok{int}\NormalTok{(}\BuiltInTok{len}\NormalTok{(Sj) }\OperatorTok{/} \DecValTok{2}\NormalTok{)):}
+              \NormalTok{idx }\OperatorTok{=} \NormalTok{j }\OperatorTok{*} \BuiltInTok{int}\NormalTok{(}\BuiltInTok{len}\NormalTok{(Sj) }\OperatorTok{/} \DecValTok{2}\NormalTok{) }\OperatorTok{+} \NormalTok{k }
+              \NormalTok{G[idx][i] }\OperatorTok{=} \NormalTok{Sj[}\DecValTok{2} \OperatorTok{*} \NormalTok{k] }\OperatorTok{+} \NormalTok{Sj[}\DecValTok{2} \OperatorTok{*} \NormalTok{k }\OperatorTok{+} \DecValTok{1}\NormalTok{]}
+              
+  \NormalTok{np.savetxt(}\StringTok{'data/simuPOP.pcadapt'}\NormalTok{, G, fmt }\OperatorTok{=} \StringTok{'}\SpecialCharTok{%i}\StringTok{'}\NormalTok{)}
+  \end{Highlighting}
+  \end{Shaded}
+  
+  \begin{verbatim}
+  ## simuPOP Version 1.1.4 : Copyright (c) 2004-2011 Bo Peng
+  ## Revision 4952 (Oct 15 2014) for Python 2.7.5 (64bit, 0thread)
+  ## Random Number Generator is set to mt19937 with random seed 0xec2e1c062a76f3ee.
+  ## This is the standard long allele version with 18446744073709551616 maximum allelic states.
+  ## For more information, please visit http://simupop.sourceforge.net,
+  ## or email simupop-list@lists.sourceforge.net (subscription required).
+  \end{verbatim}
   
   \subsection{Modèle d'expansion
   spatiale}\label{modele-dexpansion-spatiale}
@@ -411,7 +577,14 @@ starts here.
   coefficients de métissage global fut sur l'interprétation généalogique
   de l'ACP de Gil McVean (McVean, 2009):
   
-  Coefficients de métissage et ACP
+  \begin{figure}
+  
+  {\centering \includegraphics[width=300px]{figure/mcvean} 
+  
+  }
+  
+  \caption{Coefficients de métissage et ACP}\label{fig:mcvean}
+  \end{figure}
   
   Pour chacun des 22 chromosomes,
   
@@ -559,11 +732,28 @@ starts here.
   l'emplacement des évènements de recombinaison. Pour ce faire, nous
   utilisons le modèle décrit dans (Price et al., 2009), en parcourant
   
-  \(\lambda = 0.001\)
+  \begin{figure}
   
-  \(\lambda = 0.01\)
+  {\centering \includegraphics[width=400px,height=200px]{figure/ancestry_heatmap_lambda_0001} 
   
-  \(\lambda = 0.1\)
+  }
+  
+  \caption{$\lambda = 0.001$}\label{fig:lambda0001}
+  \end{figure}\begin{figure}
+  
+  {\centering \includegraphics[width=400px,height=200px]{figure/ancestry_heatmap_lambda_001} 
+  
+  }
+  
+  \caption{$\lambda = 0.01$}\label{fig:lambda001}
+  \end{figure}\begin{figure}
+  
+  {\centering \includegraphics[width=400px,height=200px]{figure/ancestry_heatmap_lambda_01} 
+  
+  }
+  
+  \caption{$\lambda = 0.1$}\label{fig:lambda01}
+  \end{figure}
   
   \newpage
   
@@ -599,11 +789,14 @@ starts here.
   -r 50 5000 -T 
   \end{verbatim}
   
-  Modèle neutre. \(12N\) genérations auparavant, premier épisode de
-  divergence donnant naissance à P1 et à O. \(8N\) générations auparavant,
-  deuxième épisode de divergence voyant l'apparition de P3. \(4N\)
-  générations auparavant, dernier épisode de divergence et apparition de
-  P2.
+  \begin{figure}
+  
+  {\centering \includegraphics[scale=0.5]{figure/background} 
+  
+  }
+  
+  \caption{Modèle neutre. $12N$ genérations auparavant, premier épisode de divergence donnant naissance à P1 et à O. $8N$ générations auparavant, deuxième épisode de divergence voyant l'apparition de P3. $4N$ générations auparavant, dernier épisode de divergence et apparition de P2.}\label{fig:background}
+  \end{figure}
   
   ~
   
@@ -618,12 +811,14 @@ starts here.
   -es 0.1 2 0.8 -ej 0.1 5 3 -r 50 5000 -T
   \end{verbatim}
   
-  Modèle alternatif. \(12N\) genérations auparavant, premier épisode de
-  divergence donnant naissance à P1 et à O. \(8N\) générations auparavant,
-  deuxième épisode de divergence voyant l'apparition de P3. \(4N\)
-  générations auparavant, dernier épisode de divergence et apparition de
-  P2. \(t\) unités de temps auparavant, épisode de flux de gènes de P3
-  vers la population P2.
+  \begin{figure}
+  
+  {\centering \includegraphics[scale=0.5]{figure/alternate} 
+  
+  }
+  
+  \caption{Modèle alternatif. $12N$ genérations auparavant, premier épisode de divergence donnant naissance à P1 et à O. $8N$ générations auparavant, deuxième épisode de divergence voyant l'apparition de P3. $4N$ générations auparavant, dernier épisode de divergence et apparition de P2. $t$ unités de temps auparavant, épisode de flux de gènes de P3 vers la population P2.}\label{fig:alternate}
+  \end{figure}
   
   La variable \(f\) présente en figure \ref{fig:alternate} représente le
   taux d'introgression, elle quantifie la proportion d'haplotypes présents
@@ -674,11 +869,17 @@ starts here.
   Nous comparons ici notre méthode au logiciel RFMix destiné à la
   détermination de coefficients de métissage local.
   
-  10 generations
+  \begin{figure}
+  \includegraphics[width=500px]{figure/facet_admixture_setting_10_gen} \caption{10 generations}\label{fig:ras10g}
+  \end{figure}
   
-  100 generations
+  \begin{figure}
+  \includegraphics[width=500px]{figure/facet_admixture_setting_100_gen} \caption{100 generations}\label{fig:ras100g}
+  \end{figure}
   
-  1000 generations
+  \begin{figure}
+  \includegraphics[width=500px]{figure/facet_admixture_setting_1000_gen} \caption{1000 generations}\label{fig:ras1000g}
+  \end{figure}
   
   \paragraph{Scénario à flux de gènes}\label{scenario-a-flux-de-genes-1}
   
@@ -712,8 +913,7 @@ starts here.
   obvious after a chapter or section title, proper typesetting doesn't add
   an indent there.
   
-  \chapter*{(APPENDIX) Appendix}\label{appendix-appendix}
-  \addcontentsline{toc}{chapter}{(APPENDIX) Appendix}
+  \appendix
   
   \chapter{The First Appendix}\label{the-first-appendix}
   
@@ -722,6 +922,49 @@ starts here.
   chunk tag) to help with readibility and/or setup.
   
   \textbf{In the main Rmd file}
+  
+  \begin{Shaded}
+  \begin{Highlighting}[]
+  \CommentTok{# This chunk ensures that the thesisdown package is}
+  \CommentTok{# installed and loaded. This thesisdown package includes}
+  \CommentTok{# the template files for the thesis and also two functions}
+  \CommentTok{# used for labeling and referencing}
+  \CommentTok{#opts_chunk$set(cache=TRUE)}
+  
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(devtools))\{}
+    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
+  \NormalTok{\}}
+  
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(dplyr))\{}
+    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
+  \NormalTok{\}}
+  
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(ggplot2))\{}
+    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
+  \NormalTok{\}}
+  
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(bookdown))\{}
+    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"bookdown"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
+  \NormalTok{\}}
+  
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(thesisdown))\{}
+    \KeywordTok{library}\NormalTok{(devtools)}
+    \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"ismayc/thesisdown"}\NormalTok{)}
+  \NormalTok{\}}
+  
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(data.table))\{}
+    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"data.table"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
+  \NormalTok{\}}
+  
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(pcadapt))\{}
+    \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"bcm-uga/pcadapt"}\NormalTok{)}
+  \NormalTok{\}}
+  
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(simulate))\{}
+    \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"keurcien/simulate"}\NormalTok{)}
+  \NormalTok{\}}
+  \end{Highlighting}
+  \end{Shaded}
   
   \chapter{The Second Appendix, for
   Fun}\label{the-second-appendix-for-fun}
@@ -742,17 +985,31 @@ starts here.
   estimation of ancestry in unrelated individuals. \emph{Genome Research},
   \emph{19}(9), 1655--1664.
   
+  \hypertarget{ref-beaumont2004identifying}{}
+  Beaumont, M. A., \& Balding, D. J. (2004). Identifying adaptive genetic
+  divergence among populations from genome scans. \emph{Molecular
+  Ecology}, \emph{13}(4), 969--980.
+  
   \hypertarget{ref-bonhomme2010detecting}{}
   Bonhomme, M., Chevalet, C., Servin, B., Boitard, S., Abdallah, J.,
   Blott, S., \& SanCristobal, M. (2010). Detecting selection in population
   trees: The lewontin and krakauer test extended. \emph{Genetics},
   \emph{186}(1), 241--262.
   
+  \hypertarget{ref-cavalli1994francesco}{}
+  Cavalli-Sforza, L. (1994). Francesco. qui sommes-nous? Une histoire de
+  diversité humaine. \emph{Trans. Brun, Françoise. Flammarion Ed. Paris:
+  Centre National Des Lettres}.
+  
   \hypertarget{ref-caye2016tess3}{}
   Caye, K., Deist, T. M., Martins, H., Michel, O., \& François, O. (2016).
   TESS3: Fast inference of spatial population structure and genome scans
   for selection. \emph{Molecular Ecology Resources}, \emph{16}(2),
   540--548.
+  
+  \hypertarget{ref-darwin1980origine}{}
+  Darwin, C. (1980). L'Origine des espèces, trad. \emph{Edmond Barbier
+  (1876), Paris, Maspero}.
   
   \hypertarget{ref-durand2011testing}{}
   Durand, E. Y., Patterson, N., Reich, D., \& Slatkin, M. (2011). Testing
@@ -810,6 +1067,11 @@ starts here.
   Royal Statistical Society: Series B (Statistical Methodology)},
   \emph{64}(4), 695--715.
   
+  \hypertarget{ref-peng2005simupop}{}
+  Peng, B., \& Kimmel, M. (2005). SimuPOP: A forward-time population
+  genetics simulation environment. \emph{Bioinformatics}, \emph{21}(18),
+  3686--3687.
+  
   \hypertarget{ref-pfeifer2017estimates}{}
   Pfeifer, B., \& Kapan, D. D. (2017). Estimates of introgression as a
   function of pairwise distances. \emph{BioRxiv}, 154377.
@@ -824,6 +1086,12 @@ starts here.
   Rosenzweig, B. K., Pease, J. B., Besansky, N. J., \& Hahn, M. W. (2016).
   Powerful methods for detecting introgressed regions from population
   genomic data. \emph{Molecular Ecology}, \emph{25}(11), 2387--2397.
+  
+  \hypertarget{ref-roux2012recent}{}
+  Roux, C., Pauwels, M., Ruggiero, M.-V., Charlesworth, D., Castric, V.,
+  \& Vekemans, X. (2012). Recent and ancient signature of balancing
+  selection around the s-locus in arabidopsis halleri and a. lyrata.
+  \emph{Molecular Biology and Evolution}, \emph{30}(2), 435--447.
   
   \hypertarget{ref-suarez2016}{}
   Suarez-Gonzalez, et a., Adriana. (2016). Genomic and functional

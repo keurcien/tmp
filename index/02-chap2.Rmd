@@ -10,6 +10,128 @@ Une population est dite localement adaptée à son environnement si elle a connu
 
 ### Modèle de divergence
 
+Nous adaptons une version du script Python utilisé dans [@roux2012recent], basé sur le module de simulation simuPOP [@peng2005simupop].
+
+```{python, cache=TRUE}
+#!/usr/bin/env python
+from __future__ import division
+import simuOpt, types, os, sys, time
+simuOpt.setOptions(alleleType = 'long')
+from operator import itemgetter
+import numpy as np
+from simuPOP import *
+from simuPOP.utils import *
+from simuPOP.sampling import drawRandomSample
+
+def simulate(Ne, Nsam, T1, T2, T3, s10, s11):
+    pop = Population(size = Ne, 
+                     ploidy = 2, 
+                     loci = [1], 
+                     infoFields = ['fitness', 'migrate_to'])
+                     
+    def getfitness10(geno):
+        if geno[0] + geno[1] == 0 :
+            return 1 - 2 * s10
+        if geno[0] + geno[1] == 1 :
+            return 1 - s10
+        else :
+            return 1
+
+    def getfitness11(geno):
+        if geno[0] + geno[1] == 0 :
+            return 1 - 2 * s11
+        if geno[0] + geno[1] == 1 :
+            return 1 - s11
+        else :
+            return 1
+            
+    pop.evolve( 
+        initOps = [
+            InitSex(),
+            InitGenotype(loci = ALL_AVAIL, 
+                         freq = [0.5, 0.5],  
+                         begin = 0, 
+                         end = 1)
+        ],
+        
+        preOps = [
+            # resize the ancestral population at the time immediatly 
+            # before the split
+            ResizeSubPops([0], 
+                          sizes = [Ne + Ne], 
+                          at = T1 - 1),
+                              
+            ResizeSubPops(["S1_1"], 
+                          sizes = [Ne + Ne], 
+                          at = T1 + T2 - 1),
+                              
+            # split populations in 2 subpopulations 
+            SplitSubPops(subPops = [0], 
+                         sizes = [Ne, Ne], 
+                         names = ["S1_0", "S1_1"], 
+                         at = T1),
+                             
+            SplitSubPops(subPops = ["S1_1"], 
+                         sizes = [Ne, Ne], 
+                         at = T1 + T2, 
+                         names = ["S2_0", "S2_1"]),
+                         
+            # apply selection by invoking function getfitness
+            PySelector(loci = [0], 
+                       func = getfitness11, 
+                       begin = T1 + T2,
+                       subPops = ["S2_1"]),
+                   
+            PySelector(loci = [0],
+                       func = getfitness10, 
+                       begin = T1, 
+                       subPops = ["S1_0"], 
+                       end = T1 + T2 + T3 - 1)
+        ],
+        
+        matingScheme = RandomMating(ops = [
+                                        Recombinator(intensity = 1)
+                                    ]),
+                       
+        gen = T1 + T2 + T3 
+      
+    )
+    
+    sample = drawRandomSample(pop, sizes = [Nsam, Nsam, Nsam])
+    
+    return sample
+
+    
+Ne = 1000
+Nsam = 25
+T1 = 10
+T2 = 100
+T3 = 100
+s = 0.1
+nSNP = 1000
+
+G  = np.zeros([3 * Nsam, nSNP])
+
+for i in range(nSNP):
+    if i < 1:
+        s10 = 2 * s
+        s11 = 0.0
+    elif i < 2:
+        s10 = 0.0
+        s11 = s
+    else:
+        s10 = 0.0
+        s11 = 0.0
+    res = simulate(Ne, Nsam, T1, T2, T3, s10, s11)
+    for j in range(3):
+        Sj = res.genotype(j)
+        for k in range(int(len(Sj) / 2)):
+            idx = j * int(len(Sj) / 2) + k 
+            G[idx][i] = Sj[2 * k] + Sj[2 * k + 1]
+            
+np.savetxt('data/simuPOP.pcadapt', G, fmt = '%i')
+```
+
 ### Modèle d'expansion spatiale
 
 ## La communalité
