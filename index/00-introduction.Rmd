@@ -1,16 +1,61 @@
 # Introduction {-}
 
-« Je me propose de passer brièvement en revue les progrès de l’opinion relativement à l’origine des espèces. Jusque tout récemment, la plupart des naturalistes croyaient que les espèces sont des productions immuables créées séparément. De nombreux savants ont habilement soutenu cette hypothèse. Quelques autres, au contraire, ont admis que les espèces éprouvent des modifications et que les formes actuelles descendent de formes préexistantes par voie de génération régulière. »
+## Génétique et génétique des populations
 
-C'est de cette manière qu'en 1920, Edmond Barbier, dans sa notice relative à la traduction française de \textit{L'Origine des espèces} [@darwin1980origine], décide de présenter le contexte dans lequel il a été amené à effectuer ce travail de traduction. Ce constat qu'il partage, réalisé il y a presque cent ans, semble pourtant valoir encore aujourd'hui. Si bien que chaque sortie de l'Église catholique affirmant la compatibilité entre la religion et la théorie évolutionniste apporte son lot de débats et de controverses.
+Qu'est-ce que la génétique ? À cette question nous pourrions reprendre en guise de réponse la formulation de Cavalli-Sforza, traduite de l'italien par Françoise Brun [@cavalli1994francesco]: « La génétique est la science de l'hérédité. Elle est la clé de toute la biologie, parce qu'elle explique les mécanismes qui sont responsables de la reproduction des êtres vivants, du fonctionnement et de la transmission du matériel héréditaire, des différences entre les individus, de l'évolution biologique. »  
 
-## Qu'est-ce que la génétique ?
 
-À cette question nous pourrions reprendre en guise de réponse la formulation de Cavalli-Sforza, traduite de l'italien [@cavalli1994francesco]: « La génétique est la science de l'hérédité. Elle est la clé de toute la biologie, parce qu'elle explique les mécanismes qui sont responsables de la reproduction des êtres vivants, du fonctionnement et de la transmission du matériel héréditaire, des différences entre les individus, de l'évolution biologique. »
+« Population genetics is concerned with the genetic basis of evolution. It differs from much of biology in that its important insights are theoretical rather than observational or experimental. It could hardly be otherwise. The objects of study are primarily the frequencies and fitnesses of genotypes in natural populations. » [@gillespie2010population].
 
-## Données en grande dimension 
+## À l'origine de la variabilité génétique
+
+La théorie neutraliste de l'évolution formalisée et popularisée par Motoo Kimura
+Neutre
+Dérive génétique
+
+Wiki : "En particulier, l'hypothèse de neutralité, sous laquelle les mutations n'ont aucune influence sur la valeur sélective, est l'hypothèse nulle généralement retenue dans les travaux où une telle hypothèse est nécessaire."
+
+La formulation d'une hypothèse ou d'un ensemble d'hypothèses permettant de décrire un processus évolutif en l'absence de sélection, portant généralement le nom de \textit{modèle neutre}, est souvent de première nécessité dans toute démarche visant à caractériser un mécanisme de sélection. La donnée d'observations mettant en défaut le modèle neutre aura pour conséquences de créditer davantage une hypothèse invoquant un processus de sélection.
+
+Sélection naturelle
+Environnement hétérogène
+
+## Données de séquençage nouvelle génération
+
+### Next-Generation Sequencing (NGS)
+
+Exome, Genome, transcriptome, etc...
+
+Le séquençage nouvelle génération a connu un essor considérable au cours des dernières décennies. Si bien que les prouesses techniques et les progrès technologiques réalisés dans ce domaine ont permis de réduire d'un facteur 100,000 les coûts de séquençage en l'espace de seulement 15 ans [@wetterstrand2013dna].
+
+```{r, fig.align='center', fig.width=6, fig.cap='Évolution des coûts de séquençage depuis 2001.'}
+df <- read.csv("data/seqcost2015_4.csv")
+df %>% 
+  mutate(log10CpG = log10(Cost.per.Genome)) %>% 
+  ggplot(aes(x = as.Date(Date), y = log10CpG)) + 
+  geom_point(color = cbbPalette[6]) +
+  geom_line(color = cbbPalette[2]) +
+  scale_y_continuous(breaks = 1:8, 
+                     labels = c("10",
+                                "100",
+                                "1K",
+                                "10K",
+                                "100K",
+                                "1M",
+                                "10M",
+                                "100M")) +
+  xlab("Année") +
+  ylab("Coût par génôme") + 
+  scale_x_date(date_minor_breaks = "1 year") +
+  theme_bw()
+```
+
+Le séquençage nouvelle génération génèrant de considérables volumes de données, de nouvelles problèmatiques se posent quant à leur stockage ainsi qu'à leur analyse, nécessitant l'utilisation de puissantes ressources de calcul ainsi que le développement d'algorithmes plus adaptés [@gogol2012overview]. Financement croissant pour l'acquisition de données NGS [@muir2016real].
+
+###
 
 L'accumulation de données, aussi bien en termes d'observations qu'en termes de variables, laisse à penser que le traitement de celles-ci pourrait permettre de détecter efficacement les variables qui sont responsables ou qui influencent un phénomène particulier. Cela pourrait être par exemple l'utilisation de bases de données automobiles pour prédire la durée de vie de véhicules neufs, ou encore celle de données climatiques pour estimer les variations de température auxquelles pourrait être sujette notre planète. Cette accumulation massive s'accompagne tout de même d'un phénomène bien connu en statistiques, phénomène qui porte le nom de "curse of dimensionality" [@giraud2014introduction]. 
 
-Dérive génétique
-Environnement hétérogène
+
+
+

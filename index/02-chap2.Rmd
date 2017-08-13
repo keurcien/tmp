@@ -8,6 +8,66 @@ Une population est dite localement adaptée à son environnement si elle a connu
 
 ### Modèle en île
 
+```{r}
+if (!file.exists("msdir/ms")) {
+  system("gcc -o msdir/ms msdir/ms.c msdir/streec.c msdir/rand1.c -lm")
+}
+
+### ms : list of parameters ###
+nDEMS <- 3
+nCHR_per_POP <- 100
+nCHR <- nDEMS * nCHR_per_POP
+nIND <- nCHR / 2
+nSNP_neutral <- 975
+nSNP_outlier <- 25
+mig_rate_neutral <- 10
+mig_rate_adaptive <- 1
+###############################
+
+nCHR_per_POP_string <- nCHR_per_POP
+for (k in 1:(nDEMS - 1)) {
+  nCHR_per_POP_string <- paste(nCHR_per_POP_string, nCHR_per_POP)
+}
+
+mig_rate_neutral_string <- "x"
+mig_rate_adaptive_string <- "x"
+for (k in 1:nDEMS){
+  for (j in 1:nDEMS){
+    if ((k == j) && (k > 1)){
+      mig_rate_neutral_string <- paste(mig_rate_neutral_string, "x")
+      mig_rate_adaptive_string <- paste(mig_rate_adaptive_string, "x")      
+    } else if (k != j) {
+      mig_rate_neutral_string <- paste(mig_rate_neutral_string, mig_rate_neutral)
+      mig_rate_adaptive_string <- paste(mig_rate_adaptive_string, mig_rate_adaptive)
+    }
+  }
+}
+
+cmd_neutral <- paste("./ms",
+                     nCHR,
+                     nSNP_neutral,
+                     "-s 1 -I",
+                     nDEMS,
+                     nCHR_per_POP_string,
+                     "-ma",
+                     mig_rate_neutral_string,
+                     ">", 
+                     "data/neutral.txt")
+
+cmd_adaptive <- paste("./ms",
+                      nCHR,
+                      nSNP_outlier,
+                      "-s 1 -I",
+                      nDEMS,
+                      nCHR_per_POP_string,
+                      "-ma",
+                      mig_rate_adaptive_string,
+                      ">",
+                      "data/adaptive.txt") 
+
+system(cmd_neutral)
+```
+
 ### Modèle de divergence
 
 Nous adaptons une version du script Python utilisé dans [@roux2012recent], basé sur le module de simulation simuPOP [@peng2005simupop].
@@ -108,7 +168,7 @@ T1 = 10
 T2 = 100
 T3 = 100
 s = 0.1
-nSNP = 1000
+nSNP = 10
 
 G  = np.zeros([3 * Nsam, nSNP])
 
