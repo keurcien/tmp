@@ -149,8 +149,9 @@ son lot de débats et de controverses. \par
 }
 
 \Abstract{
-The preface pretty much says it all. \par  Second paragraph of abstract
-starts here.
+** Résumé ** \par  La nécessité de développer des outils d'analyse
+exploratoire capables de traiter de larges volumes de données. **
+Abstract **
 }
 
 % End of CII addition
@@ -199,8 +200,9 @@ starts here.
       \listoffigures
   
       \begin{abstract}
-      The preface pretty much says it all. \par  Second paragraph of abstract
-      starts here.
+      ** Résumé ** \par  La nécessité de développer des outils d'analyse
+      exploratoire capables de traiter de larges volumes de données. **
+      Abstract **
     \end{abstract}
   
   
@@ -215,12 +217,12 @@ starts here.
   
   Qu'est-ce que la génétique ? À cette question nous pourrions reprendre
   en guise de réponse la formulation de Cavalli-Sforza, traduite de
-  l'italien par Françoise Brun (Cavalli-Sforza, 1994): « La génétique est
-  la science de l'hérédité. Elle est la clé de toute la biologie, parce
-  qu'elle explique les mécanismes qui sont responsables de la reproduction
-  des êtres vivants, du fonctionnement et de la transmission du matériel
-  héréditaire, des différences entre les individus, de l'évolution
-  biologique. »
+  l'italien par Françoise Brun (L. Cavalli-Sforza, 1994): « La génétique
+  est la science de l'hérédité. Elle est la clé de toute la biologie,
+  parce qu'elle explique les mécanismes qui sont responsables de la
+  reproduction des êtres vivants, du fonctionnement et de la transmission
+  du matériel héréditaire, des différences entre les individus, de
+  l'évolution biologique. »
   
   « Population genetics is concerned with the genetic basis of evolution.
   It differs from much of biology in that its important insights are
@@ -231,8 +233,68 @@ starts here.
   \section{À l'origine de la variabilité
   génétique}\label{a-lorigine-de-la-variabilite-genetique}
   
-  La théorie neutraliste de l'évolution formalisée et popularisée par
-  Motoo Kimura Neutre Dérive génétique
+  \subsection{La théorie darwinienne}\label{la-theorie-darwinienne}
+  
+  \subsection{La théorie neutraliste}\label{la-theorie-neutraliste}
+  
+  À la théorie de l'évolution de Charles Darwin est souvent opposée la
+  théorie neutraliste de l'évolution formalisée par Motoo Kimura dans son
+  ouvrage \textit{The neutral theory of molecular evolution} (Kimura,
+  1983). Ce nouveau regard porté sur l'évolution apporte des réponses aux
+  questions auxquelles ne permettait pas de répondre la théorie
+  darwinienne. Une des composantes principales de cette nouvelle théorie
+  consiste en l'affirmation que les fluctuations aléatoires dans la
+  fréquence des variants, n'affectant que très peu ou pas du tout la
+  valeur sélective, soient la principale source de variabilité de l'ADN
+  (B. Charlesworth \& Charlesworth, 2009).
+  
+  \subsection{Dérive génétique}\label{derive-genetique}
+  
+  Nous illustrons ici le principe de dérive génétique à l'aide du modèle
+  de Wright-Fisher tel qu'il est présenté dans l'ouvrage
+  \textit{Population Genetics} (Gillespie, 2010).
+  
+  \begin{figure}
+  
+  {\centering \includegraphics{thesis_files/figure-latex/drift-1} 
+  
+  }
+  
+  \caption{Simulation numérique de la dérive génétique. La fréquence de l'allèle étudié est simulée pour 5 populations constituées chacune de 20 individus sur une période de 100 générations. Dans chaque population, la fréquence de l'allèle est initialement de 0.20.}\label{fig:drift}
+  \end{figure}
+  
+  La fréquence d'un allèle au sein d'une population est principalement
+  impactée par deux facteurs :
+  
+  \begin{itemize}
+  \item
+    Le nombre d'individus
+  \item
+    Les lois de Mendel
+  \end{itemize}
+  
+  La figure \ref{fig:drift} met en évidence deux propriétés de la dérive
+  génétique :
+  
+  \begin{itemize}
+  \item
+    Les fréquences alléliques évoluent de façon indépendante d'une
+    population à une autre.
+  \item
+    La dérive génétique entraîne une perte de diversité allélique au sein
+    d'une population. Dans le modèle de Wright-Fisher, les fréquences
+    alléliques finissent éventuellement par atteindre les états dits
+    absorbants que sont \(0\) et \(1\).
+  \end{itemize}
+  
+  \begin{figure}
+  
+  {\centering \includegraphics[width=500px]{figure/mendel} 
+  
+  }
+  
+  \caption{Représentation schématique des lois de Mendel.}\label{fig:mendel}
+  \end{figure}
   
   Wiki : ``En particulier, l'hypothèse de neutralité, sous laquelle les
   mutations n'ont aucune influence sur la valeur sélective, est
@@ -263,30 +325,6 @@ starts here.
   d'un facteur 100,000 les coûts de séquençage en l'espace de seulement 15
   ans (Wetterstrand, 2013).
   
-  \begin{Shaded}
-  \begin{Highlighting}[]
-  \NormalTok{df <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/seqcost2015_4.csv"}\NormalTok{)}
-  \NormalTok{df %>%}\StringTok{ }
-  \StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{log10CpG =} \KeywordTok{log10}\NormalTok{(Cost.per.Genome)) %>%}\StringTok{ }
-  \StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{as.Date}\NormalTok{(Date), }\DataTypeTok{y =} \NormalTok{log10CpG)) +}\StringTok{ }
-  \StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{color =} \NormalTok{cbbPalette[}\DecValTok{6}\NormalTok{]) +}
-  \StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{color =} \NormalTok{cbbPalette[}\DecValTok{2}\NormalTok{]) +}
-  \StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{breaks =} \DecValTok{1}\NormalTok{:}\DecValTok{8}\NormalTok{, }
-                       \DataTypeTok{labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"10"}\NormalTok{,}
-                                  \StringTok{"100"}\NormalTok{,}
-                                  \StringTok{"1K"}\NormalTok{,}
-                                  \StringTok{"10K"}\NormalTok{,}
-                                  \StringTok{"100K"}\NormalTok{,}
-                                  \StringTok{"1M"}\NormalTok{,}
-                                  \StringTok{"10M"}\NormalTok{,}
-                                  \StringTok{"100M"}\NormalTok{)) +}
-  \StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Année"}\NormalTok{) +}
-  \StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Coût par génôme"}\NormalTok{) +}\StringTok{ }
-  \StringTok{  }\KeywordTok{scale_x_date}\NormalTok{(}\DataTypeTok{date_minor_breaks =} \StringTok{"1 year"}\NormalTok{) +}
-  \StringTok{  }\KeywordTok{theme_bw}\NormalTok{()}
-  \end{Highlighting}
-  \end{Shaded}
-  
   \begin{figure}
   
   {\centering \includegraphics{thesis_files/figure-latex/unnamed-chunk-1-1} 
@@ -297,11 +335,11 @@ starts here.
   \end{figure}
   
   Le séquençage nouvelle génération génèrant de considérables volumes de
-  données, de nouvelles problèmatiques se posent quant à leur stockage
-  ainsi qu'à leur analyse, nécessitant l'utilisation de puissantes
-  ressources de calcul ainsi que le développement d'algorithmes plus
-  adaptés (Gogol-Döring \& Chen, 2012). Financement croissant pour
-  l'acquisition de données NGS (Muir et al., 2016).
+  données, de nouvelles problèmatiques se posent quant à leur stockage et
+  leur analyse, nécessitant l'utilisation de puissantes ressources de
+  calcul ainsi que le développement d'algorithmes plus adaptés
+  (Gogol-Döring \& Chen, 2012). Financement croissant pour l'acquisition
+  de données NGS (Muir et al., 2016).
   
   \subsection{}\label{section}
   
@@ -316,6 +354,101 @@ starts here.
   s'accompagne tout de même d'un phénomène bien connu en statistiques,
   phénomène qui porte le nom de ``curse of dimensionality'' (Giraud,
   2014).
+  
+  \subsection{Les marqueurs génétiques}\label{les-marqueurs-genetiques}
+  
+  Au concept de génétique est souvent associé l'acronyme ADN,
+  correspondant au nom de la molécule d'Acide désoxyribonucléique.
+  
+  DNA bases pair up with each other, A with T and C with G, to form units
+  called base pairs. Each base is also attached to a sugar molecule and a
+  phosphate molecule. Together, a base, sugar, and phosphate are called a
+  nucleotide. Nucleotides are arranged in two long strands that form a
+  spiral called a double helix. The structure of the double helix is
+  somewhat like a ladder, with the base pairs forming the ladder's rungs
+  and the sugar and phosphate molecules forming the vertical sidepieces of
+  the ladder. \url{https://ghr.nlm.nih.gov/primer/basics/dna} Chaque
+  chromosome est constitué de deux brins d'ADN. La structure spatiale de
+  l'ADN n'étant pas prise en compte dans les travaux présentés ici, nous
+  en garderons une représentation unidimensionnelle.
+  
+  D'un point de vue statistique, seuls les sites nucléotidiques
+  potentiellement variables d'une observation à une autre présentent un
+  intérêt. Ces variations génétiques peuvent se manifester sous
+  différentes formes, nous amenant à les classer d'autant de façons :
+  
+  \begin{itemize}
+  \tightlist
+  \item
+    Microsatellite :
+  \end{itemize}
+  
+  Jusqu'à présent, les microsatellites ont connu un succès important,
+  notamment grâce à la popularisation de techniques telles que la PCR
+  (Polymerase Chain Reaction). Leur étude a permis de mettre en évidence
+  l'implication de divers blablabla.
+  
+  Un microsatellite est repérable par la répétition successive de petits
+  motifs chacun composé de 1 à 4 acides aminés.
+  
+  \begin{figure}
+  
+  {\centering \includegraphics{thesis_files/figure-latex/unnamed-chunk-2-1} 
+  
+  }
+  
+  \caption{Exemples de microsatellites. La première séquence comporte 3 répétitions du motif CCG, tandis que la seconde inclut 4 répétitions du motif CA.}\label{fig:unnamed-chunk-2}
+  \end{figure}
+  
+  \begin{itemize}
+  \tightlist
+  \item
+    Indel :
+  \end{itemize}
+  
+  INDEL (INsertion/DELetion) is where a single base has been deleted, or
+  inserted into one genome relative to another. It is a symmetrical
+  relationship, as a deletion in one corresponds to an insertion in
+  another.
+  
+  \begin{center}\includegraphics{thesis_files/figure-latex/unnamed-chunk-3-1} \end{center}
+  
+  \begin{itemize}
+  \tightlist
+  \item
+    Polymorphisme nucléotidique :
+  \end{itemize}
+  
+  \begin{center}\includegraphics{thesis_files/figure-latex/unnamed-chunk-4-1} \end{center}
+  
+  \section{Adaptation}\label{adaptation}
+  
+  \subsection{Adaptation locale}\label{adaptation-locale}
+  
+  Haut plateau, Lactase (Jeong \& Di Rienzo, 2014)
+  
+  \subsection{Introgression adaptative}\label{introgression-adaptative}
+  
+  \section{Genome-scan}\label{genome-scan}
+  
+  \subsection{L'ACP en génétique des
+  populations}\label{lacp-en-genetique-des-populations}
+  
+  rincipal component analysis (PCA) has been used for several decades to
+  study human population migrations,
+  
+  L'utilisation de l'Analyse en Composantes Principales en génétique des
+  populations a été popularisée par Cavalli-Sforza (Menozzi, Piazza, \&
+  Cavalli-Sforza, 1978).
+  
+  \begin{figure}
+  
+  {\centering \includegraphics{thesis_files/figure-latex/popres-1} 
+  
+  }
+  
+  \caption{ACP réalisée sur le jeu de données POPRES}\label{fig:popres}
+  \end{figure}
   
   \chapter{État de l'art}\label{etat-de-lart}
   
@@ -440,7 +573,7 @@ starts here.
   q-value, bonferroni, benjamini-hochberg La figure suivante donne les
   comparaisons entre les différentes procédures de correction :
   
-  \chapter{Adaptation locale}\label{adaptation-locale}
+  \chapter{Adaptation locale}\label{adaptation-locale-1}
   
   Une population est dite localement adaptée à son environnement si elle a
   connu une évolution différente de celles qu'ont connu les autres
@@ -455,67 +588,9 @@ starts here.
   
   \subsection{Modèle en île}\label{modele-en-ile}
   
-  \begin{Shaded}
-  \begin{Highlighting}[]
-  \NormalTok{if (!}\KeywordTok{file.exists}\NormalTok{(}\StringTok{"msdir/ms"}\NormalTok{)) \{}
-    \KeywordTok{system}\NormalTok{(}\StringTok{"gcc -o msdir/ms msdir/ms.c msdir/streec.c msdir/rand1.c -lm"}\NormalTok{)}
-  \NormalTok{\}}
+  \begin{center}\includegraphics{thesis_files/figure-latex/unnamed-chunk-5-1} \end{center}
   
-  \NormalTok{### ms : list of parameters ###}
-  \NormalTok{nDEMS <-}\StringTok{ }\DecValTok{3}
-  \NormalTok{nCHR_per_POP <-}\StringTok{ }\DecValTok{100}
-  \NormalTok{nCHR <-}\StringTok{ }\NormalTok{nDEMS *}\StringTok{ }\NormalTok{nCHR_per_POP}
-  \NormalTok{nIND <-}\StringTok{ }\NormalTok{nCHR /}\StringTok{ }\DecValTok{2}
-  \NormalTok{nSNP_neutral <-}\StringTok{ }\DecValTok{975}
-  \NormalTok{nSNP_outlier <-}\StringTok{ }\DecValTok{25}
-  \NormalTok{mig_rate_neutral <-}\StringTok{ }\DecValTok{10}
-  \NormalTok{mig_rate_adaptive <-}\StringTok{ }\DecValTok{1}
-  \NormalTok{###############################}
-  
-  \NormalTok{nCHR_per_POP_string <-}\StringTok{ }\NormalTok{nCHR_per_POP}
-  \NormalTok{for (k in }\DecValTok{1}\NormalTok{:(nDEMS -}\StringTok{ }\DecValTok{1}\NormalTok{)) \{}
-    \NormalTok{nCHR_per_POP_string <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(nCHR_per_POP_string, nCHR_per_POP)}
-  \NormalTok{\}}
-  
-  \NormalTok{mig_rate_neutral_string <-}\StringTok{ "x"}
-  \NormalTok{mig_rate_adaptive_string <-}\StringTok{ "x"}
-  \NormalTok{for (k in }\DecValTok{1}\NormalTok{:nDEMS)\{}
-    \NormalTok{for (j in }\DecValTok{1}\NormalTok{:nDEMS)\{}
-      \NormalTok{if ((k ==}\StringTok{ }\NormalTok{j) &&}\StringTok{ }\NormalTok{(k >}\StringTok{ }\DecValTok{1}\NormalTok{))\{}
-        \NormalTok{mig_rate_neutral_string <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(mig_rate_neutral_string, }\StringTok{"x"}\NormalTok{)}
-        \NormalTok{mig_rate_adaptive_string <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(mig_rate_adaptive_string, }\StringTok{"x"}\NormalTok{)      }
-      \NormalTok{\} else if (k !=}\StringTok{ }\NormalTok{j) \{}
-        \NormalTok{mig_rate_neutral_string <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(mig_rate_neutral_string, mig_rate_neutral)}
-        \NormalTok{mig_rate_adaptive_string <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(mig_rate_adaptive_string, mig_rate_adaptive)}
-      \NormalTok{\}}
-    \NormalTok{\}}
-  \NormalTok{\}}
-  
-  \NormalTok{cmd_neutral <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"./ms"}\NormalTok{,}
-                       \NormalTok{nCHR,}
-                       \NormalTok{nSNP_neutral,}
-                       \StringTok{"-s 1 -I"}\NormalTok{,}
-                       \NormalTok{nDEMS,}
-                       \NormalTok{nCHR_per_POP_string,}
-                       \StringTok{"-ma"}\NormalTok{,}
-                       \NormalTok{mig_rate_neutral_string,}
-                       \StringTok{">"}\NormalTok{, }
-                       \StringTok{"data/neutral.txt"}\NormalTok{)}
-  
-  \NormalTok{cmd_adaptive <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"./ms"}\NormalTok{,}
-                        \NormalTok{nCHR,}
-                        \NormalTok{nSNP_outlier,}
-                        \StringTok{"-s 1 -I"}\NormalTok{,}
-                        \NormalTok{nDEMS,}
-                        \NormalTok{nCHR_per_POP_string,}
-                        \StringTok{"-ma"}\NormalTok{,}
-                        \NormalTok{mig_rate_adaptive_string,}
-                        \StringTok{">"}\NormalTok{,}
-                        \StringTok{"data/adaptive.txt"}\NormalTok{) }
-  
-  \KeywordTok{system}\NormalTok{(cmd_neutral)}
-  \end{Highlighting}
-  \end{Shaded}
+  \begin{center}\includegraphics{thesis_files/figure-latex/unnamed-chunk-6-1} \end{center}
   
   \subsection{Modèle de divergence}\label{modele-de-divergence}
   
@@ -644,15 +719,6 @@ starts here.
   \end{Highlighting}
   \end{Shaded}
   
-  \begin{verbatim}
-  ## simuPOP Version 1.1.4 : Copyright (c) 2004-2011 Bo Peng
-  ## Revision 4952 (Oct 15 2014) for Python 2.7.5 (64bit, 0thread)
-  ## Random Number Generator is set to mt19937 with random seed 0xbd619c3eb55b6012.
-  ## This is the standard long allele version with 18446744073709551616 maximum allelic states.
-  ## For more information, please visit http://simupop.sourceforge.net,
-  ## or email simupop-list@lists.sourceforge.net (subscription required).
-  \end{verbatim}
-  
   \subsection{Modèle d'expansion
   spatiale}\label{modele-dexpansion-spatiale}
   
@@ -673,7 +739,7 @@ starts here.
   
   \newpage
   
-  \chapter{Introgression adaptative}\label{introgression-adaptative}
+  \chapter{Introgression adaptative}\label{introgression-adaptative-1}
   
   \section{Qu'est-ce que l'introgression
   ?}\label{quest-ce-que-lintrogression}
@@ -886,29 +952,6 @@ starts here.
   l'emplacement des évènements de recombinaison. Pour ce faire, nous
   utilisons le modèle décrit dans (Price et al., 2009), en parcourant
   
-  \begin{figure}
-  
-  {\centering \includegraphics[width=400px,height=200px]{figure/ancestry_heatmap_lambda_0001} 
-  
-  }
-  
-  \caption{$\lambda = 0.001$}\label{fig:lambda0001}
-  \end{figure}\begin{figure}
-  
-  {\centering \includegraphics[width=400px,height=200px]{figure/ancestry_heatmap_lambda_001} 
-  
-  }
-  
-  \caption{$\lambda = 0.01$}\label{fig:lambda001}
-  \end{figure}\begin{figure}
-  
-  {\centering \includegraphics[width=400px,height=200px]{figure/ancestry_heatmap_lambda_01} 
-  
-  }
-  
-  \caption{$\lambda = 0.1$}\label{fig:lambda01}
-  \end{figure}
-  
   \newpage
   
   \subsection{Simulations à partir de ms et
@@ -986,53 +1029,36 @@ starts here.
   \subsection{Résultats de la comparaison des
   logiciels}\label{resultats-de-la-comparaison-des-logiciels}
   
-  \begin{Shaded}
-  \begin{Highlighting}[]
-  \NormalTok{im.df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{methods =} \KeywordTok{c}\NormalTok{(}\StringTok{"Bdf"}\NormalTok{, }\StringTok{"D"}\NormalTok{, }\StringTok{"f_d"}\NormalTok{, }\StringTok{"pcadapt"}\NormalTok{, }\StringTok{"RNDmin"}\NormalTok{),}
-                      \DataTypeTok{input =} \KeywordTok{c}\NormalTok{(}\StringTok{"genoytpes"}\NormalTok{, }\StringTok{"genoytpes"}\NormalTok{, }\StringTok{"genoytpes"}\NormalTok{, }\StringTok{"genoytpes"}\NormalTok{, }\StringTok{"haplotypes"}\NormalTok{),}
-                      \DataTypeTok{nb_of_pop =} \KeywordTok{c}\NormalTok{(}\StringTok{"4"}\NormalTok{, }\StringTok{"4"}\NormalTok{, }\StringTok{"4"}\NormalTok{, }\StringTok{">= 3"}\NormalTok{, }\StringTok{"3"}\NormalTok{),}
-                      \DataTypeTok{outgroup =} \KeywordTok{c}\NormalTok{(}\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{, }\StringTok{"Oui"}\NormalTok{))}
-  
-  \NormalTok{knitr::}\KeywordTok{kable}\NormalTok{(im.df, }
-               \DataTypeTok{col.names =} \KeywordTok{c}\NormalTok{(}\StringTok{"Statistique"}\NormalTok{, }
-                             \StringTok{"Format"}\NormalTok{,}
-                             \StringTok{"Nombre de populations"}\NormalTok{, }
-                             \StringTok{"Dont Outgroup"}\NormalTok{), }
-               \DataTypeTok{format =} \StringTok{"latex"}\NormalTok{)}
-  \end{Highlighting}
-  \end{Shaded}
-  
-  \begin{tabular}{l|l|l|l}
-  \hline
-  Statistique & Format & Nombre de populations & Dont Outgroup\\
-  \hline
-  Bdf & genoytpes & 4 & Oui\\
-  \hline
-  D & genoytpes & 4 & Oui\\
-  \hline
-  f\_d & genoytpes & 4 & Oui\\
-  \hline
-  pcadapt & genoytpes & >= 3 & Oui\\
-  \hline
-  RNDmin & haplotypes & 3 & Oui\\
-  \hline
-  \end{tabular}
-  
   \paragraph{Scénario de métissage}\label{scenario-de-metissage}
   
   Nous comparons ici notre méthode au logiciel RFMix destiné à la
   détermination de coefficients de métissage local.
   
   \begin{figure}
-  \includegraphics[width=500px]{figure/facet_admixture_setting_10_gen} \caption{10 generations}\label{fig:ras10g}
+  
+  {\centering \includegraphics[width=500px]{figure/facet_admixture_setting_10_gen} 
+  
+  }
+  
+  \caption{10 generations}\label{fig:ras10g}
   \end{figure}
   
   \begin{figure}
-  \includegraphics[width=500px]{figure/facet_admixture_setting_100_gen} \caption{100 generations}\label{fig:ras100g}
+  
+  {\centering \includegraphics[width=500px]{figure/facet_admixture_setting_100_gen} 
+  
+  }
+  
+  \caption{100 generations}\label{fig:ras100g}
   \end{figure}
   
   \begin{figure}
-  \includegraphics[width=500px]{figure/facet_admixture_setting_1000_gen} \caption{1000 generations}\label{fig:ras1000g}
+  
+  {\centering \includegraphics[width=500px]{figure/facet_admixture_setting_1000_gen} 
+  
+  }
+  
+  \caption{1000 generations}\label{fig:ras1000g}
   \end{figure}
   
   \paragraph{Scénario à flux de gènes}\label{scenario-a-flux-de-genes-1}
@@ -1052,6 +1078,8 @@ starts here.
   
   Blockwise computation of covariance matrix Random SVD Storage in binary
   format Memory-mapping
+  
+  Pairwise-Cor (Dray \& Josse, 2015)
   
   \chapter*{Conclusion}\label{conclusion}
   \addcontentsline{toc}{chapter}{Conclusion}
@@ -1118,6 +1146,11 @@ starts here.
     \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"keurcien/simulate"}\NormalTok{)}
   \NormalTok{\}}
   
+  \NormalTok{knitr::opts_chunk$}\KeywordTok{set}\NormalTok{(}\DataTypeTok{fig.align =} \StringTok{'center'}\NormalTok{, }
+                        \DataTypeTok{echo =} \OtherTok{FALSE}\NormalTok{, }
+                        \DataTypeTok{fig.width =} \DecValTok{6}\NormalTok{,}
+                        \DataTypeTok{results =} \StringTok{'hide'}\NormalTok{)}
+  
   \CommentTok{# The palette with black:}
   \NormalTok{cbbPalette <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"#000000"}\NormalTok{, }
                   \StringTok{"#E69F00"}\NormalTok{, }
@@ -1171,9 +1204,18 @@ starts here.
   for selection. \emph{Molecular Ecology Resources}, \emph{16}(2),
   540--548.
   
+  \hypertarget{ref-charlesworth2009darwin}{}
+  Charlesworth, B., \& Charlesworth, D. (2009). Darwin and genetics.
+  \emph{Genetics}, \emph{183}(3), 757--766.
+  
   \hypertarget{ref-darwin1980origine}{}
   Darwin, C. (1980). L'Origine des espèces, trad. \emph{Edmond Barbier
   (1876), Paris, Maspero}.
+  
+  \hypertarget{ref-dray2015principal}{}
+  Dray, S., \& Josse, J. (2015). Principal component analysis with missing
+  values: A comparative survey of methods. \emph{Plant Ecology},
+  \emph{216}(5), 657--667.
   
   \hypertarget{ref-durand2011testing}{}
   Durand, E. Y., Patterson, N., Reich, D., \& Slatkin, M. (2011). Testing
@@ -1208,10 +1250,19 @@ starts here.
   evolutionary process. \emph{Oxford Surveys in Evolutionary Biology},
   \emph{7}, 69--128.
   
+  \hypertarget{ref-jeong2014adaptations}{}
+  Jeong, C., \& Di Rienzo, A. (2014). Adaptations to local environments in
+  modern human populations. \emph{Current Opinion in Genetics \&
+  Development}, \emph{29}, 1--8.
+  
   \hypertarget{ref-joly2009statistical}{}
   Joly, S., McLenachan, P. A., \& Lockhart, P. J. (2009). A statistical
   approach for distinguishing hybridization and incomplete lineage
   sorting. \emph{The American Naturalist}, \emph{174}(2), E54--E70.
+  
+  \hypertarget{ref-kimura1983neutral}{}
+  Kimura, M. (1983). \emph{The neutral theory of molecular evolution}.
+  Cambridge University Press.
   
   \hypertarget{ref-lewontin1973distribution}{}
   Lewontin, R., \& Krakauer, J. (1973). Distribution of gene frequency as
@@ -1232,6 +1283,11 @@ starts here.
   \hypertarget{ref-mcvean2009genealogical}{}
   McVean, G. (2009). A genealogical interpretation of principal components
   analysis. \emph{PLoS Genetics}, \emph{5}(10), e1000686.
+  
+  \hypertarget{ref-menozzi1978synthetic}{}
+  Menozzi, P., Piazza, A., \& Cavalli-Sforza, L. (1978). Synthetic maps of
+  human gene frequencies in europeans. \emph{Science}, \emph{201}(4358),
+  786--792.
   
   \hypertarget{ref-muir2016real}{}
   Muir, P., Li, S., Lou, S., Wang, D., Spakowicz, D. J., Salichos, L.,

@@ -9,56 +9,58 @@ Une population est dite localement adaptée à son environnement si elle a connu
 ### Modèle en île
 
 ```{r}
-if (!file.exists("msdir/ms")) {
-  system("gcc -o msdir/ms msdir/ms.c msdir/streec.c msdir/rand1.c -lm")
+if (!file.exists("ms/ms")) {
+  system("gcc -o ms/ms ms/ms.c ms/streec.c ms/rand1.c -lm")
 }
 
 ### ms : list of parameters ###
-nDEMS <- 3
-nCHR_per_POP <- 100
-nCHR <- nDEMS * nCHR_per_POP
+nb_demes <- 3
+nCHR_per_POP <- 50
+nCHR <- nb_demes * nCHR_per_POP
 nIND <- nCHR / 2
-nSNP_neutral <- 975
-nSNP_outlier <- 25
+nb_neutral <- 975
+nb_adaptive <- 25
 mig_rate_neutral <- 10
-mig_rate_adaptive <- 1
+mig_rate_adaptive <- 0.1
 ###############################
 
 nCHR_per_POP_string <- nCHR_per_POP
-for (k in 1:(nDEMS - 1)) {
+for (k in 1:(nb_demes - 1)) {
   nCHR_per_POP_string <- paste(nCHR_per_POP_string, nCHR_per_POP)
 }
 
 mig_rate_neutral_string <- "x"
 mig_rate_adaptive_string <- "x"
-for (k in 1:nDEMS){
-  for (j in 1:nDEMS){
+for (k in 1:nb_demes){
+  for (j in 1:nb_demes){
     if ((k == j) && (k > 1)){
       mig_rate_neutral_string <- paste(mig_rate_neutral_string, "x")
       mig_rate_adaptive_string <- paste(mig_rate_adaptive_string, "x")      
     } else if (k != j) {
-      mig_rate_neutral_string <- paste(mig_rate_neutral_string, mig_rate_neutral)
-      mig_rate_adaptive_string <- paste(mig_rate_adaptive_string, mig_rate_adaptive)
+      mig_rate_neutral_string <- paste(mig_rate_neutral_string, 
+                                       mig_rate_neutral)
+      mig_rate_adaptive_string <- paste(mig_rate_adaptive_string, 
+                                        mig_rate_adaptive)
     }
   }
 }
 
-cmd_neutral <- paste("./ms",
+cmd_neutral <- paste("ms/./ms",
                      nCHR,
-                     nSNP_neutral,
+                     nb_neutral,
                      "-s 1 -I",
-                     nDEMS,
+                     nb_demes,
                      nCHR_per_POP_string,
                      "-ma",
                      mig_rate_neutral_string,
                      ">", 
                      "data/neutral.txt")
 
-cmd_adaptive <- paste("./ms",
+cmd_adaptive <- paste("ms/./ms",
                       nCHR,
-                      nSNP_outlier,
+                      nb_adaptive,
                       "-s 1 -I",
-                      nDEMS,
+                      nb_demes,
                       nCHR_per_POP_string,
                       "-ma",
                       mig_rate_adaptive_string,
@@ -66,13 +68,50 @@ cmd_adaptive <- paste("./ms",
                       "data/adaptive.txt") 
 
 system(cmd_neutral)
+system(cmd_adaptive)
+
+file.neutral <- scan(file = "data/neutral.txt", 
+              what = "character", 
+              sep = "\n", 
+              skip = 2)
+
+g.neutral <- NULL
+
+for (locus in 1:nb_neutral){
+  res.locus1 <- file.neutral[4:(nCHR + 3)]
+  file.neutral <- file.neutral[-(1:(nCHR+3))]
+  g.neutral <- cbind(g.neutral, as.numeric(as.factor(res.locus1)))
+}
+
+file.adaptive <- scan(file = "data/adaptive.txt", 
+                      what = "character", 
+                      sep = "\n", 
+                      skip = 2)
+
+g.adaptive <- NULL
+
+for (locus in 1:nb_adaptive){
+  res.locus1 <- file.adaptive[4:(nCHR + 3)]
+  file.adaptive <- file.adaptive[-(1:(nCHR+3))]
+  g.adaptive <- cbind(g.adaptive, as.numeric(as.factor(res.locus1)))
+}
+
+g <- cbind(g.neutral, g.adaptive)
+
+x <- pcadapt::pcadapt(t(g), K = 2)
+pop <- c(rep("A", 50), rep("B", 50), rep("C", 50))
+plot(x, option = "scores", pop = pop)
+```
+
+```{r}
+plot(x, option = "manhattan")
 ```
 
 ### Modèle de divergence
 
 Nous adaptons une version du script Python utilisé dans [@roux2012recent], basé sur le module de simulation simuPOP [@peng2005simupop].
 
-```{python, cache=TRUE}
+```{python, echo = TRUE, cache = TRUE}
 #!/usr/bin/env python
 from __future__ import division
 import simuOpt, types, os, sys, time

@@ -9,13 +9,85 @@ Qu'est-ce que la génétique ? À cette question nous pourrions reprendre en gui
 
 ## À l'origine de la variabilité génétique
 
-La théorie neutraliste de l'évolution formalisée et popularisée par Motoo Kimura
-Neutre
-Dérive génétique
+
+### La théorie darwinienne
+
+### La théorie neutraliste
+
+À la théorie de l'évolution de Charles Darwin est souvent opposée la théorie neutraliste de l'évolution formalisée par Motoo Kimura dans son ouvrage \textit{The neutral theory of molecular evolution} [@kimura1983neutral]. Ce nouveau regard porté sur l'évolution apporte des réponses aux questions auxquelles ne permettait pas de répondre la théorie darwinienne.
+Une des composantes principales de cette nouvelle théorie consiste en l'affirmation que les fluctuations aléatoires dans la fréquence des variants, n'affectant que très peu ou pas du tout la valeur sélective, soient la principale source de variabilité de l'ADN [@charlesworth2009darwin]. 
+
+### Dérive génétique
+
+Nous illustrons ici le principe de dérive génétique à l'aide du modèle de Wright-Fisher tel qu'il est présenté dans l'ouvrage \textit{Population Genetics} [@gillespie2010population].
+
+```{r drift, fig.height=8, fig.cap="Simulation numérique de la dérive génétique. La fréquence de l'allèle étudié est simulée pour 5 populations constituées chacune de 20 individus sur une période de 100 générations. Dans chaque population, la fréquence de l'allèle est initialement de 0.20."}
+
+nb_generations <- 100
+nb_populations <- 5
+s <- c(20, 100, 1000)
+p1 <- 0.2
+init <- vector(mode = "numeric", 
+               length = (nb_generations + 1) * nb_populations * length(s))
+af.df <- data.frame(generation = init,
+                    f.obs = init,
+                    population = init,
+                    size = sort(rep(s, (nb_generations + 1) * nb_populations)))
+
+for (N in s) {
+  for (k in 1:nb_populations) {
+    x <- rep("A2", length = 2 * N)
+    idx <- sample(1:(2 * N), size = floor(2 * N * p1)) 
+    x[idx] <- "A1"
+    offset <- (k - 1) * (nb_generations + 1)
+    af.df[af.df$size == N, ]$generation[offset + 1] <- 0
+    af.df[af.df$size == N, ]$f.obs[offset + 1] <- sum(x == "A1") / (2 * N)
+    af.df[af.df$size == N, ]$population[offset + 1] <- k
+    
+    for (i in 1:nb_generations) {
+      x <- sample(x, size = 2 * N, replace = TRUE)
+      af.df[af.df$size == N, ]$generation[offset + i + 1] <- i
+      af.df[af.df$size == N, ]$f.obs[offset + i + 1] <- sum(x == "A1") / (2 * N)
+      af.df[af.df$size == N, ]$population[offset + i + 1] <- k
+    }
+  }
+}
+
+af.df %>% 
+  ggplot(aes(x = generation, 
+             y = f.obs, 
+             color = as.factor(population))) +
+  facet_wrap(~size, ncol = 1) +
+  geom_line(size = 1.5) +
+  scale_color_manual(values = cbbPalette[2:6]) +
+  ylim(0, 1) +
+  xlab("Génération") +
+  ylab("Fréquence allélique") +
+  theme_bw() +
+  theme(legend.position = "none")
+```
+La fréquence d'un allèle au sein d'une population est principalement impactée par deux facteurs :
+
+- Le nombre d'individus 
+
+- Les lois de Mendel
+
+La figure \@ref(fig:drift) met en évidence deux propriétés de la dérive génétique :
+
+- Les fréquences alléliques évoluent de façon indépendante d'une population à une autre.
+
+- La dérive génétique entraîne une perte de diversité allélique au sein des populations de petite taille. Dans le modèle de Wright-Fisher, les fréquences alléliques finissent éventuellement par atteindre les états dits absorbants que sont $0$ et $1$.
+
+```{r mendel, results="asis", echo=FALSE, fig.cap="Représentation schématique des lois de Mendel.", out.width="500px"}
+include_graphics("figure/mendel.pdf")
+```
+
 
 Wiki : "En particulier, l'hypothèse de neutralité, sous laquelle les mutations n'ont aucune influence sur la valeur sélective, est l'hypothèse nulle généralement retenue dans les travaux où une telle hypothèse est nécessaire."
 
 La formulation d'une hypothèse ou d'un ensemble d'hypothèses permettant de décrire un processus évolutif en l'absence de sélection, portant généralement le nom de \textit{modèle neutre}, est souvent de première nécessité dans toute démarche visant à caractériser un mécanisme de sélection. La donnée d'observations mettant en défaut le modèle neutre aura pour conséquences de créditer davantage une hypothèse invoquant un processus de sélection.
+
+
 
 Sélection naturelle
 Environnement hétérogène
@@ -45,16 +117,288 @@ df %>%
                                 "10M",
                                 "100M")) +
   xlab("Année") +
-  ylab("Coût par génôme") + 
+  ylab("Coût par génôme (en dollars)") + 
   scale_x_date(date_minor_breaks = "1 year") +
   theme_bw()
 ```
 
-Le séquençage nouvelle génération génèrant de considérables volumes de données, de nouvelles problèmatiques se posent quant à leur stockage ainsi qu'à leur analyse, nécessitant l'utilisation de puissantes ressources de calcul ainsi que le développement d'algorithmes plus adaptés [@gogol2012overview]. Financement croissant pour l'acquisition de données NGS [@muir2016real].
+Le séquençage nouvelle génération génèrant de considérables volumes de données, de nouvelles problèmatiques se posent quant à leur stockage et leur analyse, nécessitant l'utilisation de puissantes ressources de calcul ainsi que le développement d'algorithmes plus adaptés [@gogol2012overview]. Financement croissant pour l'acquisition de données NGS [@muir2016real].
 
 ###
 
 L'accumulation de données, aussi bien en termes d'observations qu'en termes de variables, laisse à penser que le traitement de celles-ci pourrait permettre de détecter efficacement les variables qui sont responsables ou qui influencent un phénomène particulier. Cela pourrait être par exemple l'utilisation de bases de données automobiles pour prédire la durée de vie de véhicules neufs, ou encore celle de données climatiques pour estimer les variations de température auxquelles pourrait être sujette notre planète. Cette accumulation massive s'accompagne tout de même d'un phénomène bien connu en statistiques, phénomène qui porte le nom de "curse of dimensionality" [@giraud2014introduction]. 
+
+### Les marqueurs génétiques
+
+Au concept de génétique est souvent associé l'acronyme ADN, correspondant au nom de la molécule d'Acide désoxyribonucléique.
+
+DNA bases pair up with each other, A with T and C with G, to form units called base pairs. Each base is also attached to a sugar molecule and a phosphate molecule. Together, a base, sugar, and phosphate are called a nucleotide. Nucleotides are arranged in two long strands that form a spiral called a double helix. The structure of the double helix is somewhat like a ladder, with the base pairs forming the ladder’s rungs and the sugar and phosphate molecules forming the vertical sidepieces of the ladder. https://ghr.nlm.nih.gov/primer/basics/dna
+Chaque chromosome est constitué de deux brins d'ADN.
+La structure spatiale de l'ADN n'étant pas prise en compte dans les travaux présentés ici, nous en garderons une représentation unidimensionnelle.
+
+D'un point de vue statistique, seuls les sites nucléotidiques potentiellement variables d'une observation à une autre présentent un intérêt. Ces variations génétiques peuvent se manifester sous différentes formes, nous amenant à les classer d'autant de façons :
+
+
+- Microsatellite :
+
+Jusqu'à présent, les microsatellites ont connu un succès important, notamment grâce à la popularisation de techniques telles que la PCR (Polymerase Chain Reaction). Leur étude a permis de mettre en évidence l'implication de divers blablabla.
+
+Un microsatellite est repérable par la répétition successive de petits motifs chacun composé de 1 à 4 acides aminés.
+
+```{r, fig.cap="Exemples de microsatellites. La première séquence comporte 3 répétitions du motif CCG, tandis que la seconde inclut 4 répétitions du motif CA."}
+pair_base = function(seq) {
+  x <- vector(mode = "character", length = length(seq))
+  x[seq == "A"] <- "T"
+  x[seq == "T"] <- "A"
+  x[seq == "C"] <- "G"
+  x[seq == "G"] <- "C"
+  return(x)
+}
+
+N <- 20
+nuclA1 <- sample(c("A", "C", "G", "T"), size = N, replace = TRUE)
+nuclB1 <- sample(c("A", "C", "G", "T"), size = N, replace = TRUE)
+idx.microsatA <- 3:11
+idx.microsatB <- 10:17
+nuclA1[idx.microsatA] <- c("C", "C", "G") 
+nuclB1[idx.microsatB] <- c("C", "A")
+nuclA2 <- pair_base(nuclA1)
+nuclB2 <- pair_base(nuclB1)
+
+tA <- rep("DNA", 2 * N)
+tB <- rep("DNA", 2 * N)
+tA[c(idx.microsatA, idx.microsatA + N)] <- "X"
+tB[c(idx.microsatB, idx.microsatB + N)] <- "X"
+
+microsatA.df <- data.frame(x1 = rep(1:N, 2),
+                           x2 = rep(2:(N + 1), 2),
+                           y1 = c(rep(1, N), rep(3, N)),
+                           y2 = c(rep(2, N), rep(4, N)),  
+                           t = tA,
+                           r = c(nuclA1, nuclA2),
+                           type = "3 répétitions du motif CCG")
+
+microsatB.df <- data.frame(x1 = rep(1:N, 2),
+                           x2 = rep(2:(N + 1), 2),
+                           y1 = c(rep(1, N), rep(3, N)),
+                           y2 = c(rep(2, N), rep(4, N)),  
+                           t = tB,
+                           r = c(nuclB1, nuclB2),
+                           type = "4 répétitions du motif CA")
+
+rbind(microsatA.df, microsatB.df) %>% 
+  mutate(t = factor(t, 
+                    levels = c("DNA", 
+                               "X"), 
+                    ordered = TRUE)) %>%
+  ggplot() + 
+  ggtitle("Microsatellite") + 
+  facet_wrap(~type, ncol = 1, scales = "free_x") +
+  coord_fixed(ratio = 1) +
+  scale_y_continuous(limits = c(-0.5, 5.5)) +
+  scale_fill_manual(values = cbbPalette[c(3, 7)]) +
+  geom_rect(mapping = aes(xmin = x1, 
+                          xmax = x2, 
+                          ymin = y1, 
+                          ymax = y2, 
+                          fill = t), 
+            color = "black", 
+            alpha = 0.75) +
+  geom_text(aes(x = x1 + (x2 - x1) / 2, 
+                y = y1 + (y2 - y1) / 2, 
+                label = r), 
+            size = 4) +
+  theme_bw() +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        legend.position = "none",
+        plot.title = element_text(hjust = 0.5))
+```
+
+
+- Indel :
+
+INDEL (INsertion/DELetion) is where a single base has been deleted, or inserted into one genome relative to another. It is a symmetrical relationship, as a deletion in one corresponds to an insertion in another. 
+
+
+```{r}
+N <- 20
+nuclA1 <- sample(c("A", "C", "G", "T"), size = N, replace = TRUE)
+nuclA2 <- pair_base(nuclA1)
+nuclB1 <- nuclA1
+nuclB2 <- nuclA2
+idx.SNP <- sample(1:N, size = 1)
+nuclB1[idx.SNP] <- "-"
+nuclB2[idx.SNP] <- "-"
+tA <- rep("DNA1", 2 * N)
+tB <- rep("DNA2", 2 * N)
+tA[c(idx.SNP, idx.SNP + N)] <- "X"
+tB[c(idx.SNP, idx.SNP + N)] <- "X"
+
+indelA.df <- data.frame(x1 = rep(1:N, 2),
+                        x2 = rep(2:(N + 1), 2),
+                        y1 = c(rep(1, N), rep(3, N)),
+                        y2 = c(rep(2, N), rep(4, N)),  
+                        t = tA,
+                        r = c(nuclA1, nuclA2),
+                        marker.type = "Indel")
+
+indelB.df <- data.frame(x1 = rep(1:N, 2),
+                        x2 = rep(2:(N + 1), 2),
+                        y1 = c(rep(7, N), rep(9, N)),
+                        y2 = c(rep(8, N), rep(10, N)),  
+                        t = tB,
+                        r = c(nuclB1, nuclB2),
+                        marker.type = "Indel")
+
+rbind(indelA.df, indelB.df) %>%
+  mutate(t = factor(t, 
+                    levels = c("DNA1", 
+                               "DNA2", 
+                               "X"), 
+                    ordered = TRUE)) %>%
+  ggplot() + 
+  ggtitle("Insertion/Délétion") + 
+  coord_fixed() +
+  scale_fill_manual(values = cbbPalette[c(3, 6, 7)]) +
+  geom_rect(mapping = aes(xmin = x1, 
+                          xmax = x2, 
+                          ymin = y1, 
+                          ymax = y2, 
+                          fill = t), 
+            color = "black", 
+            alpha = 0.75) +
+  geom_text(aes(x = x1 + (x2 - x1) / 2, 
+                y = y1 + (y2 - y1) / 2, 
+                label = r), 
+            size = 4) +
+  theme_bw() +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        legend.position = "none",
+        plot.title = element_text(hjust = 0.5))
+```
+
+- Polymorphisme nucléotidique : 
+
+```{r}
+N <- 20
+nuclA1 <- sample(c("A", "C", "G", "T"), size = N, replace = TRUE)
+nuclA2 <- pair_base(nuclA1)
+nuclB1 <- nuclA1
+idx.SNP <- sample(1:N, size = 1)
+if (nuclA1[idx.SNP] == "A" || nuclA1[idx.SNP] == "T") {
+  nuclB1[idx.SNP] <- sample(c("C", "G"), size = 1)
+} else if (nuclA1[idx.SNP] == "C" || nuclA1[idx.SNP] == "G") {
+  nuclB1[idx.SNP] <- sample(c("A", "T"), size = 1)
+} 
+nuclB2 <- pair_base(nuclB1)
+
+tA <- rep("DNA1", 2 * N)
+tB <- rep("DNA2", 2 * N)
+tA[c(idx.SNP, idx.SNP + N)] <- "X"
+tB[c(idx.SNP, idx.SNP + N)] <- "X"
+
+SNPA.df <- data.frame(x1 = rep(1:N, 2),
+                      x2 = rep(2:(N + 1), 2),
+                      y1 = c(rep(1, N), rep(3, N)),
+                      y2 = c(rep(2, N), rep(4, N)),  
+                      t = tA,
+                      r = c(nuclA1, nuclA2),
+                      marker.type = "SNP")
+
+SNPB.df <- data.frame(x1 = rep(1:N, 2),
+                      x2 = rep(2:(N + 1), 2),
+                      y1 = c(rep(7, N), rep(9, N)),
+                      y2 = c(rep(8, N), rep(10, N)),  
+                      t = tB,
+                      r = c(nuclB1, nuclB2),
+                      marker.type = "SNP")
+
+rbind(SNPA.df, SNPB.df) %>% 
+  mutate(t = factor(t, 
+                    levels = c("DNA1", 
+                               "DNA2", 
+                               "X"), 
+                    ordered = TRUE)) %>%
+  ggplot() + 
+  ggtitle("Polymorphisme nucléotidique") + 
+  coord_fixed() +
+  scale_fill_manual(values = cbbPalette[c(3, 6, 7)]) +
+  geom_rect(mapping = aes(xmin = x1, 
+                          xmax = x2, 
+                          ymin = y1, 
+                          ymax = y2, 
+                          fill = t), 
+            color = "black", 
+            alpha = 0.75) +
+  geom_text(aes(x = x1 + (x2 - x1) / 2, 
+                y = y1 + (y2 - y1) / 2, 
+                label = r), 
+            size = 4) +
+  theme_bw() +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        legend.position = "none",
+        plot.title = element_text(hjust = 0.5))
+
+```
+
+
+
+
+
+## Adaptation
+
+### Adaptation locale
+
+Haut plateau, Lactase [@jeong2014adaptations]
+
+### Introgression adaptative
+
+
+
+## Genome-scan
+
+### L'ACP en génétique des populations
+
+rincipal component analysis (PCA) has been used for several decades to study human population migrations,
+
+L'utilisation de l'Analyse en Composantes Principales en génétique des populations a été popularisée par Cavalli-Sforza [@menozzi1978synthetic].
+
+```{r popres, fig.cap = "ACP réalisée sur le jeu de données POPRES"}
+obj.popres <- readRDS("data/popres.rds")
+
+ggdf <- data.frame(PC1 = -obj.popres$u[, 1], 
+                   PC2 = -obj.popres$u[, 2],
+                   pop = obj.popres$pop.fr)
+
+ggplot(ggdf, aes(x = PC2, y = PC1, fill = pop)) + 
+  geom_point(size = 2.5, shape = 21, stroke = 1) + 
+  scale_fill_manual(labels = sort(unique(ggdf$pop)), 
+                    values = as.character(obj.popres$palette.fr)) +
+  guides(fill = guide_legend(nrow = 5)) +
+  theme_bw() +
+  theme(axis.text = element_text(face = "bold"),
+        legend.text = element_text(size = 7.5),
+        legend.key.height = unit(0.75, "line"),
+        legend.key.width = unit(0.5, "line"),
+        legend.title = element_blank(),
+        legend.direction = "horizontal",
+        legend.position = "bottom",
+        plot.margin = unit(c(0.1, 0.1, 0.1, 0.1), "cm"))
+
+
+```
 
 
 

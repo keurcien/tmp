@@ -6,3 +6,5 @@ Blockwise computation of covariance matrix
 Random SVD
 Storage in binary format
 Memory-mapping
+
+Pairwise-Cor [@dray2015principal]

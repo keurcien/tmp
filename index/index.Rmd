@@ -77,6 +77,11 @@ if(!require(simulate)){
   devtools::install_github("keurcien/simulate")
 }
 
+knitr::opts_chunk$set(fig.align = 'center', 
+                      echo = FALSE, 
+                      fig.width = 6,
+                      results = 'hide')
+
 # The palette with black:
 cbbPalette <- c("#000000", 
                 "#E69F00", 

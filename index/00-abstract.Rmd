@@ -1,3 +1,5 @@
-The preface pretty much says it all.  \par
+** Résumé **  \par
 
-Second paragraph of abstract starts here.
+La nécessité de développer des outils d'analyse exploratoire capables de traiter de larges volumes de données.
+
+** Abstract **
