@@ -1,24 +1,25 @@
-# Introduction {-}
+# Introduction 
 
-## Génétique et génétique des populations
+## La génétique des populations
 
-Qu'est-ce que la génétique ? À cette question nous pourrions reprendre en guise de réponse la formulation de Cavalli-Sforza, traduite de l'italien par Françoise Brun [@cavalli1994francesco]: « La génétique est la science de l'hérédité. Elle est la clé de toute la biologie, parce qu'elle explique les mécanismes qui sont responsables de la reproduction des êtres vivants, du fonctionnement et de la transmission du matériel héréditaire, des différences entre les individus, de l'évolution biologique. »  
+Si nous devions donner une définition brêve du concept de génétique, nous reprendrions la formulation de Cavalli-Sforza, traduite de l'italien par Françoise Brun [@cavalli1994francesco]: « La génétique est la science de l'hérédité. Elle est la clé de toute la biologie, parce qu'elle explique les mécanismes qui sont responsables de la reproduction des êtres vivants, du fonctionnement et de la transmission du matériel héréditaire, des différences entre les individus, de l'évolution biologique. »  
 
+Bien que l'hérédité puisse être de nature \textit{épigénétique} ou de type \textit{non mendélienne}, nous concentrerons la discussion principalement sur l'hérédité \textit{mendélienne}, pour laquelle la molécule d'ADN (Acide désoxyribonucléique) est depuis longtemps connue pour en être le support. Les lois de Mendel ont permis de décrire de façon quantitative les mécanismes de la transmission du matériel génétique.
 
-« Population genetics is concerned with the genetic basis of evolution. It differs from much of biology in that its important insights are theoretical rather than observational or experimental. It could hardly be otherwise. The objects of study are primarily the frequencies and fitnesses of genotypes in natural populations. » [@gillespie2010population].
+« Population genetics is concerned with the genetic basis of evolution. It differs from much of biology in that its important insights are theoretical rather than observational or experimental. It could hardly be otherwise. The objects of study are primarily the frequencies and fitnesses of genotypes in natural populations. » [@gillespie2010population]. 
 
 ## À l'origine de la variabilité génétique
 
-
-### La théorie darwinienne
-
 ### La théorie neutraliste
+
+Avant d'aborder la théorie neutraliste de Motoo Kimura, il convient de mentionner celle qui l'a précédé.
 
 À la théorie de l'évolution de Charles Darwin est souvent opposée la théorie neutraliste de l'évolution formalisée par Motoo Kimura dans son ouvrage \textit{The neutral theory of molecular evolution} [@kimura1983neutral]. Ce nouveau regard porté sur l'évolution apporte des réponses aux questions auxquelles ne permettait pas de répondre la théorie darwinienne.
 Une des composantes principales de cette nouvelle théorie consiste en l'affirmation que les fluctuations aléatoires dans la fréquence des variants, n'affectant que très peu ou pas du tout la valeur sélective, soient la principale source de variabilité de l'ADN [@charlesworth2009darwin]. 
 
 ### Dérive génétique
 
+La dérive génétique est un mécanisme important en génétique des populations. Les modèles statistiques 
 Nous illustrons ici le principe de dérive génétique à l'aide du modèle de Wright-Fisher tel qu'il est présenté dans l'ouvrage \textit{Population Genetics} [@gillespie2010population].
 
 ```{r drift, fig.height=8, fig.cap="Simulation numérique de la dérive génétique. La fréquence de l'allèle étudié est simulée pour 5 populations constituées chacune de 20 individus sur une période de 100 générations. Dans chaque population, la fréquence de l'allèle est initialement de 0.20."}
@@ -68,7 +69,7 @@ af.df %>%
 ```
 La fréquence d'un allèle au sein d'une population est principalement impactée par deux facteurs :
 
-- Le nombre d'individus 
+- Le nombre d'individus composant la population
 
 - Les lois de Mendel
 
@@ -79,7 +80,7 @@ La figure \@ref(fig:drift) met en évidence deux propriétés de la dérive gén
 - La dérive génétique entraîne une perte de diversité allélique au sein des populations de petite taille. Dans le modèle de Wright-Fisher, les fréquences alléliques finissent éventuellement par atteindre les états dits absorbants que sont $0$ et $1$.
 
 ```{r mendel, results="asis", echo=FALSE, fig.cap="Représentation schématique des lois de Mendel.", out.width="500px"}
-include_graphics("figure/mendel.pdf")
+include_graphics("figure/mendel.png")
 ```
 
 
@@ -87,7 +88,28 @@ Wiki : "En particulier, l'hypothèse de neutralité, sous laquelle les mutations
 
 La formulation d'une hypothèse ou d'un ensemble d'hypothèses permettant de décrire un processus évolutif en l'absence de sélection, portant généralement le nom de \textit{modèle neutre}, est souvent de première nécessité dans toute démarche visant à caractériser un mécanisme de sélection. La donnée d'observations mettant en défaut le modèle neutre aura pour conséquences de créditer davantage une hypothèse invoquant un processus de sélection.
 
+### Mutations aléatoires
 
+Si la dérive génétique entraîne une perte de diversité allélique, les mutations favorisent quant à elle le maintien des variations génétiques entre les populations [@gillespie2010population]. Une mutation peut survenir à un locus donné avec une probabilité spécifique à chaque espèce, appelée \textit{taux de mutation}.
+
+```{r mutationRate, results="asis"}
+species <- c("C. elegans", "Drosophile", "Souris", "Homme")
+rates <- c("2.3E-10", "3.4E-10", "1.8E-10", "5E-11")
+mr.df <- data.frame(Species = species,
+                    Rates = rates)
+colnames(mr.df) <- c("Espèce", "Taux de mutation")
+kable(mr.df) %>% 
+  kable_styling(bootstrap_options = "striped", 
+                full_width = F, 
+                position = "center")
+```
+
+
+## Adaptation 
+
+### Adaptation locale
+
+Haut plateau, Lactase [@jeong2014adaptations]
 
 Sélection naturelle
 Environnement hétérogène
@@ -100,13 +122,13 @@ Exome, Genome, transcriptome, etc...
 
 Le séquençage nouvelle génération a connu un essor considérable au cours des dernières décennies. Si bien que les prouesses techniques et les progrès technologiques réalisés dans ce domaine ont permis de réduire d'un facteur 100,000 les coûts de séquençage en l'espace de seulement 15 ans [@wetterstrand2013dna].
 
-```{r, fig.align='center', fig.width=6, fig.cap='Évolution des coûts de séquençage depuis 2001.'}
+```{r wetterstrand, fig.align='center', fig.width=6, fig.cap='Évolution des coûts de séquençage depuis 2001.'}
 df <- read.csv("data/seqcost2015_4.csv")
 df %>% 
   mutate(log10CpG = log10(Cost.per.Genome)) %>% 
   ggplot(aes(x = as.Date(Date), y = log10CpG)) + 
-  geom_point(color = cbbPalette[6]) +
-  geom_line(color = cbbPalette[2]) +
+  geom_line(color = cbbPalette[2], size = 1.5) +
+  geom_point(color = cbbPalette[6], size = 1.5) +
   scale_y_continuous(breaks = 1:8, 
                      labels = c("10",
                                 "100",
@@ -141,11 +163,9 @@ D'un point de vue statistique, seuls les sites nucléotidiques potentiellement v
 
 - Microsatellite :
 
-Jusqu'à présent, les microsatellites ont connu un succès important, notamment grâce à la popularisation de techniques telles que la PCR (Polymerase Chain Reaction). Leur étude a permis de mettre en évidence l'implication de divers blablabla.
+Jusqu'à présent, les microsatellites ont connu un succès important, notamment grâce à la popularisation de techniques telles que la PCR (\textit{Polymerase Chain Reaction}). Leur étude a permis de mettre en évidence l'implication de divers blablabla. Un microsatellite est repérable par la répétition successive de petits motifs chacun composé de 1 à 4 acides aminés.
 
-Un microsatellite est repérable par la répétition successive de petits motifs chacun composé de 1 à 4 acides aminés.
-
-```{r, fig.cap="Exemples de microsatellites. La première séquence comporte 3 répétitions du motif CCG, tandis que la seconde inclut 4 répétitions du motif CA."}
+```{r microsat, fig.cap="Exemples de microsatellites. La première séquence comporte 3 répétitions du motif CCG, tandis que la seconde inclut 4 répétitions du motif CA."}
 pair_base = function(seq) {
   x <- vector(mode = "character", length = length(seq))
   x[seq == "A"] <- "T"
@@ -224,7 +244,7 @@ rbind(microsatA.df, microsatB.df) %>%
 INDEL (INsertion/DELetion) is where a single base has been deleted, or inserted into one genome relative to another. It is a symmetrical relationship, as a deletion in one corresponds to an insertion in another. 
 
 
-```{r}
+```{r indel}
 N <- 20
 nuclA1 <- sample(c("A", "C", "G", "T"), size = N, replace = TRUE)
 nuclA2 <- pair_base(nuclA1)
@@ -287,7 +307,7 @@ rbind(indelA.df, indelB.df) %>%
 
 - Polymorphisme nucléotidique : 
 
-```{r}
+```{r snp}
 N <- 20
 nuclA1 <- sample(c("A", "C", "G", "T"), size = N, replace = TRUE)
 nuclA2 <- pair_base(nuclA1)
@@ -353,52 +373,6 @@ rbind(SNPA.df, SNPB.df) %>%
 
 ```
 
-
-
-
-
-## Adaptation
-
-### Adaptation locale
-
-Haut plateau, Lactase [@jeong2014adaptations]
-
-### Introgression adaptative
-
-
-
-## Genome-scan
-
-### L'ACP en génétique des populations
-
-rincipal component analysis (PCA) has been used for several decades to study human population migrations,
-
-L'utilisation de l'Analyse en Composantes Principales en génétique des populations a été popularisée par Cavalli-Sforza [@menozzi1978synthetic].
-
-```{r popres, fig.cap = "ACP réalisée sur le jeu de données POPRES"}
-obj.popres <- readRDS("data/popres.rds")
-
-ggdf <- data.frame(PC1 = -obj.popres$u[, 1], 
-                   PC2 = -obj.popres$u[, 2],
-                   pop = obj.popres$pop.fr)
-
-ggplot(ggdf, aes(x = PC2, y = PC1, fill = pop)) + 
-  geom_point(size = 2.5, shape = 21, stroke = 1) + 
-  scale_fill_manual(labels = sort(unique(ggdf$pop)), 
-                    values = as.character(obj.popres$palette.fr)) +
-  guides(fill = guide_legend(nrow = 5)) +
-  theme_bw() +
-  theme(axis.text = element_text(face = "bold"),
-        legend.text = element_text(size = 7.5),
-        legend.key.height = unit(0.75, "line"),
-        legend.key.width = unit(0.5, "line"),
-        legend.title = element_blank(),
-        legend.direction = "horizontal",
-        legend.position = "bottom",
-        plot.margin = unit(c(0.1, 0.1, 0.1, 0.1), "cm"))
-
-
-```
 
 
 

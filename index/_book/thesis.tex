@@ -24,10 +24,9 @@
 %% Preamble
 %%
 % \documentclass{<something>} must begin each LaTeX document
-\documentclass[12pt,twoside]{reedthesis}
+\documentclass[12pt,twoside]{ugathesis}
 % Packages are extensions to the basic LaTeX functions. Whatever you
 % want to typeset, there is probably a package out there for it.
-% Chemistry (chemtex), screenplays, you name it.
 % Check out CTAN to see: http://www.ctan.org/
 %%
 \usepackage{graphicx,latexsym}
@@ -37,7 +36,6 @@
 \usepackage{xcolor}
 \usepackage{eso-pic}
 \usepackage{longtable,booktabs,setspace}
-\usepackage{chemarr} %% Useful for one reaction arrow, useless if you're not a chem major
 \usepackage[hyphens]{url}
 \usepackage{pdfpages}
 \usepackage{tikz}
@@ -50,14 +48,6 @@
 \floatplacement{figure}{H}
 % End of CII addition
 \usepackage{rotating}
-
-% Next line commented out by CII
-%%% \usepackage{natbib}
-% Comment out the natbib line above and uncomment the following two lines to use the new
-% biblatex-chicago style, for Chicago A. Also make some changes at the end where the
-% bibliography is included.
-%\usepackage{biblatex-chicago}
-%\bibliography{thesis}
 
 % Added by CII (Thanks, Hadley!)
 % Use ref for internal links
@@ -72,14 +62,11 @@
 \captionsetup{width=5in}
 % End of CII addition
 
-% \usepackage{times} % other fonts are available like times, bookman, charter, palatino
-
 % To pass between YAML and LaTeX the dollar signs are added by CII
 \title{THÈSE}
 \author{Keurcien LUU}
 \labo{Techniques de l'Ingénierie Médicale et de la Complexité - Informatique,
 Mathématiques et Applications de Grenoble (TIMC-IMAG)}
-% The month and year that you submit your FINAL draft TO THE LIBRARY (May or December)
 \date{31 octobre 2017}
 \division{Mathematics and Natural Sciences}
 \advisor{Michael BLUM}
@@ -159,7 +146,6 @@ Abstract **
 %% End Preamble
 %%
 %
-
 \begin{document}
 
 % Everything below added by CII
@@ -167,12 +153,10 @@ Abstract **
   
   \frontmatter % this stuff will be roman-numbered
   \pagestyle{empty} % this removes page numbers from the frontmatter
-
       \begin{acknowledgements}
       The preface pretty much says it all. \par  Second paragraph of abstract
       starts here.
     \end{acknowledgements}
-  
       \begin{preface}
       « Je me propose de passer brièvement en revue les progrès de l'opinion
       relativement à l'origine des espèces. Jusque tout récemment, la plupart
@@ -190,7 +174,6 @@ Abstract **
       la compatibilité entre la religion et la théorie évolutionniste apporte
       son lot de débats et de controverses. \par
     \end{preface}
-  
       \hypersetup{linkcolor=black}
     \setcounter{tocdepth}{2}
     \tableofcontents
@@ -198,25 +181,22 @@ Abstract **
       \listoftables
   
       \listoffigures
-  
       \begin{abstract}
       ** Résumé ** \par  La nécessité de développer des outils d'analyse
       exploratoire capables de traiter de larges volumes de données. **
       Abstract **
     \end{abstract}
   
-  
   \mainmatter % here the regular arabic numbering starts
   \pagestyle{fancyplain} % turns page numbering back on
 
-  \chapter*{Introduction}\label{introduction}
-  \addcontentsline{toc}{chapter}{Introduction}
+  \chapter{Introduction}\label{introduction}
   
-  \section{Génétique et génétique des
-  populations}\label{genetique-et-genetique-des-populations}
+  \section{À l'origine de la variabilité
+  génétique}\label{a-lorigine-de-la-variabilite-genetique}
   
-  Qu'est-ce que la génétique ? À cette question nous pourrions reprendre
-  en guise de réponse la formulation de Cavalli-Sforza, traduite de
+  Si nous devions donner une définition brêve du concept de génétique,
+  nous reprendrions la formulation de Cavalli-Sforza, traduite de
   l'italien par Françoise Brun (L. Cavalli-Sforza, 1994): « La génétique
   est la science de l'hérédité. Elle est la clé de toute la biologie,
   parce qu'elle explique les mécanismes qui sont responsables de la
@@ -224,14 +204,19 @@ Abstract **
   du matériel héréditaire, des différences entre les individus, de
   l'évolution biologique. »
   
+  Bien que l'hérédité puisse être de nature \textit{épigénétique} ou de
+  type \textit{non mendélienne}, nous concentrerons la discussion
+  principalement sur l'hérédité \textit{mendélienne}, pour laquelle la
+  molécule d'ADN (Acide désoxyribonucléique) est depuis longtemps connue
+  pour en être le support. Les lois de Mendel ont permis de décrire de
+  façon quantitative les mécanismes de la transmission du matériel
+  génétique.
+  
   « Population genetics is concerned with the genetic basis of evolution.
   It differs from much of biology in that its important insights are
   theoretical rather than observational or experimental. It could hardly
   be otherwise. The objects of study are primarily the frequencies and
   fitnesses of genotypes in natural populations. » (Gillespie, 2010).
-  
-  \section{À l'origine de la variabilité
-  génétique}\label{a-lorigine-de-la-variabilite-genetique}
   
   \subsection{La théorie darwinienne}\label{la-theorie-darwinienne}
   
@@ -250,10 +235,10 @@ Abstract **
   
   \subsection{Dérive génétique}\label{derive-genetique}
   
-  Nous illustrons ici le principe de dérive génétique à l'aide du modèle
-  de Wright-Fisher tel qu'il est présenté dans l'ouvrage
-  \textit{Population Genetics} (Gillespie, 2010).
-  
+  La dérive génétique est un mécanisme important en génétique des
+  populations. Les modèles statistiques Nous illustrons ici le principe de
+  dérive génétique à l'aide du modèle de Wright-Fisher tel qu'il est
+  présenté dans l'ouvrage \textit{Population Genetics} (Gillespie, 2010).
   \begin{figure}
   
   {\centering \includegraphics{thesis_files/figure-latex/drift-1} 
@@ -262,31 +247,26 @@ Abstract **
   
   \caption{Simulation numérique de la dérive génétique. La fréquence de l'allèle étudié est simulée pour 5 populations constituées chacune de 20 individus sur une période de 100 générations. Dans chaque population, la fréquence de l'allèle est initialement de 0.20.}\label{fig:drift}
   \end{figure}
-  
   La fréquence d'un allèle au sein d'une population est principalement
   impactée par deux facteurs :
-  
   \begin{itemize}
   \item
-    Le nombre d'individus
+    Le nombre d'individus composant la population
   \item
     Les lois de Mendel
   \end{itemize}
-  
   La figure \ref{fig:drift} met en évidence deux propriétés de la dérive
   génétique :
-  
   \begin{itemize}
   \item
     Les fréquences alléliques évoluent de façon indépendante d'une
     population à une autre.
   \item
     La dérive génétique entraîne une perte de diversité allélique au sein
-    d'une population. Dans le modèle de Wright-Fisher, les fréquences
-    alléliques finissent éventuellement par atteindre les états dits
-    absorbants que sont \(0\) et \(1\).
+    des populations de petite taille. Dans le modèle de Wright-Fisher, les
+    fréquences alléliques finissent éventuellement par atteindre les états
+    dits absorbants que sont \(0\) et \(1\).
   \end{itemize}
-  
   \begin{figure}
   
   {\centering \includegraphics[width=500px]{figure/mendel} 
@@ -295,7 +275,6 @@ Abstract **
   
   \caption{Représentation schématique des lois de Mendel.}\label{fig:mendel}
   \end{figure}
-  
   Wiki : ``En particulier, l'hypothèse de neutralité, sous laquelle les
   mutations n'ont aucune influence sur la valeur sélective, est
   l'hypothèse nulle généralement retenue dans les travaux où une telle
@@ -309,6 +288,29 @@ Abstract **
   aura pour conséquences de créditer davantage une hypothèse invoquant un
   processus de sélection.
   
+  \subsection{Mutations aléatoires}\label{mutations-aleatoires}
+  
+  Si la dérive génétique entraîne une perte de diversité allélique, les
+  mutations favorisent quant à elle le maintien des variations génétiques
+  entre les populations (Gillespie, 2010). Une mutation peut survenir à un
+  locus donné avec une probabilité spécifique à chaque espèce, appelée
+  \textit{taux de mutation}.
+  \begin{table}[!h]
+  \centering
+  \begin{tabular}{l|l}
+  \hline
+  Espèce & Taux de mutation\\
+  \hline
+  C. elegans & 2.3E-10\\
+  \hline
+  Drosophile & 3.4E-10\\
+  \hline
+  Souris & 1.8E-10\\
+  \hline
+  Homme & 5E-11\\
+  \hline
+  \end{tabular}
+  \end{table}
   Sélection naturelle Environnement hétérogène
   
   \section{Données de séquençage nouvelle
@@ -324,16 +326,14 @@ Abstract **
   progrès technologiques réalisés dans ce domaine ont permis de réduire
   d'un facteur 100,000 les coûts de séquençage en l'espace de seulement 15
   ans (Wetterstrand, 2013).
-  
   \begin{figure}
   
-  {\centering \includegraphics{thesis_files/figure-latex/unnamed-chunk-1-1} 
+  {\centering \includegraphics{thesis_files/figure-latex/wetterstrand-1} 
   
   }
   
-  \caption{Évolution des coûts de séquençage depuis 2001.}\label{fig:unnamed-chunk-1}
+  \caption{Évolution des coûts de séquençage depuis 2001.}\label{fig:wetterstrand}
   \end{figure}
-  
   Le séquençage nouvelle génération génèrant de considérables volumes de
   données, de nouvelles problèmatiques se posent quant à leur stockage et
   leur analyse, nécessitant l'utilisation de puissantes ressources de
@@ -376,50 +376,41 @@ Abstract **
   potentiellement variables d'une observation à une autre présentent un
   intérêt. Ces variations génétiques peuvent se manifester sous
   différentes formes, nous amenant à les classer d'autant de façons :
-  
   \begin{itemize}
   \tightlist
   \item
     Microsatellite :
   \end{itemize}
-  
   Jusqu'à présent, les microsatellites ont connu un succès important,
   notamment grâce à la popularisation de techniques telles que la PCR
-  (Polymerase Chain Reaction). Leur étude a permis de mettre en évidence
-  l'implication de divers blablabla.
-  
-  Un microsatellite est repérable par la répétition successive de petits
-  motifs chacun composé de 1 à 4 acides aminés.
-  
+  (\textit{Polymerase Chain Reaction}). Leur étude a permis de mettre en
+  évidence l'implication de divers blablabla. Un microsatellite est
+  repérable par la répétition successive de petits motifs chacun composé
+  de 1 à 4 acides aminés.
   \begin{figure}
   
-  {\centering \includegraphics{thesis_files/figure-latex/unnamed-chunk-2-1} 
+  {\centering \includegraphics{thesis_files/figure-latex/microsat-1} 
   
   }
   
-  \caption{Exemples de microsatellites. La première séquence comporte 3 répétitions du motif CCG, tandis que la seconde inclut 4 répétitions du motif CA.}\label{fig:unnamed-chunk-2}
+  \caption{Exemples de microsatellites. La première séquence comporte 3 répétitions du motif CCG, tandis que la seconde inclut 4 répétitions du motif CA.}\label{fig:microsat}
   \end{figure}
-  
   \begin{itemize}
   \tightlist
   \item
     Indel :
   \end{itemize}
-  
   INDEL (INsertion/DELetion) is where a single base has been deleted, or
   inserted into one genome relative to another. It is a symmetrical
   relationship, as a deletion in one corresponds to an insertion in
   another.
-  
-  \begin{center}\includegraphics{thesis_files/figure-latex/unnamed-chunk-3-1} \end{center}
-  
+  \begin{center}\includegraphics{thesis_files/figure-latex/indel-1} \end{center}
   \begin{itemize}
   \tightlist
   \item
     Polymorphisme nucléotidique :
   \end{itemize}
-  
-  \begin{center}\includegraphics{thesis_files/figure-latex/unnamed-chunk-4-1} \end{center}
+  \begin{center}\includegraphics{thesis_files/figure-latex/snp-1} \end{center}
   
   \section{Adaptation}\label{adaptation}
   
@@ -430,25 +421,6 @@ Abstract **
   \subsection{Introgression adaptative}\label{introgression-adaptative}
   
   \section{Genome-scan}\label{genome-scan}
-  
-  \subsection{L'ACP en génétique des
-  populations}\label{lacp-en-genetique-des-populations}
-  
-  rincipal component analysis (PCA) has been used for several decades to
-  study human population migrations,
-  
-  L'utilisation de l'Analyse en Composantes Principales en génétique des
-  populations a été popularisée par Cavalli-Sforza (Menozzi, Piazza, \&
-  Cavalli-Sforza, 1978).
-  
-  \begin{figure}
-  
-  {\centering \includegraphics{thesis_files/figure-latex/popres-1} 
-  
-  }
-  
-  \caption{ACP réalisée sur le jeu de données POPRES}\label{fig:popres}
-  \end{figure}
   
   \chapter{État de l'art}\label{etat-de-lart}
   
@@ -468,12 +440,10 @@ Abstract **
   fixation de cet allèle, \(p(t)\) sa fréquence après \(t\) générations,
   et en supposant que \(F_t\) soit suffisamment petit, ce qui devrait être
   vérifié dans le cas neutre. (Nicholson et al., 2002) :
-  
   \begin{equation} 
     p(t) \sim N(p_0, F_t p_0 (1-p_0)) 
     \label{eq:frequency-law}
   \end{equation}
-  
   De la loi \eqref{eq:frequency-law} nous tirons
   \(\text{Var}(p(t)) = F_t p_0 (1-p_0)\).
   
@@ -481,7 +451,6 @@ Abstract **
   préalable deux paramètres que sont la fréquence allélique initiale
   \(p_0\) et la matrice d'apparentement \(V\), \(V \in M_K(\mathbb{R})\)
   où \(K\) est le nombre de populations observées. Notant :
-  
   \begin{itemize}
   \item
     \(\boldsymbol{p} = (p_1, p_2, \dots, p_K) \in \mathbb{R}^K\),
@@ -490,23 +459,18 @@ Abstract **
   \item
     \(\boldsymbol{r} = N(0, V)\),
   \end{itemize}
-  
   le modèle neutre pour \(\boldsymbol{p}\) est donné par la relation
   suivante :
-  
   \begin{equation} 
     \boldsymbol{p} = \boldsymbol{p_0} + \boldsymbol{r} 
     \label{eq:flk_neutral_model}
   \end{equation}
-  
   Bonhomme \textit{et al.} proposent pour ce modèle de mesurer une
   statistique de qualité de l'ajustement pour quantifier la déviance d'un
   allèle par rapport au modèle neutre :
-  
   \begin{equation} 
     FLK = (\boldsymbol{p - \hat{p}_0})^T V (\boldsymbol{p - \hat{p}_0})                                \label{eq:flk-statistic}
   \end{equation}
-  
   Sous l'hypothèse neutre et suivant \eqref{eq:flk-statistic},
   \(FLK \sim \chi^2 (K - 1)\).
   
@@ -518,12 +482,10 @@ Abstract **
   \textit{et al.} proposent une méthode permettant de détecter les allèles
   sous sélection en environnement hétérogène (Whitlock \& Lotterhos,
   2015). Ainsi, la quantité
-  
   \begin{equation} 
     k \frac{F_{ST}^{\prime}}{\bar{{F_{ST}^{\prime}}}}  
     \label{eq:OutFLANK-statistic}
   \end{equation}
-  
   où \(k\) représente le nombre de degrés de libertés.
   
   \section{Modèle du logiciel Bayescan}\label{modele-du-logiciel-bayescan}
@@ -537,20 +499,26 @@ Abstract **
   2004). \(F_{ST} \in [0, 1]\) est une quantité qui peut être interprété
   comme proportionnel à la probabilité que deux individus aient un ancêtre
   commun dans la sous-population
-  
   \begin{equation} 
     \log \left( \frac{F_{ST}}{1 - F_{ST}} \right) = \alpha_j + \beta_i + \gamma_{ij}
     \label{eq:Bayescan-statistic}
   \end{equation}
-  
   \section{Fast PCA}\label{fast-pca}
   
-  \begin{itemize}
-  \tightlist
-  \item
-    ACP en génétique des populations
-  \end{itemize}
+  \subsection{L'ACP en génétique des
+  populations}\label{lacp-en-genetique-des-populations}
   
+  L'utilisation de l'Analyse en Composantes Principales en génétique des
+  populations a été popularisée par Cavalli-Sforza (Menozzi, Piazza, \&
+  Cavalli-Sforza, 1978).
+  \begin{figure}
+  
+  {\centering \includegraphics{thesis_files/figure-latex/popres-1} 
+  
+  }
+  
+  \caption{ACP réalisée sur le jeu de données POPRES}\label{fig:popres}
+  \end{figure}
   \section{Analyse en Composantes Principales
   parcimonieuse}\label{analyse-en-composantes-principales-parcimonieuse}
   
@@ -587,16 +555,13 @@ Abstract **
   démographiques}\label{simulations-et-modeles-demographiques}
   
   \subsection{Modèle en île}\label{modele-en-ile}
-  
-  \begin{center}\includegraphics{thesis_files/figure-latex/unnamed-chunk-5-1} \end{center}
-  
-  \begin{center}\includegraphics{thesis_files/figure-latex/unnamed-chunk-6-1} \end{center}
+  \begin{center}\includegraphics{thesis_files/figure-latex/island-pca-1} \end{center}
+  \begin{center}\includegraphics{thesis_files/figure-latex/island-manhattan-1} \end{center}
   
   \subsection{Modèle de divergence}\label{modele-de-divergence}
   
   Nous adaptons une version du script Python utilisé dans (Roux et al.,
   2012), basé sur le module de simulation simuPOP (Peng \& Kimmel, 2005).
-  
   \begin{Shaded}
   \begin{Highlighting}[]
   \CommentTok{#!/usr/bin/env python}
@@ -718,7 +683,6 @@ Abstract **
   \NormalTok{np.savetxt(}\StringTok{'data/simuPOP.pcadapt'}\NormalTok{, G, fmt }\OperatorTok{=} \StringTok{'}\SpecialCharTok{%i}\StringTok{'}\NormalTok{)}
   \end{Highlighting}
   \end{Shaded}
-  
   \subsection{Modèle d'expansion
   spatiale}\label{modele-dexpansion-spatiale}
   
@@ -796,7 +760,6 @@ Abstract **
   L'un des premiers articles à établir un lien entre l'ACP et les
   coefficients de métissage global fut sur l'interprétation généalogique
   de l'ACP de Gil McVean (McVean, 2009):
-  
   \begin{figure}
   
   {\centering \includegraphics[width=300px]{figure/mcvean} 
@@ -805,7 +768,6 @@ Abstract **
   
   \caption{Coefficients de métissage et ACP}\label{fig:mcvean}
   \end{figure}
-  
   Pour chacun des 22 chromosomes,
   
   \section{Analyse en Composantes Principales
@@ -851,7 +813,6 @@ Abstract **
   de statistiques dont \(RND_{\text{min}}\) dérive.
   
   ~
-  
   \begin{itemize}
   \tightlist
   \item
@@ -860,7 +821,6 @@ Abstract **
     si \(x = (x_i)_{1 \leq i \leq n}\) et \(y = (y_i)_{1 \leq i \leq n}\),
     alors :
   \end{itemize}
-  
   \[d_{xy} = \text{Card}(\{i \in [|1, n|] \; | \; x_i \neq y_i \})\]
   
   Cette statistique est ainsi définie pour une paire de séquences (\(x\),
@@ -974,18 +934,15 @@ Abstract **
   ci-dessous :
   
   ~
-  
   \begin{itemize}
   \tightlist
   \item
     Modèle neutre :
   \end{itemize}
-  
   \begin{verbatim}
   ./ms 200 1 -I 4 50 50 50 50 -ej 1 2 1 -ej 2 3 1 -ej 3 4 1 
   -r 50 5000 -T 
   \end{verbatim}
-  
   \begin{figure}
   
   {\centering \includegraphics[scale=0.5]{figure/background} 
@@ -994,20 +951,16 @@ Abstract **
   
   \caption{Modèle neutre. $12N$ genérations auparavant, premier épisode de divergence donnant naissance à P1 et à O. $8N$ générations auparavant, deuxième épisode de divergence voyant l'apparition de P3. $4N$ générations auparavant, dernier épisode de divergence et apparition de P2.}\label{fig:background}
   \end{figure}
-  
   ~
-  
   \begin{itemize}
   \tightlist
   \item
     Modèle alternatif :
   \end{itemize}
-  
   \begin{verbatim}
   ./ms 200 1 -I 4 50 50 50 50 -ej 1 2 1 -ej 2 3 1 -ej 3 4 1 
   -es 0.1 2 0.8 -ej 0.1 5 3 -r 50 5000 -T
   \end{verbatim}
-  
   \begin{figure}
   
   {\centering \includegraphics[scale=0.5]{figure/alternate} 
@@ -1016,7 +969,6 @@ Abstract **
   
   \caption{Modèle alternatif. $12N$ genérations auparavant, premier épisode de divergence donnant naissance à P1 et à O. $8N$ générations auparavant, deuxième épisode de divergence voyant l'apparition de P3. $4N$ générations auparavant, dernier épisode de divergence et apparition de P2. $t$ unités de temps auparavant, épisode de flux de gènes de P3 vers la population P2.}\label{fig:alternate}
   \end{figure}
-  
   La variable \(f\) présente en figure \ref{fig:alternate} représente le
   taux d'introgression, elle quantifie la proportion d'haplotypes présents
   dans la population P2 et qui proviennent de la population P3. Ainsi, une
@@ -1033,7 +985,6 @@ Abstract **
   
   Nous comparons ici notre méthode au logiciel RFMix destiné à la
   détermination de coefficients de métissage local.
-  
   \begin{figure}
   
   {\centering \includegraphics[width=500px]{figure/facet_admixture_setting_10_gen} 
@@ -1042,7 +993,6 @@ Abstract **
   
   \caption{10 generations}\label{fig:ras10g}
   \end{figure}
-  
   \begin{figure}
   
   {\centering \includegraphics[width=500px]{figure/facet_admixture_setting_100_gen} 
@@ -1051,7 +1001,6 @@ Abstract **
   
   \caption{100 generations}\label{fig:ras100g}
   \end{figure}
-  
   \begin{figure}
   
   {\centering \includegraphics[width=500px]{figure/facet_admixture_setting_1000_gen} 
@@ -1060,7 +1009,6 @@ Abstract **
   
   \caption{1000 generations}\label{fig:ras1000g}
   \end{figure}
-  
   \paragraph{Scénario à flux de gènes}\label{scenario-a-flux-de-genes-1}
   
   Dans ce paragraphe, nous comparons notre statistique de test à un
@@ -1104,52 +1052,51 @@ Abstract **
   chunk tag) to help with readibility and/or setup.
   
   \textbf{In the main Rmd file}
-  
   \begin{Shaded}
   \begin{Highlighting}[]
-  \CommentTok{# This chunk ensures that the thesisdown package is}
-  \CommentTok{# installed and loaded. This thesisdown package includes}
-  \CommentTok{# the template files for the thesis and also two functions}
-  \CommentTok{# used for labeling and referencing}
-  \CommentTok{#opts_chunk$set(cache=TRUE)}
-  
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(devtools))\{}
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(devtools)) \{}
     \KeywordTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
   \NormalTok{\}}
   
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(dplyr))\{}
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(dplyr)) \{}
     \KeywordTok{install.packages}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
   \NormalTok{\}}
   
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(ggplot2))\{}
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(ggplot2)) \{}
     \KeywordTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
   \NormalTok{\}}
   
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(bookdown))\{}
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(bookdown)) \{}
     \KeywordTok{install.packages}\NormalTok{(}\StringTok{"bookdown"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
   \NormalTok{\}}
   
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(thesisdown))\{}
-    \KeywordTok{library}\NormalTok{(devtools)}
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(thesisdown)) \{}
     \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"ismayc/thesisdown"}\NormalTok{)}
   \NormalTok{\}}
   
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(data.table))\{}
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(data.table)) \{}
     \KeywordTok{install.packages}\NormalTok{(}\StringTok{"data.table"}\NormalTok{, }\DataTypeTok{repos =} \StringTok{"http://cran.rstudio.com"}\NormalTok{)}
   \NormalTok{\}}
   
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(pcadapt))\{}
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(pcadapt)) \{}
     \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"bcm-uga/pcadapt"}\NormalTok{)}
   \NormalTok{\}}
   
-  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(simulate))\{}
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(simulate)) \{}
     \NormalTok{devtools::}\KeywordTok{install_github}\NormalTok{(}\StringTok{"keurcien/simulate"}\NormalTok{)}
+  \NormalTok{\}}
+  
+  \NormalTok{if(!}\KeywordTok{require}\NormalTok{(kableExtra))\{}
+    \KeywordTok{install.packages}\NormalTok{(}\StringTok{"kableExtra"}\NormalTok{)}
   \NormalTok{\}}
   
   \NormalTok{knitr::opts_chunk$}\KeywordTok{set}\NormalTok{(}\DataTypeTok{fig.align =} \StringTok{'center'}\NormalTok{, }
                         \DataTypeTok{echo =} \OtherTok{FALSE}\NormalTok{, }
                         \DataTypeTok{fig.width =} \DecValTok{6}\NormalTok{,}
                         \DataTypeTok{results =} \StringTok{'hide'}\NormalTok{)}
+  
+  \NormalTok{knitr::opts_knit$}\KeywordTok{set}\NormalTok{(}\DataTypeTok{kable.force.latex =} \OtherTok{TRUE}\NormalTok{)}
+  \CommentTok{# knitr::opts_chunk$set(cache = TRUE)}
   
   \CommentTok{# The palette with black:}
   \NormalTok{cbbPalette <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"#000000"}\NormalTok{, }
@@ -1162,7 +1109,6 @@ Abstract **
                   \StringTok{"#CC79A7"}\NormalTok{)}
   \end{Highlighting}
   \end{Shaded}
-  
   \chapter{The Second Appendix, for
   Fun}\label{the-second-appendix-for-fun}
   
@@ -1353,8 +1299,5 @@ Abstract **
   Yang, J. J., Li, J., Buu, A., \& Williams, L. K. (2013). Efficient
   inference of local ancestry. \emph{Bioinformatics}, \emph{29}(21),
   2750--2756.
-  
-  % Index?
 
 \end{document}
-

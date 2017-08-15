@@ -9,18 +9,8 @@ title: 'THÈSE'
 knit: "bookdown::render_book"
 site: bookdown::bookdown_site
 output: 
-  function(){bookdown::pdf_book(
-  toc = TRUE,
-  toc_depth = 3,  
-  template = "template.tex",
-  fig_caption = TRUE,
-  highlight = "pygments",
-  keep_tex = TRUE,
-  pandoc_args = "--chapters")}
-  #pandoc_args = "--top-level-division=chapter")}
-  
-#  thesis_pdf_updt: default
-#  thesisdown::thesis_gitbook: default
+  thesisdown::thesis_pdf: default
+  thesisdown::thesis_gitbook: default
 #  thesisdown::thesis_word: default
 #  thesisdown::thesis_epub: default
 
@@ -38,49 +28,49 @@ lof: true
 ---
 
 ```{r include_packages, include = FALSE}
-# This chunk ensures that the thesisdown package is
-# installed and loaded. This thesisdown package includes
-# the template files for the thesis and also two functions
-# used for labeling and referencing
-#opts_chunk$set(cache=TRUE)
-
-if(!require(devtools)){
+if(!require(devtools)) {
   install.packages("devtools", repos = "http://cran.rstudio.com")
 }
 
-if(!require(dplyr)){
+if(!require(dplyr)) {
   install.packages("dplyr", repos = "http://cran.rstudio.com")
 }
 
-if(!require(ggplot2)){
+if(!require(ggplot2)) {
   install.packages("ggplot2", repos = "http://cran.rstudio.com")
 }
 
-if(!require(bookdown)){
+if(!require(bookdown)) {
   install.packages("bookdown", repos = "http://cran.rstudio.com")
 }
 
-if(!require(thesisdown)){
-  library(devtools)
+if(!require(thesisdown)) {
   devtools::install_github("ismayc/thesisdown")
 }
 
-if(!require(data.table)){
+if(!require(data.table)) {
   install.packages("data.table", repos = "http://cran.rstudio.com")
 }
 
-if(!require(pcadapt)){
+if(!require(pcadapt)) {
   devtools::install_github("bcm-uga/pcadapt")
 }
 
-if(!require(simulate)){
+if(!require(simulate)) {
   devtools::install_github("keurcien/simulate")
+}
+
+if(!require(kableExtra)){
+  install.packages("kableExtra")
 }
 
 knitr::opts_chunk$set(fig.align = 'center', 
                       echo = FALSE, 
                       fig.width = 6,
                       results = 'hide')
+
+knitr::opts_knit$set(kable.force.latex = TRUE)
+# knitr::opts_chunk$set(cache = TRUE)
 
 # The palette with black:
 cbbPalette <- c("#000000", 

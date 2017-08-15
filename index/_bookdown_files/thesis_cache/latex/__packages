@@ -9,3 +9,5 @@ data.table
 pcadapt
 vcfR
 simulate
+bindrcpp
+kableExtra

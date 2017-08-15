@@ -8,7 +8,7 @@ Une population est dite localement adaptée à son environnement si elle a connu
 
 ### Modèle en île
 
-```{r}
+```{r island-pca}
 if (!file.exists("ms/ms")) {
   system("gcc -o ms/ms ms/ms.c ms/streec.c ms/rand1.c -lm")
 }
@@ -103,7 +103,7 @@ pop <- c(rep("A", 50), rep("B", 50), rep("C", 50))
 plot(x, option = "scores", pop = pop)
 ```
 
-```{r}
+```{r island-manhattan}
 plot(x, option = "manhattan")
 ```
 

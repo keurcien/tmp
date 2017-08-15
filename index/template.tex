@@ -24,10 +24,9 @@
 %% Preamble
 %%
 % \documentclass{<something>} must begin each LaTeX document
-\documentclass[12pt,twoside]{reedthesis}
+\documentclass[12pt,twoside]{ugathesis}
 % Packages are extensions to the basic LaTeX functions. Whatever you
 % want to typeset, there is probably a package out there for it.
-% Chemistry (chemtex), screenplays, you name it.
 % Check out CTAN to see: http://www.ctan.org/
 %%
 \usepackage{graphicx,latexsym}
@@ -37,7 +36,6 @@
 \usepackage{xcolor}
 \usepackage{eso-pic}
 \usepackage{longtable,booktabs,setspace}
-\usepackage{chemarr} %% Useful for one reaction arrow, useless if you're not a chem major
 \usepackage[hyphens]{url}
 \usepackage{pdfpages}
 \usepackage{tikz}
@@ -50,14 +48,6 @@
 \floatplacement{figure}{H}
 % End of CII addition
 \usepackage{rotating}
-
-% Next line commented out by CII
-%%% \usepackage{natbib}
-% Comment out the natbib line above and uncomment the following two lines to use the new
-% biblatex-chicago style, for Chicago A. Also make some changes at the end where the
-% bibliography is included.
-%\usepackage{biblatex-chicago}
-%\bibliography{thesis}
 
 % Added by CII (Thanks, Hadley!)
 % Use ref for internal links
@@ -72,13 +62,10 @@
 \captionsetup{width=5in}
 % End of CII addition
 
-% \usepackage{times} % other fonts are available like times, bookman, charter, palatino
-
 % To pass between YAML and LaTeX the dollar signs are added by CII
 \title{$title$}
 \author{$author$}
 \labo{$labo$}
-% The month and year that you submit your FINAL draft TO THE LIBRARY (May or December)
 \date{$date$}
 \division{$division$}
 \advisor{$advisor$}
@@ -204,8 +191,6 @@ $endfor$
   \pagestyle{fancyplain} % turns page numbering back on
 
   $body$
-  
-  % Index?
 
 \end{document}
 

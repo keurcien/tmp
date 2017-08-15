@@ -72,7 +72,32 @@ $F_{ST} \in [0, 1]$ est une quantité qui peut être interprété comme proporti
 
 ## Fast PCA
 
-- ACP en génétique des populations
+### L'ACP en génétique des populations
+
+L'utilisation de l'Analyse en Composantes Principales en génétique des populations a été popularisée par Cavalli-Sforza [@menozzi1978synthetic].
+
+```{r popres, fig.cap = "ACP réalisée sur le jeu de données POPRES"}
+obj.popres <- readRDS("data/popres.rds")
+
+ggdf <- data.frame(PC1 = -obj.popres$u[, 1], 
+                   PC2 = -obj.popres$u[, 2],
+                   pop = obj.popres$pop.fr)
+
+ggplot(ggdf, aes(x = PC2, y = PC1, fill = pop)) + 
+  geom_point(size = 2.5, shape = 21, stroke = 1) + 
+  scale_fill_manual(labels = sort(unique(ggdf$pop)), 
+                    values = as.character(obj.popres$palette.fr)) +
+  guides(fill = guide_legend(nrow = 5)) +
+  theme_bw() +
+  theme(axis.text = element_text(face = "bold"),
+        legend.text = element_text(size = 7.5),
+        legend.key.height = unit(0.75, "line"),
+        legend.key.width = unit(0.5, "line"),
+        legend.title = element_blank(),
+        legend.direction = "horizontal",
+        legend.position = "bottom",
+        plot.margin = unit(c(0.1, 0.1, 0.1, 0.1), "cm"))
+```
 
 
 
