@@ -18,7 +18,7 @@ nb_demes <- 3
 nCHR_per_POP <- 50
 nCHR <- nb_demes * nCHR_per_POP
 nIND <- nCHR / 2
-nb_neutral <- 975
+nb_neutral <- 100
 nb_adaptive <- 25
 mig_rate_neutral <- 10
 mig_rate_adaptive <- 0.1

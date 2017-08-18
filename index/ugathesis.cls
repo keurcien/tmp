@@ -1,3 +1,4 @@
+%
 % This file is copyright (C) 2003 Sam Noble. It may be modified so long
 % as my name is not removed and the modifier adds his name to the file.
 % Redistribution permitted.
@@ -58,7 +59,7 @@
 \newcommand{\VerbBar}{|}
 \newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
 \DefineVerbatimEnvironment{verbatim}{Verbatim}{xleftmargin=-1em}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{xleftmargin=-1em,commandchars=\\\{\}}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
 % Add ',fontsize=\small' for more characters per line
 \usepackage{framed}
 \definecolor{shadecolor}{RGB}{248,248,248}
@@ -115,12 +116,12 @@
   \pagestyle{fancy}
 
 % Psych majors: You do not need the following six lines, as it conflicts with apacite, so comment them out.
-  %\let\oldthebibliography=\thebibliography
-  %\let\endoldthebibliography=\endthebibliography
-  %\renewenvironment{thebibliography}[1]{
-  %  \oldthebibliography{#1}
-  %  \addcontentsline{toc}{chapter}{\bibname}
-  %}{\endoldthebibliography}
+  \let\oldthebibliography=\thebibliography
+  \let\endoldthebibliography=\endthebibliography
+  \renewenvironment{thebibliography}[1]{
+    \oldthebibliography{#1}
+    \addcontentsline{toc}{chapter}{\bibname}
+  }{\endoldthebibliography}
  %%%%%% end of things for psych majors to comment out
 
   \let\oldtheindex=\theindex
@@ -192,8 +193,8 @@
 %\addtolength\textheight{\headheight}
 %\addtolength\textheight{\headsep}
 
-\def\labo#1{\gdef \@labo{#1}}
-\def\@labo{\@latex@warning@no@line{No \noexpand\labo given}}
+\def\lab#1{\gdef \@lab{#1}}
+\def\@lab{\@latex@warning@no@line{No \noexpand\lab given}}
 \def\division#1{\gdef \@division{#1}}
 \def\@division{\@latex@warning@no@line{No \noexpand\division given}}
 \def\department#1{\gdef \@department{#1}}
@@ -281,6 +282,7 @@
 % I hacked the title page to all be the same font size
 % as requested by the library, BTS 2005
 
+
 \renewcommand{\maketitle}{%
   {\pagestyle{empty}
   \fontsize{12}{14}\selectfont
@@ -292,10 +294,10 @@
   \let \footnote \thanks
   \baselineskip = 1.4\baselineskip
   \setbox0=\hbox{of the Requirements for the Degree}
-  \begin{minipage}{0.1\linewidth} 
+  \begin{minipage}{0.1\linewidth}
   \begin{tikzpicture}[remember picture, overlay]
     \draw[line width = 1pt] ($(current page.north west) + (0.5cm,-0.5cm)$) rectangle ($(current page.south east) + (-0.5cm,0.5cm)$);
-    \node[anchor=north west, xshift=0.5cm, yshift=-0.5cm] at (current page.north west) {\includegraphics[width=5cm, height=26.65cm]{figure/grey.jpg}};
+    \node[anchor=north west, xshift=0.5cm, yshift=-0.5cm] at (current page.north west) {\includegraphics[width=5cm, height=26.65cm]{figure/template.png}};
   \end{tikzpicture}
   \end{minipage}
   \begin{minipage}{0.9\linewidth}
@@ -323,17 +325,17 @@
     \vfil
     Thèse dirigée par {\fontsize{12}{14}\selectfont\bf \@advisor} \\
     \vfil
-    {\fontsize{12}{14}\selectfont préparée au sein du laboratoire} {\fontsize{12}{14}\selectfont\bf \@labo} \\
+    {\fontsize{12}{14}\selectfont préparée au sein du laboratoire} {\fontsize{12}{14}\selectfont\bf \@lab} \\
     {\fontsize{12}{14}\selectfont et de l'école doctorale} {\fontsize{12}{14}\selectfont\bf "Ingénierie de la Santé, de la Cognition et Environnement" (EDISCE)}
     \vfil
     \bigskip
     \bigskip
-    {\fontsize{18}{20}\fontfamily{ppl}\selectfont\bf Méthodes statistiques en grande dimension pour l'étude de l'adaptation biologique à l'aide de larges bases de données génomiques} 
+    {\fontsize{18}{20}\fontfamily{ppl}\selectfont\bf Méthodes statistiques en grande dimension pour l'étude de l'adaptation biologique à l'aide de larges bases de données génomiques}
     \centerline{}
     \vskip 1.5em
     {\fontsize{12}{14}\selectfont Thèse soutenue publiquement le \@date, \par
-    devant le jury composé de :} 
-  
+    devant le jury composé de :}
+
   \end{minipage}\par
   \end{titlepage}
   }

@@ -3,16 +3,16 @@ author: 'Keurcien LUU'
 date: ' 31 octobre 2017'
 division: 'Mathematics and Natural Sciences'
 advisor: 'Michael BLUM'
-labo: "Techniques de l'Ingénierie Médicale et de la Complexité - Informatique, Mathématiques et Applications de Grenoble (TIMC-IMAG)"
+lab: "Techniques de l'Ingénierie Médicale et de la Complexité - Informatique, Mathématiques et Applications de Grenoble (TIMC-IMAG)"
 department: 'Ingénierie de la Santé, de la Cognition et Environnement (EDISCE)' 
 title: 'THÈSE'
 knit: "bookdown::render_book"
 site: bookdown::bookdown_site
 output: 
   thesisdown::thesis_pdf: default
-  thesisdown::thesis_gitbook: default
-#  thesisdown::thesis_word: default
-#  thesisdown::thesis_epub: default
+  #thesisdown::thesis_gitbook: default
+  #thesisdown::thesis_epub: default
+  #thesisdown::thesis_word: default
 
 abstract: >
   `r if(knitr:::is_latex_output()) paste(readLines("00-abstract.Rmd"), collapse = ' ')`
@@ -64,12 +64,15 @@ if(!require(kableExtra)){
   install.packages("kableExtra")
 }
 
-knitr::opts_chunk$set(fig.align = 'center', 
-                      echo = FALSE, 
+if(!require(maps)){
+  install.packages("maps")
+}
+
+knitr::opts_chunk$set(echo = FALSE,
+                      fig.align = 'center',
                       fig.width = 6,
                       results = 'hide')
 
-knitr::opts_knit$set(kable.force.latex = TRUE)
 # knitr::opts_chunk$set(cache = TRUE)
 
 # The palette with black:

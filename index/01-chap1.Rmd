@@ -19,7 +19,7 @@ Le modèle de FLK estime le modèle neutre d'un SNP bi-allélique lorsque celui-
 
 \begin{equation} 
   p(t) \sim N(p_0, F_t p_0 (1-p_0)) 
-  \label{eq:frequency-law}
+  (\#eq:frequency-law)
 \end{equation}
 
 De la loi \@ref(eq:frequency-law) nous tirons $\text{Var}(p(t)) = F_t p_0 (1-p_0)$.
@@ -76,7 +76,9 @@ $F_{ST} \in [0, 1]$ est une quantité qui peut être interprété comme proporti
 
 L'utilisation de l'Analyse en Composantes Principales en génétique des populations a été popularisée par Cavalli-Sforza [@menozzi1978synthetic].
 
-```{r popres, fig.cap = "ACP réalisée sur le jeu de données POPRES"}
+(ref:popres-cap) ACP réalisée sur le jeu de données POPRES [@novembre2008genes].
+
+```{r popres, fig.cap = '(ref:popres-cap)'}
 obj.popres <- readRDS("data/popres.rds")
 
 ggdf <- data.frame(PC1 = -obj.popres$u[, 1], 

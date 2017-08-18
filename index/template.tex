@@ -27,10 +27,11 @@
 \documentclass[12pt,twoside]{ugathesis}
 % Packages are extensions to the basic LaTeX functions. Whatever you
 % want to typeset, there is probably a package out there for it.
+% Chemistry (chemtex), screenplays, you name it.
 % Check out CTAN to see: http://www.ctan.org/
 %%
 \usepackage{graphicx,latexsym}
-\usepackage[french]{babel} 
+\usepackage[french]{babel}
 \usepackage{amsmath}
 \usepackage{amssymb,amsthm}
 \usepackage{xcolor}
@@ -40,7 +41,6 @@
 \usepackage{pdfpages}
 \usepackage{tikz}
 \usetikzlibrary{calc}
-\newcommand\HRule{\rule{\textwidth}{1pt}}
 % Added by CII
 \usepackage{hyperref}
 \usepackage{lmodern}
@@ -48,6 +48,15 @@
 \floatplacement{figure}{H}
 % End of CII addition
 \usepackage{rotating}
+
+% Next line commented out by CII
+%%% \usepackage{natbib}
+% Comment out the natbib line above and uncomment the following two lines to use the new
+% biblatex-chicago style, for Chicago A. Also make some changes at the end where the
+% bibliography is included.
+%\usepackage{biblatex-chicago}
+%\bibliography{thesis}
+
 
 % Added by CII (Thanks, Hadley!)
 % Use ref for internal links
@@ -62,19 +71,19 @@
 \captionsetup{width=5in}
 % End of CII addition
 
+% \usepackage{times} % other fonts are available like times, bookman, charter, palatino
+
+
 % To pass between YAML and LaTeX the dollar signs are added by CII
 \title{$title$}
 \author{$author$}
-\labo{$labo$}
+\lab{$lab$}
 \date{$date$}
 \division{$division$}
 \advisor{$advisor$}
-%If you have two advisors for some reason, you can use the following
-% Uncommented out by CII
-$if(altadvisor)$
-\altadvisor{$altadvisor$}
-$endif$
-% End of CII addition
+
+%\institution{$institution$}
+%\degree{$degree$}
 
 %%% Remember to use the correct department!
 \department{$department$}
@@ -142,55 +151,58 @@ $endfor$
 \begin{document}
 
 % Everything below added by CII
-  $if(title)$
-    \maketitle
-  $endif$
+$if(title)$
+  \maketitle
+$endif$
 
-  \frontmatter % this stuff will be roman-numbered
-  \pagestyle{empty} % this removes page numbers from the frontmatter
+\frontmatter % this stuff will be roman-numbered
+\pagestyle{empty} % this removes page numbers from the frontmatter
 
-  $if(acknowledgements)$
-    \begin{acknowledgements}
-      $acknowledgements$
-    \end{acknowledgements}
-  $endif$
+$if(acknowledgements)$
+  \begin{acknowledgements}
+    $acknowledgements$
+  \end{acknowledgements}
+$endif$
 
-  $if(preface)$
-    \begin{preface}
-      $preface$
-    \end{preface}
-  $endif$
+$if(preface)$
+  \begin{preface}
+    $preface$
+  \end{preface}
+$endif$
 
-  $if(toc)$
-    \hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
-    \setcounter{tocdepth}{$toc-depth$}
-    \tableofcontents
-  $endif$
+$if(toc)$
+  \hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
+  \setcounter{tocdepth}{$toc-depth$}
+  \tableofcontents
+$endif$
 
-  $if(lot)$
-    \listoftables
-  $endif$
+$if(lot)$
+  \listoftables
+$endif$
 
-  $if(lof)$
-    \listoffigures
-  $endif$
+$if(lof)$
+  \listoffigures
+$endif$
 
-  $if(abstract)$
-    \begin{abstract}
-      $abstract$
-    \end{abstract}
-  $endif$
+$if(abstract)$
+  \begin{abstract}
+    $abstract$
+  \end{abstract}
+$endif$
 
-  $if(dedication)$
-    \begin{dedication}
-      $dedication$
-    \end{dedication}
-  $endif$
+$if(dedication)$
+  \begin{dedication}
+    $dedication$
+  \end{dedication}
+$endif$
 
-  \mainmatter % here the regular arabic numbering starts
-  \pagestyle{fancyplain} % turns page numbering back on
+\mainmatter % here the regular arabic numbering starts
+\pagestyle{fancyplain} % turns page numbering back on
 
-  $body$
+$body$
+
+
+% Index?
 
 \end{document}
 

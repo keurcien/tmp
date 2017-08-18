@@ -1,5 +1,2 @@
-« Je me propose de passer brièvement en revue les progrès de l’opinion relativement à l’origine des espèces. Jusque tout récemment, la plupart des naturalistes croyaient que les espèces sont des productions immuables créées séparément. De nombreux savants ont habilement soutenu cette hypothèse. Quelques autres, au contraire, ont admis que les espèces éprouvent des modifications et que les formes actuelles descendent de formes préexistantes par voie de génération régulière. »
-
-
-C'est de cette manière qu'en 1920, Edmond Barbier, dans sa notice relative à la traduction française de \textit{L'Origine des espèces} [@darwin1980origine], décide de présenter le contexte dans lequel il a été amené à effectuer ce travail de traduction. Ce constat qu'il partage, réalisé il y a presque cent ans, semble pourtant valoir encore aujourd'hui. Si bien que chaque sortie de l'Église catholique affirmant la compatibilité entre la religion et la théorie évolutionniste apporte son lot de débats et de controverses. \par
+blabla \par
 

@@ -21,7 +21,9 @@ L'introgression peut être détectée de différentes façons. Une première app
 
 L'un des premiers articles à établir un lien entre l'ACP et les coefficients de métissage global fut sur l'interprétation généalogique de l'ACP de Gil McVean [@mcvean2009genealogical]: 
 
-```{r mcvean, results="asis", echo=FALSE, fig.cap="Coefficients de métissage et ACP", out.width = "300px", fig.align='center'}
+(ref:mcvean-cap) Coefficients de métissage et ACP [@mcvean2009genealogical].
+
+```{r mcvean, results = 'asis', fig.cap = '(ref:mcvean-cap)', out.width = '300px'}
 include_graphics("figure/mcvean.png")
 ```
 
@@ -115,7 +117,7 @@ include_graphics(path = "figure/ancestry_heatmap_lambda_01.png")
 ```
 
 
-```{r simulations, eval=FALSE, echo=FALSE}
+```{r simulations, eval = FALSE}
 path <- "~/Documents/thesis/git/simulations/introgression/"
 output.name <- "populus"
 recombinationRate <- 0.05 # in Morgans per Megabase
