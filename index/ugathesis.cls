@@ -297,7 +297,7 @@
   \begin{minipage}{0.1\linewidth}
   \begin{tikzpicture}[remember picture, overlay]
     \draw[line width = 1pt] ($(current page.north west) + (0.5cm,-0.5cm)$) rectangle ($(current page.south east) + (-0.5cm,0.5cm)$);
-    \node[anchor=north west, xshift=0.5cm, yshift=-0.5cm] at (current page.north west) {\includegraphics[width=5cm, height=26.65cm]{figure/template.png}};
+    \node[anchor=north west, xshift=0.375cm, yshift=-0.36125cm] at (current page.north west) {\includegraphics[width=5cm, height=26.91575cm]{figure/template.png}};
   \end{tikzpicture}
   \end{minipage}
   \begin{minipage}{0.9\linewidth}
