@@ -8,7 +8,7 @@
 
 Cette définition, donnée par Cavalli-Sforza et traduite ici de l'italien par Françoise Brun [@cavalli1994francesco], restitue également les motivations à l'origine de l'émergence du domaine de la génétique des populations, à savoir l'étude de la variabilité interindividuelle d'un point de vue évolutionniste. Pour John H. Gillespie, il s'agit de la « discipline qui fait le lien entre la génétique et l'évolution » [@gillespie2010population] : « La génétique des populations s'intéresse à l'évolution d'un point de vue génétique. Elle diffère de la biologie en ce que ses idées les plus importantes ne sont pas expérimentales ou observationnelles mais davantage théoriques. Il pourrait difficilement en être autrement. Les objets d'étude sont principalement la fréquence et la valeur sélective des génotypes dans les populations naturelles. » 
 
-Malgré cette caractérisation, les fondements de la génétique des populations trouvent en réalité leurs origines bien avant la formalisation en 1909 par Wilhelm Johannsen du concept de gène et donc de génotype [@roll2014holist], en témoignent les travaux de Charles Darwin (1809-1882) et de Gregor Mendel (1822-1884). *L'Origine des espèces*, publié en 1859 et considéré encore à ce jour comme le texte fondateur de la théorie de l'évolution [@darwin1980origine], énonce les premiers principes de la sélection naturelle. Les travaux de Mendel, figurent quant à eux parmi les premiers à se pencher sur les mécanismes de l'hérédité d'un point de vue statistique, notamment via l'étude de phénotypes en termes de proportions et de fréquences. 
+Malgré cette caractérisation, les fondements de la génétique des populations trouvent en réalité leurs origines bien avant la formalisation en 1909 par Wilhelm Johannsen du concept même de gène [@roll2014holist], en témoignent les travaux de Charles Darwin (1809-1882) et de Gregor Mendel (1822-1884). *L'Origine des espèces*, publié en 1859 et considéré encore à ce jour comme le texte fondateur de la théorie de l'évolution [@darwin1980origine], énonce les premiers principes de la sélection naturelle. Les travaux de Mendel, figurent quant à eux parmi les premiers à se pencher sur les mécanismes de l'hérédité d'un point de vue statistique, notamment via l'étude de phénotypes en termes de proportions et de fréquences. 
 
 ```{r mendel, fig.cap="Représentation schématique des lois de Mendel."}
 include_graphics("figure/mendel.png")
@@ -49,23 +49,17 @@ data.frame(theory = sort(rep(c("Darwin", "Kimura"), 3)),
 
 ```
 
-Une des composantes principales de cette nouvelle théorie consiste à affirmer que les fluctuations aléatoires dans la fréquence des allèles, n'affectant que très peu ou pas du tout la valeur sélective, constituent la principale source de variabilité de l'ADN [@charlesworth2009darwin]. Une grande partie de la variation génétique observée est fonctionnellement neutre, n'occasionnant pas de changement de phénotype. 
+Une des composantes principales de cette nouvelle théorie consiste à affirmer que les fluctuations aléatoires dans les fréquences d'allèle, n'affectant que très peu ou pas du tout la valeur sélective, constituent la principale source de variabilité de l'ADN [@charlesworth2009darwin]. Une grande partie de la variation génétique observée est fonctionnellement neutre et n'occasionne pas de changement de phénotype. 
 
-### Sélection naturelle
+L'approbation de cette théorie, bien que conceptuellement intéressante, aura un retentissement beaucoup plus important d'un point de vue méthodologie statistique. La formulation d'une hypothèse permettant de décrire un processus évolutif en l'absence de sélection, portant généralement le nom de *modèle neutre*, est souvent de première nécessité dans toute démarche visant à caractériser un mécanisme de sélection. La donnée d'observations mettant en défaut le modèle neutre aura pour conséquences de créditer davantage une hypothèse invoquant un processus de sélection. Historiquement, la statistique $D$ de Tajima fut l'une des premières statistiques développées à partir d'une hypothèse nulle bâtie pour les mutations neutres [@tajima1989statistical]. Différentes forces peuvent être à l'origine de la variation des fréquences alléliques : 
 
-### Sélection sexuelle
+1. La dérive génétique
 
-### Dérive génétique
+La dérive génétique est un mécanisme essentiel en génétique des populations. Le principe de dérive génétique est illustré en figure \@ref(fig:drift), à l'aide du modèle de Wright-Fisher tel qu'il est présenté dans l'ouvrage *Population Genetics* [@gillespie2010population].
 
-La dérive génétique est un mécanisme important en génétique des populations. Les modèles statistiques 
-Nous illustrons ici le principe de dérive génétique à l'aide du modèle de Wright-Fisher tel qu'il est présenté dans l'ouvrage *Population Genetics* [@gillespie2010population].
+(ref:drift-cap) Simulation numérique de la dérive génétique. La fréquence de l'allèle étudié est simulée pour 5 populations constituées chacune de 20, 100 ou 1000 individus sur une période de 100 générations. Dans chaque population, la fréquence de l'allèle est initialement de 0.20 [@gillespie2010population].
 
-Ten simulations of random genetic drift of a single given allele with an initial frequency distribution 0.5 measured over the course of 50 generations, repeated in three reproductively synchronous populations of different sizes. In these simulations, alleles drift to loss or fixation (frequency of 0.0 or 1.0) only in the smallest population
-
-(ref:drift-cap) Simulation numérique de la dérive génétique. La fréquence de l'allèle étudié est simulée pour 5 populations constituées chacune de 20 individus sur une période de 100 générations. Dans chaque population, la fréquence de l'allèle est initialement de 0.20.
-
-```{r drift, fig.height=8, fig.cap='(ref:drift-cap)'}
-
+```{r drift, fig.height=7, fig.cap='(ref:drift-cap)'}
 nb_generations <- 100
 nb_populations <- 5
 s <- c(20, 100, 1000)
@@ -109,77 +103,86 @@ af.df %>%
   theme_bw() +
   theme(legend.position = "none")
 ```
-La fréquence d'un allèle au sein d'une population est principalement impactée par deux facteurs :
 
-- Le nombre d'individus composant la population
-
-- Les lois de Mendel
-
-La figure \@ref(fig:drift) met en évidence deux propriétés de la dérive génétique :
+En particulier, la figure \@ref(fig:drift) met en évidence deux caractéristiques de la dérive génétique :
 
 - Les fréquences alléliques évoluent de façon indépendante d'une population à une autre.
 
-- La dérive génétique entraîne une perte de diversité allélique au sein des populations de petite taille. Dans le modèle de Wright-Fisher, les fréquences alléliques finissent éventuellement par atteindre les états dits absorbants que sont $0$ et $1$.
+- Pour un nombre de générations fixé, la dérive génétique entraîne une perte de diversité allélique plus rapidement au sein des populations de plus petite taille. Dans le modèle de Wright-Fisher, les fréquences alléliques finissent éventuellement par atteindre les états dits absorbants que sont 0 et 1.
 
+2. Les mutations aléatoires
 
+Si la dérive génétique entraîne une perte de diversité allélique, les mutations favorisent quant à elles le maintien des variations génétiques entre les populations [@gillespie2010population]. Les mutations apparaissent principalement lors de la phase de réplication de l'ADN. Une mutation peut survenir à un locus donné avec une probabilité spécifique à chaque espèce [@drake1998rates], appelée *taux de mutation*.
 
+(ref:mutationRate-cap) Exemples de taux de mutation par paire de base et par réplication chez différentes espèces [@drake1998rates].
 
-Wiki : "En particulier, l'hypothèse de neutralité, sous laquelle les mutations n'ont aucune influence sur la valeur sélective, est l'hypothèse nulle généralement retenue dans les travaux où une telle hypothèse est nécessaire."
-
-La formulation d'une hypothèse ou d'un ensemble d'hypothèses permettant de décrire un processus évolutif en l'absence de sélection, portant généralement le nom de *modèle neutre*, est souvent de première nécessité dans toute démarche visant à caractériser un mécanisme de sélection. La donnée d'observations mettant en défaut le modèle neutre aura pour conséquences de créditer davantage une hypothèse invoquant un processus de sélection.
-
-### Mutations aléatoires
-
-Si la dérive génétique entraîne une perte de diversité allélique, les mutations favorisent quant à elle le maintien des variations génétiques entre les populations [@gillespie2010population]. Une mutation peut survenir à un locus donné avec une probabilité spécifique à chaque espèce, appelée *taux de mutation*.
-
-```{r mutationRate}
-species <- c("C. elegans", "Drosophile", "Souris", "Homme")
-rates <- c("2.3E-10", "3.4E-10", "1.8E-10", "5E-11")
-mr.df <- data.frame(Species = species,
-                    Rates = rates)
-colnames(mr.df) <- c("Espèce", "Taux de mutation")
-kable(mr.df) %>% 
-  kable_styling(bootstrap_options = "striped", 
-                full_width = F, 
-                position = "center")
+```{r mutationRate, results='asis', message=FALSE}
+species <- c("E. coli", "C. elegans", "Drosophile", "Souris", "Homme")
+rates <- c("5.4e-10", "2.3e-10", "3.4e-10", "1.8e-10", "5.0e-11")
+data.frame(Species = species, Rates = rates) %>%
+  knitr::kable(col.names = c("Espèce", "Taux de mutation"),
+               caption = '(ref:mutationRate-cap)',
+               longtable = TRUE,
+               booktabs = TRUE) %>%
+  kable_styling(full_width = T)
 ```
 
-### Flux de gène
+3. Le flux de gène
 
-Le flux de gène est le résultat d'évènements migratoires, initiés par des individus appartenant à une population donnée, vers une seconde population dont le pool génique diffère éventuellement de la population d'origine. 
+Le flux de gène est le résultat d'évènements migratoires, initiés par des individus appartenant à une population donnée, vers une seconde population dont le pool génique diffère éventuellement de la population d'origine. Le flux de gène influe instantanément sur la diversité génétique initialement présente, soit parce que les allèles *migrants* n'arrivent pas dans les mêmes proportions que celles qui sont établies dans la population receveuse, soit parce que parmi les allèles *migrants* figurent des allèles qui n'existaient tout simplement pas dans la population receveuse. 
 
-```{r}
-map_data("france") %>% 
-  ggplot() + 
-  geom_polygon(aes(x = long, 
-                   y = lat, 
-                   group = group)) + 
-  coord_fixed(1.3) + 
-  theme_bw()
-```
+4. La sélection naturelle
 
-## Adaptation 
+En biologie évolutive, la sélection naturelle est la force évolutive qui tend à préserver les allèles conférant des avantages quant à la survie d'un individu ou d'une espèce. Elle agit sur les traits qui sont héritables. La grande majorité de ces traits sont transmis aux descendants en suivant le mécanisme d'hérédité génétique. Cependant, d'autres aspects de la biologie d'un organisme peuvent se transmettre via des mécanismes différents, comme certains comportements culturels ou caractéristiques de l'environnement qui ont été façonnées par les populations ancestrales [@gerbault2011evolution]. 
 
 ### Adaptation locale
 
+La diversité climatique et la diversité géologique terrestre ont naturellement façonné des environnements aux propriétés physiques et chimiques variées. À celles-ci viennent s'ajouter des caractéristiques écologiques résultant des interactions entre l'environnement et les organismes qui y évoluent *lato sensu*.
+Une population sera dite adaptée à son environnement si elle développe, par le biais de la sélection naturelle, un ou plusieurs allèles augmentant la valeur sélective des individus la constituant, en réponse aux pressions environnementales auxquelles ces individus sont soumis. À titre d'exemple, nous pouvons citer l'adaptation des populations tibétaines et andines à la haute altitude [@beall2007two].
 
+(ref:andeanvstibetan-cap) Exemples de phénotypes liés à l'adaptation à la haute altitude distinguant les populations andines des populations tibétaines [@jeong2014adaptations].
 
-Haut plateau, Lactase [@jeong2014adaptations]
+```{r andeanvstibetan, results='asis', message=FALSE}
+tibetan <- c("à partir de 4000m d'altitude", 
+             "non",
+             "non",
+             "1%")
+andean <- c("oui", 
+            "oui",
+            "oui",
+            "5%")
+traits <- c("Augmentation du taux d'hémoglobine", 
+            "Augmentation de la pression artérielle pulmonaire", 
+            "Augmentation de la ventilation au repos", 
+            "Prévalence du mal chronique des montagnes")
+data.frame(Traits = traits, Andean = andean, Tibetan = tibetan) %>%
+  knitr::kable(col.names = c("Trait", "Andins", "Tibétains"),
+               caption = '(ref:andeanvstibetan-cap)',
+               longtable = TRUE,
+               booktabs = TRUE) %>%
+  kable_styling(full_width = T)
+```
 
-Sélection naturelle
+Chez l'Homme moderne, les habitudes alimentaires et les modes de vie constituent également des caractéristiques environnementales importantes. L'agriculture et le pastoralisme^[Le pastoralisme décrit la relation interdépendante entre les éleveurs, leurs troupeaux et les milieux exploités.] ont notamment participé à la diversification des environnements humains [@jeong2014adaptations]. En Europe, l'adaptation biologique à ces nouveaux modes de vie s'est par ailleurs manifesté par la sélection du phénotype *LP*, dit de *persistence de la lactase*, caractérisant l'aptitude à digérer le lactose à l'âge adulte [@itan2009origins].
+
 Environnement hétérogène
 
-## Données de séquençage nouvelle génération
+## Données de polymorphismes génétiques
 
-### Next-Generation Sequencing (NGS)
+Le séquençage de l'ADN consiste à déterminer l'ordre dans lequel sont agencées les paires de bases pour un fragment d'ADN donné. Son apparition a offert de nouvelles voies d'exploration en biologie évolutive. Les variations génétiques étaient jusqu'alors appréciées par le biais des différences phénotypiques. En phylogénie par exemple, le séquençage de l'ADN a donné naissance à la phylogénétique moléculaire, qui se distingue de la phylogénétique traditionnelle en ce qu'elle ne considère que les séquences de nucléotides pour évaluer la proximité entre deux espèces. Et c'est précisément l'accès à ces séquences qui va permettre à toute une population de méthodologies statistiques de voir le jour et de se développer. 
 
-Exome, Genome, transcriptome, etc...
 
-Le séquençage nouvelle génération a connu un essor considérable au cours des dernières décennies. Si bien que les prouesses techniques et les progrès technologiques réalisés dans ce domaine ont permis de réduire d'un facteur 100,000 les coûts de séquençage en l'espace de seulement 15 ans [@wetterstrand2013dna].
+### Des données en grande dimension 
 
-(ref:wetterstrand) Évolution des coûts de séquençage depuis 2001 [@wetterstrand2013dna]. 
+Le séquençage nouvelle génération (appelé encore séquençage à haut débit) a connu un essor considérable au cours des dernières décennies. Si bien que les prouesses techniques et les progrès technologiques réalisés dans ce domaine ont permis de réduire d'un facteur 100,000 les coûts de séquençage en l'espace de seulement 15 ans [@wetterstrand2013dna]. 
 
-```{r wetterstrand, fig.cap='(ref:wetterstrand)'}
+Toutefois, compte tenu de la popularité croissante des technologies NGS [@muir2016real] et des considérables volumes de données qu'elles génèrent, de nouvelles problèmatiques se posent quant à leur stockage et leur analyse, nécessitant l'utilisation de puissantes ressources de calcul ainsi que le développement d'algorithmes plus adaptés [@gogol2012overview]. 
+
+D'un point de vue statistique, l'accumulation de données, aussi bien en termes d'observations qu'en termes de variables, tend à opacifier la limite, si elle existe, entre ce qui relève du signal que l'on cherche à détecter, et ce qui n'en relève pas. Ce phénomène bien connu en statistiques porte le nom de *fléau de la dimension* [@giraud2014introduction].
+
+(ref:wetterstrand-cap) Évolution des coûts de séquençage depuis 2001 [@wetterstrand2013dna]. 
+
+```{r wetterstrand, fig.cap='(ref:wetterstrand-cap)', fig.height=4}
 df <- read.csv("data/seqcost2015_4.csv")
 df %>% 
   mutate(log10CpG = log10(Cost.per.Genome)) %>% 
@@ -201,26 +204,13 @@ df %>%
   theme_bw()
 ```
 
-Le séquençage nouvelle génération génèrant de considérables volumes de données, de nouvelles problèmatiques se posent quant à leur stockage et leur analyse, nécessitant l'utilisation de puissantes ressources de calcul ainsi que le développement d'algorithmes plus adaptés [@gogol2012overview]. Financement croissant pour l'acquisition de données NGS [@muir2016real].
-
-###
-
-L'accumulation de données, aussi bien en termes d'observations qu'en termes de variables, laisse à penser que le traitement de celles-ci pourrait permettre de détecter efficacement les variables qui sont responsables ou qui influencent un phénomène particulier. Cela pourrait être par exemple l'utilisation de bases de données automobiles pour prédire la durée de vie de véhicules neufs, ou encore celle de données climatiques pour estimer les variations de température auxquelles pourrait être sujette notre planète. Cette accumulation massive s'accompagne tout de même d'un phénomène bien connu en statistiques, phénomène qui porte le nom de "curse of dimensionality" [@giraud2014introduction]. 
-
 ### Les marqueurs génétiques
 
-Au concept de génétique est souvent associé l'acronyme ADN, correspondant au nom de la molécule d'Acide désoxyribonucléique.
-
-DNA bases pair up with each other, A with T and C with G, to form units called base pairs. Each base is also attached to a sugar molecule and a phosphate molecule. Together, a base, sugar, and phosphate are called a nucleotide. Nucleotides are arranged in two long strands that form a spiral called a double helix. The structure of the double helix is somewhat like a ladder, with the base pairs forming the ladder’s rungs and the sugar and phosphate molecules forming the vertical sidepieces of the ladder. https://ghr.nlm.nih.gov/primer/basics/dna
-Chaque chromosome est constitué de deux brins d'ADN.
-La structure spatiale de l'ADN n'étant pas prise en compte dans les travaux présentés ici, nous en garderons une représentation unidimensionnelle.
-
-D'un point de vue statistique, seuls les sites nucléotidiques potentiellement variables d'une observation à une autre présentent un intérêt. Ces variations génétiques peuvent se manifester sous différentes formes, nous amenant à les classer d'autant de façons :
-
+Le séquençage de l'ADN a également permis de faire évoluer le concept de *marqueur génétique*. Un marqueur génétique correspondait autrefois à un gène *polymorphe*^[présentant des variations à l'échelle de l'espèce.] identifié sur la base d'observations phénotypiques. Grâce au séquençage de l'ADN, une nouvelle définition tenant compte de la position sur le chromosome a été adoptée pour caractériser un marqueur génétique. Différents types de marqueurs génétiques ont été identifiés, parmi lesquels figurent les microsatellites, les insertions, les délétions et les SNPs^[SNP *(Single-Nucleotide Polymorphism)* : polymorphisme d'un seul nucléotide.]. La structure spatiale de l'ADN n'étant pas prise en compte dans les travaux présentés ici, nous en garderons une représentation unidimensionnelle.
 
 - Microsatellite :
 
-Jusqu'à présent, les microsatellites ont connu un succès important, notamment grâce à la popularisation de techniques telles que la PCR (*Polymerase Chain Reaction*). Leur étude a permis de mettre en évidence l'implication de divers blablabla. Un microsatellite est repérable par la répétition successive de petits motifs chacun composé de 1 à 4 acides aminés.
+Jusqu'à présent, les microsatellites ont connu un succès important, notamment grâce à la popularisation de techniques telles que la PCR (*Réaction en Chaîne par Polymérase*). Un microsatellite est repérable par la répétition successive de petits motifs chacun composé de 1 à 4 acides aminés.
 
 (ref:microsat) Exemples de microsatellites. La première séquence comporte 3 répétitions du motif CCG, tandis que la seconde inclut 4 répétitions du motif CA.
 
@@ -287,6 +277,18 @@ rbind(microsatA.df, microsatB.df) %>%
                 y = y1 + (y2 - y1) / 2, 
                 label = r), 
             size = 4) +
+  annotate("text", 
+           x = 3.25,
+           y = 2.55, 
+           label = "paire de bases", 
+           size = 3, 
+           colour = "black") + 
+  geom_segment(aes(x = 1.5, y = 2, xend = 1.5, yend = 3), 
+               colour = "black", 
+               size = 0.3,
+               arrow = arrow(length = unit(4, "pt"),
+                             type = "closed",
+                             ends = "both")) +
   theme_bw() +
   theme(axis.text.x = element_blank(),
         axis.text.y = element_blank(),
@@ -295,15 +297,16 @@ rbind(microsatA.df, microsatB.df) %>%
         axis.title.y = element_blank(),
         legend.position = "none",
         plot.title = element_text(hjust = 0.5))
+
+
 ```
 
 
 - Indel :
 
-INDEL (INsertion/DELetion) is where a single base has been deleted, or inserted into one genome relative to another. It is a symmetrical relationship, as a deletion in one corresponds to an insertion in another. 
+(ref:indel-cap) L'insertion ou la délétion d'une base constituent également des polymorphismes génétiques. Relativement à une séquence de nucléotides de référence, une insertion consiste en la présence d'une base supplémentaire tandis que la délétion consiste en l'absence d'une base.
 
-
-```{r indel}
+```{r indel, fig.cap='(ref:indel-cap)'}
 N <- 20
 nuclA1 <- sample(c("A", "C", "G", "T"), size = N, replace = TRUE)
 nuclA2 <- pair_base(nuclA1)
@@ -354,6 +357,30 @@ rbind(indelA.df, indelB.df) %>%
                 y = y1 + (y2 - y1) / 2, 
                 label = r), 
             size = 4) +
+  annotate("text", 
+           x = 3.25, 
+           y = 8.55, 
+           label = "paire de bases", 
+           size = 3, 
+           colour = "black") + 
+  geom_segment(aes(x = 1.5, y = 8, xend = 1.5, yend = 9), 
+               colour = "black", 
+               size = 0.3,
+               arrow = arrow(length = unit(4, "pt"),
+                             type = "closed",
+                             ends = "both")) +  
+  annotate("text", 
+           x = 3.25,
+           y = 2.55, 
+           label = "paire de bases", 
+           size = 3, 
+           colour = "black") + 
+  geom_segment(aes(x = 1.5, y = 2, xend = 1.5, yend = 3), 
+               colour = "black", 
+               size = 0.3,
+               arrow = arrow(length = unit(4, "pt"),
+                             type = "closed",
+                             ends = "both")) +  
   theme_bw() +
   theme(axis.text.x = element_blank(),
         axis.text.y = element_blank(),
@@ -421,6 +448,30 @@ rbind(SNPA.df, SNPB.df) %>%
                 y = y1 + (y2 - y1) / 2, 
                 label = r), 
             size = 4) +
+  annotate("text", 
+           x = 3.25,
+           y = 8.55, 
+           label = "paire de bases", 
+           size = 3, 
+           colour = "black") + 
+  geom_segment(aes(x = 1.5, y = 8, xend = 1.5, yend = 9), 
+               colour = "black", 
+               size = 0.3,
+               arrow = arrow(length = unit(4, "pt"),
+                             type = "closed",
+                             ends = "both")) +  
+  annotate("text", 
+           x = 3.25,
+           y = 2.55, 
+           label = "paire de bases", 
+           size = 3, 
+           colour = "black") + 
+  geom_segment(aes(x = 1.5, y = 2, xend = 1.5, yend = 3), 
+               colour = "black", 
+               size = 0.3,
+               arrow = arrow(length = unit(4, "pt"),
+                             type = "closed",
+                             ends = "both")) +  
   theme_bw() +
   theme(axis.text.x = element_blank(),
         axis.text.y = element_blank(),
@@ -429,8 +480,12 @@ rbind(SNPA.df, SNPB.df) %>%
         axis.title.y = element_blank(),
         legend.position = "none",
         plot.title = element_text(hjust = 0.5))
-
 ```
+
+## Les motivations de la thèse
+
+La production de données génétiques, volumineuses par la quantité d'information qu'elles renferment, laisse présager le meilleur pour les domaines de la médecine clinique et de la biologie évolutive, pourvu qu'une attention toute particulière soit prêtée quant au traitement informatique et statistique de ces données. En génétique des populations, leur acquisition offre de nombreuses perspectives d'étude, notamment pour la mise en évidence de marqueurs génétiques impliqués dans les processus évolutifs. Au-delà de l'aspect théorique que ce travail de recherche nécessite, le développement et l'implémentation de méthodes computationnelles adéquates est primordial.
+
 
 
 

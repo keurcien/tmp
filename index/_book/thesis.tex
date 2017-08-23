@@ -24,7 +24,7 @@
 %% Preamble
 %%
 % \documentclass{<something>} must begin each LaTeX document
-\documentclass[12pt,twoside]{ugathesis}
+\documentclass[12pt,a4paper,twoside]{ugathesis}
 % Packages are extensions to the basic LaTeX functions. Whatever you
 % want to typeset, there is probably a package out there for it.
 % Chemistry (chemtex), screenplays, you name it.
@@ -130,7 +130,7 @@ starts here.
 }
 
 \Preface{
-blabla \par
+
 }
 
 \Abstract{
@@ -144,6 +144,18 @@ Abstract **
 %% End Preamble
 %%
 %
+
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
 \begin{document}
 
 % Everything below added by CII
@@ -155,16 +167,13 @@ Abstract **
     The preface pretty much says it all. \par  Second paragraph of abstract
     starts here.
   \end{acknowledgements}
-  \begin{preface}
-    blabla \par
-  \end{preface}
+
   \hypersetup{linkcolor=black}
   \setcounter{tocdepth}{2}
   \tableofcontents
 
   \listoftables
 
-  \listoffigures
   \begin{abstract}
     ** Résumé ** \par  La nécessité de développer des outils d'analyse
     exploratoire capables de traiter de larges volumes de données. **
@@ -203,9 +212,9 @@ et la valeur sélective des génotypes dans les populations naturelles. »
 
 Malgré cette caractérisation, les fondements de la génétique des
 populations trouvent en réalité leurs origines bien avant la
-formalisation en 1909 par Wilhelm Johannsen du concept de gène et donc
-de génotype (Roll-Hansen, 2014), en témoignent les travaux de Charles
-Darwin (1809-1882) et de Gregor Mendel (1822-1884). \emph{L'Origine des
+formalisation en 1909 par Wilhelm Johannsen du concept même de gène
+(Roll-Hansen, 2014), en témoignent les travaux de Charles Darwin
+(1809-1882) et de Gregor Mendel (1822-1884). \emph{L'Origine des
 espèces}, publié en 1859 et considéré encore à ce jour comme le texte
 fondateur de la théorie de l'évolution (Darwin, 1980), énonce les
 premiers principes de la sélection naturelle. Les travaux de Mendel,
@@ -277,29 +286,37 @@ de Darwin et pour la théorie neutraliste de Kimura (Bromham \& Penny,
 2003).}\label{fig:kimuravsdarwin}
 \end{figure}
 Une des composantes principales de cette nouvelle théorie consiste à
-affirmer que les fluctuations aléatoires dans la fréquence des allèles,
+affirmer que les fluctuations aléatoires dans les fréquences d'allèle,
 n'affectant que très peu ou pas du tout la valeur sélective, constituent
 la principale source de variabilité de l'ADN (B. Charlesworth \&
 Charlesworth, 2009). Une grande partie de la variation génétique
-observée est fonctionnellement neutre, n'occasionnant pas de changement
+observée est fonctionnellement neutre et n'occasionne pas de changement
 de phénotype.
 
-\subsection{Sélection naturelle}\label{selection-naturelle}
-
-\subsection{Sélection sexuelle}\label{selection-sexuelle}
-
-\subsection{Dérive génétique}\label{derive-genetique}
-
-La dérive génétique est un mécanisme important en génétique des
-populations. Les modèles statistiques Nous illustrons ici le principe de
-dérive génétique à l'aide du modèle de Wright-Fisher tel qu'il est
+L'approbation de cette théorie, bien que conceptuellement intéressante,
+aura un retentissement beaucoup plus important d'un point de vue
+méthodologie statistique. La formulation d'une hypothèse permettant de
+décrire un processus évolutif en l'absence de sélection, portant
+généralement le nom de \emph{modèle neutre}, est souvent de première
+nécessité dans toute démarche visant à caractériser un mécanisme de
+sélection. La donnée d'observations mettant en défaut le modèle neutre
+aura pour conséquences de créditer davantage une hypothèse invoquant un
+processus de sélection. Historiquement, la statistique \(D\) de Tajima
+fut l'une des premières statistiques développées à partir d'une
+hypothèse nulle bâtie pour les mutations neutres (Tajima, 1989).
+Différentes forces peuvent être à l'origine de la variation des
+fréquences alléliques :
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  La dérive génétique
+\end{enumerate}
+La dérive génétique est un mécanisme essentiel en génétique des
+populations. Le principe de dérive génétique est illustré en figure
+\ref{fig:drift}, à l'aide du modèle de Wright-Fisher tel qu'il est
 présenté dans l'ouvrage \emph{Population Genetics} (Gillespie, 2010).
 
-Ten simulations of random genetic drift of a single given allele with an
-initial frequency distribution 0.5 measured over the course of 50
-generations, repeated in three reproductively synchronous populations of
-different sizes. In these simulations, alleles drift to loss or fixation
-(frequency of 0.0 or 1.0) only in the smallest population
 
 
 
@@ -313,79 +330,168 @@ different sizes. In these simulations, alleles drift to loss or fixation
 
 \caption{Simulation numérique de la dérive génétique. La
 fréquence de l'allèle étudié est simulée pour 5 populations constituées
-chacune de 20 individus sur une période de 100 générations. Dans chaque
-population, la fréquence de l'allèle est initialement de 0.20.}\label{fig:drift}
+chacune de 20, 100 ou 1000 individus sur une période de 100 générations.
+Dans chaque population, la fréquence de l'allèle est initialement de
+0.20 (Gillespie, 2010).}\label{fig:drift}
 \end{figure}
-La fréquence d'un allèle au sein d'une population est principalement
-impactée par deux facteurs :
-\begin{itemize}
-\item
-  Le nombre d'individus composant la population
-\item
-  Les lois de Mendel
-\end{itemize}
-La figure \ref{fig:drift} met en évidence deux propriétés de la dérive
-génétique :
+En particulier, la figure \ref{fig:drift} met en évidence deux
+caractéristiques de la dérive génétique :
 \begin{itemize}
 \item
   Les fréquences alléliques évoluent de façon indépendante d'une
   population à une autre.
 \item
-  La dérive génétique entraîne une perte de diversité allélique au sein
-  des populations de petite taille. Dans le modèle de Wright-Fisher, les
-  fréquences alléliques finissent éventuellement par atteindre les états
-  dits absorbants que sont \(0\) et \(1\).
+  Pour un nombre de générations fixé, la dérive génétique entraîne une
+  perte de diversité allélique plus rapidement au sein des populations
+  de plus petite taille. Dans le modèle de Wright-Fisher, les fréquences
+  alléliques finissent éventuellement par atteindre les états dits
+  absorbants que sont 0 et 1.
 \end{itemize}
-Wiki : ``En particulier, l'hypothèse de neutralité, sous laquelle les
-mutations n'ont aucune influence sur la valeur sélective, est
-l'hypothèse nulle généralement retenue dans les travaux où une telle
-hypothèse est nécessaire.''
-
-La formulation d'une hypothèse ou d'un ensemble d'hypothèses permettant
-de décrire un processus évolutif en l'absence de sélection, portant
-généralement le nom de \emph{modèle neutre}, est souvent de première
-nécessité dans toute démarche visant à caractériser un mécanisme de
-sélection. La donnée d'observations mettant en défaut le modèle neutre
-aura pour conséquences de créditer davantage une hypothèse invoquant un
-processus de sélection.
-
-\subsection{Mutations aléatoires}\label{mutations-aleatoires}
-
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Les mutations aléatoires
+\end{enumerate}
 Si la dérive génétique entraîne une perte de diversité allélique, les
-mutations favorisent quant à elle le maintien des variations génétiques
-entre les populations (Gillespie, 2010). Une mutation peut survenir à un
-locus donné avec une probabilité spécifique à chaque espèce, appelée
+mutations favorisent quant à elles le maintien des variations génétiques
+entre les populations (Gillespie, 2010). Les mutations apparaissent
+principalement lors de la phase de réplication de l'ADN. Une mutation
+peut survenir à un locus donné avec une probabilité spécifique à chaque
+espèce (Drake, Charlesworth, Charlesworth, \& Crow, 1998), appelée
 \emph{taux de mutation}.
 
-\subsection{Flux de gène}\label{flux-de-gene}
 
+
+\begin{longtable}[t]{p{\dimexpr0.41\columnwidth-2\tabcolsep}p{\dimexpr0.59\columnwidth-2\tabcolsep}}
+\caption{\label{tab:mutationRate}Exemples de taux de mutation par paire de base et
+par réplication chez différentes espèces (Drake et al., 1998).}\\
+\toprule
+Espèce & Taux de mutation\\
+\midrule
+E. coli & 5.4e-10\\
+C. elegans & 2.3e-10\\
+Drosophile & 3.4e-10\\
+Souris & 1.8e-10\\
+Homme & 5.0e-11\\
+\bottomrule
+\end{longtable}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Le flux de gène
+\end{enumerate}
 Le flux de gène est le résultat d'évènements migratoires, initiés par
 des individus appartenant à une population donnée, vers une seconde
 population dont le pool génique diffère éventuellement de la population
-d'origine.
-\begin{center}\includegraphics{thesis_files/figure-latex/unnamed-chunk-1-1} \end{center}
-
-\section{Adaptation}\label{adaptation}
+d'origine. Le flux de gène influe instantanément sur la diversité
+génétique initialement présente, soit parce que les allèles
+\emph{migrants} n'arrivent pas dans les mêmes proportions que celles qui
+sont établies dans la population receveuse, soit parce que parmi les
+allèles \emph{migrants} figurent des allèles qui n'existaient tout
+simplement pas dans la population receveuse.
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  La sélection naturelle
+\end{enumerate}
+En biologie évolutive, la sélection naturelle est la force évolutive qui
+tend à préserver les allèles conférant des avantages quant à la survie
+d'un individu ou d'une espèce. Elle agit sur les traits qui sont
+héritables. La grande majorité de ces traits sont transmis aux
+descendants en suivant le mécanisme d'hérédité génétique. Cependant,
+d'autres aspects de la biologie d'un organisme peuvent se transmettre
+via des mécanismes différents, comme certains comportements culturels ou
+caractéristiques de l'environnement qui ont été façonnées par les
+populations ancestrales (Gerbault et al., 2011).
 
 \subsection{Adaptation locale}\label{adaptation-locale}
 
-Haut plateau, Lactase (Jeong \& Di Rienzo, 2014)
+La diversité climatique et la diversité géologique terrestre ont
+naturellement façonné des environnements aux propriétés physiques et
+chimiques variées. À celles-ci viennent s'ajouter des caractéristiques
+écologiques résultant des interactions entre l'environnement et les
+organismes qui y évoluent \emph{lato sensu}. Une population sera dite
+adaptée à son environnement si elle développe, par le biais de la
+sélection naturelle, un ou plusieurs allèles augmentant la valeur
+sélective des individus la constituant, en réponse aux pressions
+environnementales auxquelles ces individus sont soumis. À titre
+d'exemple, nous pouvons citer l'adaptation des populations tibétaines et
+andines à la haute altitude (Beall, 2007).
 
-Sélection naturelle Environnement hétérogène
 
-\section{Données de séquençage nouvelle
-génération}\label{donnees-de-sequencage-nouvelle-generation}
 
-\subsection{Next-Generation Sequencing
-(NGS)}\label{next-generation-sequencing-ngs}
 
-Exome, Genome, transcriptome, etc\ldots{}
+\begin{longtable}[t]{p{\dimexpr0.56\columnwidth-2\tabcolsep}p{\dimexpr0.11\columnwidth-2\tabcolsep}p{\dimexpr0.34\columnwidth-2\tabcolsep}}
+\caption{\label{tab:andeanvstibetan}Exemples de phénotypes liés à l'adaptation à
+la haute altitude distinguant les populations andines des populations
+tibétaines (Jeong \& Di Rienzo, 2014).}\\
+\toprule
+Trait & Andins & Tibétains\\
+\midrule
+Augmentation du taux d'hémoglobine & oui & à partir de 4000m d'altitude\\
+Augmentation de la pression artérielle pulmonaire & oui & non\\
+Augmentation de la ventilation au repos & oui & non\\
+Prévalence du mal chronique des montagnes & 5\% & 1\%\\
+\bottomrule
+\end{longtable}
+Chez l'Homme moderne, les habitudes alimentaires et les modes de vie
+constituent également des caractéristiques environnementales
+importantes. L'agriculture et le pastoralisme\footnote{Le pastoralisme
+  décrit la relation interdépendante entre les éleveurs, leurs troupeaux
+  et les milieux exploités.} ont notamment participé à la
+diversification des environnements humains (Jeong \& Di Rienzo, 2014).
+En Europe, l'adaptation biologique à ces nouveaux modes de vie s'est par
+ailleurs manifesté par la sélection du phénotype \emph{LP}, dit de
+\emph{persistence de la lactase}, caractérisant l'aptitude à digérer le
+lactose à l'âge adulte (Itan, Powell, Beaumont, Burger, \& Thomas,
+2009).
 
-Le séquençage nouvelle génération a connu un essor considérable au cours
-des dernières décennies. Si bien que les prouesses techniques et les
-progrès technologiques réalisés dans ce domaine ont permis de réduire
-d'un facteur 100,000 les coûts de séquençage en l'espace de seulement 15
-ans (Wetterstrand, 2013).
+Environnement hétérogène
+
+\section{Données de polymorphismes
+génétiques}\label{donnees-de-polymorphismes-genetiques}
+
+Le séquençage de l'ADN consiste à déterminer l'ordre dans lequel sont
+agencées les paires de bases pour un fragment d'ADN donné. Son
+apparition a offert de nouvelles voies d'exploration en biologie
+évolutive. Les variations génétiques étaient jusqu'alors appréciées par
+le biais des différences phénotypiques. En phylogénie par exemple, le
+séquençage de l'ADN a donné naissance à la phylogénétique moléculaire,
+qui se distingue de la phylogénétique traditionnelle en ce qu'elle ne
+considère que les séquences de nucléotides pour évaluer la proximité
+entre deux espèces. Et c'est précisément l'accès à ces séquences qui va
+permettre à toute une population de méthodologies statistiques de voir
+le jour et de se développer.
+
+\subsection{Des données en grande
+dimension}\label{des-donnees-en-grande-dimension}
+
+Le séquençage nouvelle génération (appelé encore séquençage à haut
+débit) a connu un essor considérable au cours des dernières décennies.
+Si bien que les prouesses techniques et les progrès technologiques
+réalisés dans ce domaine ont permis de réduire d'un facteur 100,000 les
+coûts de séquençage en l'espace de seulement 15 ans (Wetterstrand,
+2013).
+
+Toutefois, compte tenu de la popularité croissante des technologies NGS
+(Muir et al., 2016) et des considérables volumes de données qu'elles
+génèrent, de nouvelles problèmatiques se posent quant à leur stockage et
+leur analyse, nécessitant l'utilisation de puissantes ressources de
+calcul ainsi que le développement d'algorithmes plus adaptés
+(Gogol-Döring \& Chen, 2012).
+
+D'un point de vue statistique, l'accumulation de données, aussi bien en
+termes d'observations qu'en termes de variables, tend à opacifier la
+limite, si elle existe, entre ce qui relève du signal que l'on cherche à
+détecter, et ce qui n'en relève pas. Ce phénomène bien connu en
+statistiques porte le nom de \emph{fléau de la dimension} (Giraud,
+2014).
 
 
 
@@ -398,48 +504,21 @@ ans (Wetterstrand, 2013).
 \caption{Évolution des coûts de séquençage depuis 2001
 (Wetterstrand, 2013).}\label{fig:wetterstrand}
 \end{figure}
-Le séquençage nouvelle génération génèrant de considérables volumes de
-données, de nouvelles problèmatiques se posent quant à leur stockage et
-leur analyse, nécessitant l'utilisation de puissantes ressources de
-calcul ainsi que le développement d'algorithmes plus adaptés
-(Gogol-Döring \& Chen, 2012). Financement croissant pour l'acquisition
-de données NGS (Muir et al., 2016).
-
-\subsection{}\label{section}
-
-L'accumulation de données, aussi bien en termes d'observations qu'en
-termes de variables, laisse à penser que le traitement de celles-ci
-pourrait permettre de détecter efficacement les variables qui sont
-responsables ou qui influencent un phénomène particulier. Cela pourrait
-être par exemple l'utilisation de bases de données automobiles pour
-prédire la durée de vie de véhicules neufs, ou encore celle de données
-climatiques pour estimer les variations de température auxquelles
-pourrait être sujette notre planète. Cette accumulation massive
-s'accompagne tout de même d'un phénomène bien connu en statistiques,
-phénomène qui porte le nom de ``curse of dimensionality'' (Giraud,
-2014).
-
 \subsection{Les marqueurs génétiques}\label{les-marqueurs-genetiques}
 
-Au concept de génétique est souvent associé l'acronyme ADN,
-correspondant au nom de la molécule d'Acide désoxyribonucléique.
-
-DNA bases pair up with each other, A with T and C with G, to form units
-called base pairs. Each base is also attached to a sugar molecule and a
-phosphate molecule. Together, a base, sugar, and phosphate are called a
-nucleotide. Nucleotides are arranged in two long strands that form a
-spiral called a double helix. The structure of the double helix is
-somewhat like a ladder, with the base pairs forming the ladder's rungs
-and the sugar and phosphate molecules forming the vertical sidepieces of
-the ladder. \url{https://ghr.nlm.nih.gov/primer/basics/dna} Chaque
-chromosome est constitué de deux brins d'ADN. La structure spatiale de
-l'ADN n'étant pas prise en compte dans les travaux présentés ici, nous
-en garderons une représentation unidimensionnelle.
-
-D'un point de vue statistique, seuls les sites nucléotidiques
-potentiellement variables d'une observation à une autre présentent un
-intérêt. Ces variations génétiques peuvent se manifester sous
-différentes formes, nous amenant à les classer d'autant de façons :
+Le séquençage de l'ADN a également permis de faire évoluer le concept de
+\emph{marqueur génétique}. Un marqueur génétique correspondait autrefois
+à un gène \emph{polymorphe}\footnote{présentant des variations à
+  l'échelle de l'espèce.} identifié sur la base d'observations
+phénotypiques. Grâce au séquençage de l'ADN, une nouvelle définition
+tenant compte de la position sur le chromosome a été adoptée pour
+caractériser un marqueur génétique. Différents types de marqueurs
+génétiques ont été identifiés, parmi lesquels figurent les
+microsatellites, les insertions, les délétions et les SNPs\footnote{SNP
+  \emph{(Single-Nucleotide Polymorphism)} : polymorphisme d'un seul
+  nucléotide.}. La structure spatiale de l'ADN n'étant pas prise en
+compte dans les travaux présentés ici, nous en garderons une
+représentation unidimensionnelle.
 \begin{itemize}
 \tightlist
 \item
@@ -447,8 +526,7 @@ différentes formes, nous amenant à les classer d'autant de façons :
 \end{itemize}
 Jusqu'à présent, les microsatellites ont connu un succès important,
 notamment grâce à la popularisation de techniques telles que la PCR
-(\emph{Polymerase Chain Reaction}). Leur étude a permis de mettre en
-évidence l'implication de divers blablabla. Un microsatellite est
+(\emph{Réaction en Chaîne par Polymérase}). Un microsatellite est
 repérable par la répétition successive de petits motifs chacun composé
 de 1 à 4 acides aminés.
 
@@ -470,11 +548,23 @@ répétitions du motif CA.}\label{fig:microsat}
 \item
   Indel :
 \end{itemize}
-INDEL (INsertion/DELetion) is where a single base has been deleted, or
-inserted into one genome relative to another. It is a symmetrical
-relationship, as a deletion in one corresponds to an insertion in
-another.
-\begin{center}\includegraphics{thesis_files/figure-latex/indel-1} \end{center}
+
+
+
+
+
+\begin{figure}
+
+{\centering \includegraphics{thesis_files/figure-latex/indel-1} 
+
+}
+
+\caption{L'insertion ou la délétion d'une base constituent
+également des polymorphismes génétiques. Relativement à une séquence de
+nucléotides de référence, une insertion consiste en la présence d'une
+base supplémentaire tandis que la délétion consiste en l'absence d'une
+base.}\label{fig:indel}
+\end{figure}
 \begin{itemize}
 \tightlist
 \item
@@ -523,13 +613,14 @@ le modèle neutre pour \(\boldsymbol{p}\) est donné par la relation
 suivante :
 \begin{equation} 
   \boldsymbol{p} = \boldsymbol{p_0} + \boldsymbol{r} 
-  \label{eq:flk_neutral_model}
+  \label{eq:flk-neutral-model}
 \end{equation}
 Bonhomme \textit{et al.} proposent pour ce modèle de mesurer une
 statistique de qualité de l'ajustement pour quantifier la déviance d'un
 allèle par rapport au modèle neutre :
 \begin{equation} 
-  FLK = (\boldsymbol{p - \hat{p}_0})^T V (\boldsymbol{p - \hat{p}_0})                                \label{eq:flk-statistic}
+  FLK = (\boldsymbol{p - \hat{p}_0})^T V (\boldsymbol{p - \hat{p}_0})                               
+  \label{eq:flk-statistic}
 \end{equation}
 Sous l'hypothèse neutre et suivant \eqref{eq:flk-statistic},
 \(FLK \sim \chi^2 (K - 1)\).
@@ -599,18 +690,19 @@ Le taux de fausse découverte, correspond à la proportion de faux
 positifs parmi les positifs. En notant \(FP\) le nombre de faux
 positifs, \(FP\) le nombre de vrais positifs, on définit le taux de
 fausse découverte \(FDR\) par :
-\[ FDR = \mathbb{E}\Big[\frac{FP}{TP + FP} 1_{FP+TP > 0}\Big] \] -
-Référence cours de Christophe Giraud
-
+\begin{equation} 
+  FDR = \mathbb{E}\Big[\frac{FP}{TP + FP} 1_{FP+TP > 0}\Big] 
+  \label{eq:FDR-def}
+\end{equation}
+\begin{itemize}
+\tightlist
+\item
+  Référence cours de Christophe Giraud
+\end{itemize}
 q-value, bonferroni, benjamini-hochberg La figure suivante donne les
 comparaisons entre les différentes procédures de correction :
 
 \chapter{Adaptation locale}\label{adaptation-locale-1}
-
-Une population est dite localement adaptée à son environnement si elle a
-connu une évolution différente de celles qu'ont connu les autres
-populations de la même espèce, et ce, en réponse aux pressions
-sélectives auxquelles elle peut être confrontrée.
 
 \section{Cas d'étude utilisant
 pcadapt}\label{cas-detude-utilisant-pcadapt}
@@ -1163,9 +1255,9 @@ chunk tag) to help with readibility and/or setup.
 \NormalTok{knitr::opts_chunk$}\KeywordTok{set}\NormalTok{(}\DataTypeTok{echo =} \OtherTok{FALSE}\NormalTok{,}
                       \DataTypeTok{fig.align =} \StringTok{'center'}\NormalTok{,}
                       \DataTypeTok{fig.width =} \DecValTok{6}\NormalTok{,}
-                      \DataTypeTok{results =} \StringTok{'hide'}\NormalTok{)}
-
-\CommentTok{# knitr::opts_chunk$set(cache = TRUE)}
+                      \DataTypeTok{results =} \StringTok{'hide'}\NormalTok{,}
+                      \DataTypeTok{cache =} \OtherTok{TRUE}\NormalTok{)}
+\CommentTok{#knitr::opts_knit$set(kable.force.latex = TRUE)}
 
 \CommentTok{# The palette with black:}
 \NormalTok{cbbPalette <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"#000000"}\NormalTok{, }
@@ -1201,6 +1293,11 @@ estimation of ancestry in unrelated individuals. \emph{Genome Research},
 Bateson, W., \& Mendel, G. (1913). \emph{Mendel's principles of
 heredity}. University press.
 
+\hypertarget{ref-beall2007two}{}
+Beall, C. M. (2007). Two routes to functional adaptation: Tibetan and
+andean high-altitude natives. \emph{Proceedings of the National Academy
+of Sciences}, \emph{104}(suppl 1), 8655--8660.
+
 \hypertarget{ref-beaumont2004identifying}{}
 Beaumont, M. A., \& Balding, D. J. (2004). Identifying adaptive genetic
 divergence among populations from genome scans. \emph{Molecular
@@ -1235,6 +1332,11 @@ Charlesworth, B., \& Charlesworth, D. (2009). Darwin and genetics.
 Darwin, C. (1980). L'Origine des espèces, trad. \emph{Edmond Barbier
 (1876), Paris, Maspero}.
 
+\hypertarget{ref-drake1998rates}{}
+Drake, J. W., Charlesworth, B., Charlesworth, D., \& Crow, J. F. (1998).
+Rates of spontaneous mutation. \emph{Genetics}, \emph{148}(4),
+1667--1686.
+
 \hypertarget{ref-dray2015principal}{}
 Dray, S., \& Josse, J. (2015). Principal component analysis with missing
 values: A comparative survey of methods. \emph{Plant Ecology},
@@ -1259,6 +1361,13 @@ Geneva, A. J., Muirhead, C. A., Kingan, S. B., \& Garrigan, D. (2015). A
 new method to scan genomes for introgression in a secondary contact
 model. \emph{PloS One}, \emph{10}(4), e0118621.
 
+\hypertarget{ref-gerbault2011evolution}{}
+Gerbault, P., Liebert, A., Itan, Y., Powell, A., Currat, M., Burger, J.,
+\ldots{} Thomas, M. G. (2011). Evolution of lactase persistence: An
+example of human niche construction. \emph{Philosophical Transactions of
+the Royal Society of London B: Biological Sciences}, \emph{366}(1566),
+863--877.
+
 \hypertarget{ref-gillespie2010population}{}
 Gillespie, J. H. (2010). \emph{Population genetics: A concise guide}.
 JHU Press.
@@ -1276,6 +1385,11 @@ Bioinformatics: Methods and Protocols}, 249--257.
 Harrison, R. G., \& others. (1990). Hybrid zones: Windows on
 evolutionary process. \emph{Oxford Surveys in Evolutionary Biology},
 \emph{7}, 69--128.
+
+\hypertarget{ref-itan2009origins}{}
+Itan, Y., Powell, A., Beaumont, M. A., Burger, J., \& Thomas, M. G.
+(2009). The origins of lactase persistence in europe. \emph{PLoS
+Computational Biology}, \emph{5}(8), e1000491.
 
 \hypertarget{ref-jeong2014adaptations}{}
 Jeong, C., \& Di Rienzo, A. (2014). Adaptations to local environments in
@@ -1370,6 +1484,11 @@ Suarez-Gonzalez, et a., Adriana. (2016). Genomic and functional
 approaches reveal a case of adaptive introgression from populus
 balsamifera (balsam poplar) in p. trichocarpa (black cottonwood).
 \emph{Molecular Ecology}, 2427--2442.
+
+\hypertarget{ref-tajima1989statistical}{}
+Tajima, F. (1989). Statistical method for testing the neutral mutation
+hypothesis by dna polymorphism. \emph{Genetics}, \emph{123}(3),
+585--595.
 
 \hypertarget{ref-thornton2014local}{}
 Thornton, T. A., \& Bermejo, J. L. (2014). Local and global ancestry

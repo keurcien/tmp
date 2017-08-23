@@ -6,7 +6,6 @@ This is for including Chapter 1. Notice that it's also good practice to name you
 The {#rmd-basics} text after the chapter declaration will allow us to link throughout the document back to the beginning of Chapter 1. These labels will automatically be generated (if not specified) by changing the spaces to hyphens and capital letters to lowercase. Look for the reference to this label at the beginning of Chapter 2.
 -->
 
-
 # État de l'art
 
 ## L'indice de fixation
@@ -36,13 +35,14 @@ le modèle neutre pour $\boldsymbol{p}$ est donné par la relation suivante :
 
 \begin{equation} 
   \boldsymbol{p} = \boldsymbol{p_0} + \boldsymbol{r} 
-  \label{eq:flk_neutral_model}
+  (\#eq:flk-neutral-model)
 \end{equation}
 
 Bonhomme \textit{et al.} proposent pour ce modèle de mesurer une statistique de qualité de l'ajustement pour quantifier la déviance d'un allèle par rapport au modèle neutre : 
 
 \begin{equation} 
-  FLK = (\boldsymbol{p - \hat{p}_0})^T V (\boldsymbol{p - \hat{p}_0})                                \label{eq:flk-statistic}
+  FLK = (\boldsymbol{p - \hat{p}_0})^T V (\boldsymbol{p - \hat{p}_0})                               
+  (\#eq:flk-statistic)
 \end{equation}
 
 Sous l'hypothèse neutre et suivant \@ref(eq:flk-statistic), $FLK \sim \chi^2 (K - 1)$.
@@ -54,7 +54,7 @@ Whitlock \textit{et al.} proposent une méthode permettant de détecter les all�
 
 \begin{equation} 
   k \frac{F_{ST}^{\prime}}{\bar{{F_{ST}^{\prime}}}}  
-  \label{eq:OutFLANK-statistic}
+  (\#eq:OutFLANK-statistic)
 \end{equation}
 
 où $k$ représente le nombre de degrés de libertés.
@@ -67,7 +67,7 @@ $F_{ST} \in [0, 1]$ est une quantité qui peut être interprété comme proporti
 
 \begin{equation} 
   \log \left( \frac{F_{ST}}{1 - F_{ST}} \right) = \alpha_j + \beta_i + \gamma_{ij}
-  \label{eq:Bayescan-statistic}
+  (\#eq:Bayescan-statistic)
 \end{equation}
 
 ## Fast PCA
@@ -114,7 +114,12 @@ ggplot(ggdf, aes(x = PC2, y = PC1, fill = pop)) +
 ## Contrôle du taux de fausse découverte
 
 Le taux de fausse découverte, correspond à la proportion de faux positifs parmi les positifs. En notant $FP$ le nombre de faux positifs, $FP$ le nombre de vrais positifs, on définit le taux de fausse découverte $FDR$ par : 
-$$ FDR = \mathbb{E}\Big[\frac{FP}{TP + FP} 1_{FP+TP > 0}\Big] $$
+
+\begin{equation} 
+  FDR = \mathbb{E}\Big[\frac{FP}{TP + FP} 1_{FP+TP > 0}\Big] 
+  (\#eq:FDR-def)
+\end{equation}
+
 - Référence cours de Christophe Giraud
 
 q-value, bonferroni, benjamini-hochberg

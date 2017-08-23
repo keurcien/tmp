@@ -18,13 +18,13 @@ abstract: >
   `r if(knitr:::is_latex_output()) paste(readLines("00-abstract.Rmd"), collapse = ' ')`
 acknowledgements: >
   `r if(knitr:::is_latex_output()) paste(readLines("00-acknowledgements.Rmd"), collapse = ' ')`
-preface: >
-  `r if(knitr:::is_latex_output()) paste(readLines("00-preface.Rmd"), collapse = ' ')`
+# preface: >
+#   `r if(knitr:::is_latex_output()) paste(readLines("00-preface.Rmd"), collapse = ' ')`
 bibliography: bib/thesis.bib
 csl: csl/apa.csl
 lot: true
-lof: true
-#space_between_paragraphs: true
+lof: false
+space_between_paragraphs: false
 ---
 
 ```{r include_packages, include = FALSE}
@@ -71,9 +71,9 @@ if(!require(maps)){
 knitr::opts_chunk$set(echo = FALSE,
                       fig.align = 'center',
                       fig.width = 6,
-                      results = 'hide')
-
-# knitr::opts_chunk$set(cache = TRUE)
+                      results = 'hide',
+                      cache = TRUE)
+#knitr::opts_knit$set(kable.force.latex = TRUE)
 
 # The palette with black:
 cbbPalette <- c("#000000", 

@@ -182,17 +182,6 @@
 \addtolength\topmargin{-\headheight}
 \addtolength\topmargin{-\headsep}
 
-%\setlength{\oddsidemargin}{.6in}
-%\setlength{\evensidemargin}{0in}
-%\setlength{\textwidth}{5.9in}
-%\setlength\topmargin{0in}
-%\addtolength\headheight{2.5pt}
-%\addtolength\topmargin{-\headheight}
-%\addtolength\topmargin{-\headsep}
-%\addtolength\textheight{1in}
-%\addtolength\textheight{\headheight}
-%\addtolength\textheight{\headsep}
-
 \def\lab#1{\gdef \@lab{#1}}
 \def\@lab{\@latex@warning@no@line{No \noexpand\lab given}}
 \def\division#1{\gdef \@division{#1}}
@@ -294,29 +283,30 @@
   \let \footnote \thanks
   \baselineskip = 1.4\baselineskip
   \setbox0=\hbox{of the Requirements for the Degree}
-  \begin{minipage}{0.1\linewidth}
-  \begin{tikzpicture}[remember picture, overlay]
-    \draw[line width = 1pt] ($(current page.north west) + (0.5cm,-0.5cm)$) rectangle ($(current page.south east) + (-0.5cm,0.5cm)$);
-    \node[anchor=north west, xshift=0.375cm, yshift=-0.36125cm] at (current page.north west) {\includegraphics[width=5cm, height=26.91575cm]{figure/template.png}};
+  \begin{minipage}{0.175\linewidth}
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north west, xshift=0.75cm, yshift=-0.44cm] at (current page.north west) {\includegraphics[width=5.65cm, height=28.22cm]{figure/template.png}};
+      \node[anchor=north west, xshift=8cm, yshift=-1cm] at (current page.north west) {\includegraphics[width=10cm]{figure/logo-comue.png}};
+      \draw[line width = 1pt] ($(current page.north west) + (0.88cm,-0.585cm)$) rectangle ($(current page.south east) + (-0.88cm,0.875cm)$);
   \end{tikzpicture}
   \end{minipage}
-  \begin{minipage}{0.9\linewidth}
+  \begin{minipage}{0.825\linewidth}
     \setcounter{page}{1}
-    \begin{flushright}
-    {\fontfamily{ppl}\fontsize{16}{18}\selectfont\color{black!30}\bf UNIVERSITÉ GRENOBLE-ALPES }
-    \end{flushright}
-    \null\vfil
-    {\fontsize{12}{14}\selectfont\bf \@title}
+    \null
+    \vfil
+    \vspace{1cm}
+    {\fontsize{12}{14}\fontfamily{CM}\selectfont\bf \@title}
     \bigskip
+    \vfil
     \vfil
     \vfil
     Pour obtenir le grade de \\
     \vfil
-    {\fontsize{12}{14}\selectfont\bf DOCTEUR DE L'UNIVERSITÉ DE GRENOBLE-ALPES} \\
+    {\fontsize{12}{14}\fontfamily{CM}\selectfont\bf DOCTEUR DE LA COMMUNAUTÉ UNIVERSITÉ GRENOBLE ALPES} \\
     \vfil
     Spécialité : \textbf{Modèles, méthodes et algorithmes en biologie, santé et environnement}\\
     \bigskip
-    {\fontsize{8}{10}\selectfont Arrêté ministériel : ?}
+    {\fontsize{8}{10}\selectfont Arrêté ministériel : 25 mai 2016}
     \vfil
     \vfil
     Présentée par \\
