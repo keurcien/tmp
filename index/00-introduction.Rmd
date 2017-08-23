@@ -19,7 +19,7 @@ include_graphics("figure/mendel.png")
 ### La théorie de l'évolution
 
 En 1859, Darwin soutenait l'idée selon laquelle la principale force évolutive serait la sélection naturelle [@darwin1980origine]. « Je me propose de passer brièvement en revue les progrès de l’opinion relativement à l’origine des espèces. Jusque tout récemment, la plupart des naturalistes croyaient que les espèces sont des productions immuables créées séparément. De nombreux savants ont habilement soutenu cette hypothèse. Quelques autres, au contraire, ont admis que les espèces éprouvent des modifications et que les formes actuelles descendent de formes préexistantes par voie de génération régulière. »
-C'est de cette manière qu'en 1920, Edmond Barbier, dans sa notice relative à la traduction française de *L'Origine des espèces* [@darwin1980origine], décide de présenter le contexte dans lequel il a été amené à effectuer ce travail de traduction. Bien qu'elle fut globalement bien accueillie par la communauté scientifique, sa théorie fut tout de même en proie à de nombreuses critiques. L'une des principales critiques émises à son encontre fut relative à la croyance de Darwin selon laquelle l'hérédité *par mélange* serait le principal mode de transmission des caractères héréditaires [@gayon1992darwin]. Or, si sélection naturelle il y a, la conservation et la transmission des caractères sélectionnés est essentielle. Si bien qu'une hérédité *par mélange* n'est pas envisageable pour soutenir la thèse de la sélection naturelle, puisque tout caractère transmis de cette façon se verrait altéré (ou dilué si l'on souhaite conserver l'idée de mélange) à chaque génération et donc éliminé après un certain temps. Cependant, sa théorie bénéficiera par la suite des travaux de Mendel qui, lors de leur redécouverte en 1902 [@bateson1913mendel], apporteront l'élément fondamental manquant à la théorie darwinienne : le principe d'hérédité *mendélienne*. Cette théorie de l'évolution néo-darwinienne, née de la conciliation de la théorie darwinienne et du principe d'hérédité de Mendel, constitue le paradigme évolutionniste tel que nous le connaissons aujourd'hui et porte le nom de *théorie synthétique de l'évolution*.
+C'est de cette manière qu'en 1920, Edmond Barbier, dans sa notice relative à la traduction française de *L'Origine des espèces* [@darwin1980origine], décide de présenter le contexte dans lequel il a été amené à effectuer ce travail de traduction. Bien qu'elle fut globalement bien accueillie par la communauté scientifique, sa théorie fut tout de même en proie à de nombreuses critiques. L'une des principales critiques émises à son encontre fut relative à la croyance de Darwin selon laquelle l'hérédité *par mélange* serait le principal mode de transmission des caractères héréditaires [@gayon1992darwin]. Or, si sélection naturelle il y a, la conservation et la transmission des caractères sélectionnés sont essentielles. Si bien qu'une hérédité *par mélange* n'est pas envisageable pour soutenir la thèse de la sélection naturelle, puisque tout caractère transmis de cette façon se verrait altéré (ou dilué si l'on souhaite conserver l'idée de mélange) à chaque génération et donc éliminé après un certain temps. Cependant, sa théorie bénéficiera par la suite des travaux de Mendel qui, lors de leur redécouverte en 1902 [@bateson1913mendel], apporteront l'élément fondamental manquant à la théorie darwinienne : le principe d'hérédité *mendélienne*. Cette théorie de l'évolution néo-darwinienne, née de la conciliation de la théorie darwinienne et du principe d'hérédité de Mendel, constitue le paradigme évolutionniste tel que nous le connaissons aujourd'hui et porte le nom de *théorie synthétique de l'évolution*.
 
 ### L'évolution d'une théorie
 
@@ -27,7 +27,7 @@ C'est de cette manière qu'en 1920, Edmond Barbier, dans sa notice relative à l
 
 (ref:kimuravsdarwin-cap) Représentation schématique des probabilités d'occurrence pour chaque type de mutation pour la théorie sélectionniste de Darwin et pour la théorie neutraliste de Kimura [@bromham2003modern].
 
-```{r kimuravsdarwin, fig.cap = '(ref:kimuravsdarwin-cap)'}
+```{r kimuravsdarwin, fig.cap = '(ref:kimuravsdarwin-cap)', fig.height=3}
 data.frame(theory = sort(rep(c("Darwin", "Kimura"), 3)),
            values = c(0.75, 0.0, 0.25, 0.5, 0.45, 0.05), 
            type = rep(c("Délétère", "Neutre", "Avantageuse"), 2)) %>%
@@ -45,13 +45,15 @@ data.frame(theory = sort(rep(c("Darwin", "Kimura"), 3)),
         axis.text.x = element_blank(),
         axis.title.x = element_blank(),
         axis.title.y = element_blank())
-
-
 ```
 
 Une des composantes principales de cette nouvelle théorie consiste à affirmer que les fluctuations aléatoires dans les fréquences d'allèle, n'affectant que très peu ou pas du tout la valeur sélective, constituent la principale source de variabilité de l'ADN [@charlesworth2009darwin]. Une grande partie de la variation génétique observée est fonctionnellement neutre et n'occasionne pas de changement de phénotype. 
 
-L'approbation de cette théorie, bien que conceptuellement intéressante, aura un retentissement beaucoup plus important d'un point de vue méthodologie statistique. La formulation d'une hypothèse permettant de décrire un processus évolutif en l'absence de sélection, portant généralement le nom de *modèle neutre*, est souvent de première nécessité dans toute démarche visant à caractériser un mécanisme de sélection. La donnée d'observations mettant en défaut le modèle neutre aura pour conséquences de créditer davantage une hypothèse invoquant un processus de sélection. Historiquement, la statistique $D$ de Tajima fut l'une des premières statistiques développées à partir d'une hypothèse nulle bâtie pour les mutations neutres [@tajima1989statistical]. Différentes forces peuvent être à l'origine de la variation des fréquences alléliques : 
+L'approbation de cette théorie, bien que conceptuellement intéressante, aura un retentissement beaucoup plus important d'un point de vue méthodologie statistique. La formulation d'une hypothèse permettant de décrire un processus évolutif en l'absence de sélection, portant généralement le nom de *modèle neutre*, est souvent de première nécessité dans toute démarche visant à caractériser un mécanisme de sélection. La donnée d'observations mettant en défaut le modèle neutre aura pour conséquences de créditer davantage une hypothèse invoquant un processus de sélection. Historiquement, la statistique $D$ de Tajima fut l'une des premières statistiques développées à partir d'une hypothèse nulle bâtie pour les mutations neutres [@tajima1989statistical]. 
+
+### Forces évolutives
+
+Si l'on s'en tient à la théorie neutraliste, cela relèverait de l'abus de langage que de parler de "forces" pour désigner les mécanismes expliquant les trajectoires fréquentielles empruntées par les allèles, puisque c'est principalement par le hasard qu'elles s'expliquent. Cela étant dit, les forces évolutives retenues par la communauté scientifique sont au nombre de quatre et nous en donnons ici une définition succinte.
 
 1. La dérive génétique
 
@@ -484,10 +486,5 @@ rbind(SNPA.df, SNPB.df) %>%
 
 ## Les motivations de la thèse
 
-La production de données génétiques, volumineuses par la quantité d'information qu'elles renferment, laisse présager le meilleur pour les domaines de la médecine clinique et de la biologie évolutive, pourvu qu'une attention toute particulière soit prêtée quant au traitement informatique et statistique de ces données. En génétique des populations, leur acquisition offre de nombreuses perspectives d'étude, notamment pour la mise en évidence de marqueurs génétiques impliqués dans les processus évolutifs. Au-delà de l'aspect théorique que ce travail de recherche nécessite, le développement et l'implémentation de méthodes computationnelles adéquates est primordial.
-
-
-
-
-
+La production de données génétiques, volumineuses par la quantité d'information qu'elles renferment, laisse présager le meilleur pour les domaines de la médecine clinique et de la biologie évolutive, pourvu qu'une attention particulière soit prêtée au traitement informatique et statistique de ces données. En génétique des populations, leur acquisition offre de nombreuses perspectives d'étude, notamment concernant la mise en évidence de marqueurs génétiques impliqués dans les processus évolutifs. Les méthodes répondant à cette problématique portent le nom de *scans génomiques*. 
 

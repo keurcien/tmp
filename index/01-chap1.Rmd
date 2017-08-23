@@ -8,6 +8,85 @@ The {#rmd-basics} text after the chapter declaration will allow us to link throu
 
 # État de l'art
 
+## Les scans génomiques
+
+Les scans génomiques pour la sélection se sont largement répandus au cours des dernières années, principalement grâce au développement fulgurant qu'ont connu les technologies NGS. Principalement réalisés sur des données humaines, les scans génomiques se sont progressivement étendus à d'autres espèces, modèles et non-modèles [@haasl2016detecting], tout en amorçant la transition vers des marqueurs génétiques de type SNP (Figure \@ref(fig:gwss)).
+
+(ref:gwss-cap) Évolution de la proportion d'articles scientifiques s'intéressant à des espèces non humaines et de la proportion de ceux dont l'étude est réalisée sur des données de SNPs, dans le cadre des scans génomiques pour la sélection [@haasl2016detecting].
+
+```{r gwss, fig.cap = '(ref:gwss-cap)', fig.height=3}
+df <- read.csv2("data/NIHMS785639-supplement-Supplemental_Table_1.csv") %>% 
+  mutate(Recent = (Year >= 2010))
+snp <- strsplit(as.character(df$Markers), split = " ")
+df$Methodology <- as.character(df$Methodology)
+df$Methodology[108] <- "recombination, and LD" 
+df$Methodology[128] <- "extreme Tajima's D; searching for balancing selection" 
+df$Methodology <- as.factor(df$Methodology)
+fst_6 <- strsplit(as.character(df$Methodology), split = "-")
+fst_space <- strsplit(as.character(df$Methodology), split = " ")
+df$var <- unlist(lapply(snp, FUN = function(x){("SNP" %in% x) || ("SNPs" %in% x)}))
+
+snp.df <- df %>% 
+  group_by(Recent, var) %>%
+  summarise(count = n()) %>%
+  mutate(freq = count / sum(count)) %>%
+  filter(var)
+
+snp.df$data <- "SNP"
+
+word.list <- c("Homo sapiens", 
+               "Homo sapiens and Pan troglodytes",
+               "Homo sapiens, Pan troglodytes",
+               "Homo sapiens, Pan troglodytes, Mus musculus",
+               "Homo sapiens, Pan troglodytes, oragutan, Rhesus macaque")
+
+h.df <- df %>% mutate(var = Species %in% word.list) %>%
+  group_by(Recent, var) %>%
+  summarise(count = n()) %>%
+  mutate(freq = count / sum(count)) %>%
+  filter(!var)
+
+h.df$data <- "Human"
+
+bool_6 <- unlist(lapply(fst_6, FUN = function(x){"FST" %in% x}))
+bool_space <- unlist(lapply(fst_space, FUN = function(x){"FST" %in% x}))
+df$var <- (bool_6 | bool_space)
+
+fst.df <- df %>% 
+  group_by(Recent, var) %>%
+  summarise(count = n()) %>%
+  mutate(freq = count / sum(count)) %>%
+  filter(var)
+
+fst.df$data <- "FST"
+
+df <- rbind(snp.df, h.df, fst.df) 
+df$Recent[df$Recent] <- "2010-2016"
+df$Recent[df$Recent == FALSE] <- "1999-2009"
+df$Recent <- factor(df$Recent, levels = sort(unique(df$Recent), decreasing = TRUE))
+
+df %>% ggplot(aes(x = Recent, 
+                  y = freq, 
+                  fill = factor(data))) +
+  ylim(0, 1) +
+  coord_flip() +
+  geom_bar(stat = "identity", 
+           colour = "black", 
+           position = "dodge",
+           width = 0.5) +
+  scale_fill_manual(labels = c("Proportion de scans à sélection utilisant l'indice de fixation",
+                               "Proportion de scans à sélection pour des espèces non humaines",
+                               "Proportion de scans à sélection utilisant des données de SNPs"),
+                    values = cbbPalette[c(8, 6, 5)]) +
+  theme_bw() +
+  theme(axis.ticks.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        legend.position = "bottom",
+        legend.title = element_blank(), 
+        legend.direction = "vertical")
+```
+
 ## L'indice de fixation
 
 En se différenciant génétiquement, les populations voient leurs fréquences d'allèles évoluer de façon indépendante. L'indice de fixation est une statistique permettant de quantifier pour un allèle donné, l'écart de la fréquence observée dans une sous-population à la fréquence théorique
