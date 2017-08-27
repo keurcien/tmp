@@ -157,7 +157,7 @@ L'utilisation de l'Analyse en Composantes Principales en génétique des populat
 
 (ref:popres-cap) ACP réalisée sur le jeu de données POPRES [@novembre2008genes].
 
-```{r popres, fig.cap = '(ref:popres-cap)'}
+```{r popres, fig.cap = '(ref:popres-cap)', out.width='\\textwidth'}
 obj.popres <- readRDS("data/popres.rds")
 
 ggdf <- data.frame(PC1 = -obj.popres$u[, 1], 
@@ -176,8 +176,7 @@ ggplot(ggdf, aes(x = PC2, y = PC1, fill = pop)) +
         legend.key.width = unit(0.5, "line"),
         legend.title = element_blank(),
         legend.direction = "horizontal",
-        legend.position = "bottom",
-        plot.margin = unit(c(0.1, 0.1, 0.1, 0.1), "cm"))
+        legend.position = "bottom")
 ```
 
 

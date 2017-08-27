@@ -39,8 +39,11 @@
 \usepackage{longtable,booktabs,setspace}
 \usepackage[hyphens]{url}
 \usepackage{pdfpages}
+\usepackage{sectsty}
 \usepackage{tikz}
 \usetikzlibrary{calc}
+
+
 % Added by CII
 \usepackage{hyperref}
 \usepackage{lmodern}
@@ -56,6 +59,23 @@
 % bibliography is included.
 %\usepackage{biblatex-chicago}
 %\bibliography{thesis}
+
+\definecolor{customDarkGreen}{RGB}{47,79,79}
+\definecolor{customDarkGrey}{RGB}{25,25,25}
+\definecolor{customGreen}{RGB}{41,124,120}
+\definecolor{customGrey}{RGB}{105,105,105}
+\definecolor{customSteelBlue}{RGB}{65,131,196}
+\renewcommand{\familydefault}{\sfdefault}
+\chapterfont{\color{black}\huge}  % sets colour of chapters
+\sectionfont{\color{customDarkGrey}\LARGE}  % sets colour of sections
+\subsectionfont{\color{customGreen}}
+\subsubsectionfont{\color{customGrey}}  % sets colour of sections
+\hypersetup{unicode=true,
+            colorlinks=true,
+            linkcolor=customSteelBlue,
+            citecolor=customSteelBlue,
+            urlcolor=customSteelBlue,
+            breaklinks=true}
 
 
 % Added by CII (Thanks, Hadley!)
@@ -73,6 +93,10 @@
 
 % \usepackage{times} % other fonts are available like times, bookman, charter, palatino
 
+% Syntax highlighting #22
+$if(highlighting-macros)$
+  $highlighting-macros$
+$endif$
 
 % To pass between YAML and LaTeX the dollar signs are added by CII
 \title{$title$}

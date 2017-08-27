@@ -189,8 +189,7 @@ df <- read.csv("data/seqcost2015_4.csv")
 df %>% 
   mutate(log10CpG = log10(Cost.per.Genome)) %>% 
   ggplot(aes(x = as.Date(Date), y = log10CpG)) + 
-  geom_line(color = cbbPalette[2], size = 1.5) +
-  geom_point(color = cbbPalette[6], size = 1.5) +
+  geom_line(color = cbbPalette[6], size = 1.5) +
   scale_y_continuous(breaks = 1:8, 
                      labels = c("10",
                                 "100",

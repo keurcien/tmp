@@ -2,13 +2,269 @@
 
 `r if(!knitr:::is_latex_output()) '# (APPENDIX) Appendix {-}'` 
 
-# The First Appendix
+# Supplementary Information 
+
+## Article 1 {-}
+
+# Supplementary Information
+
+## Article 2 {-}
+
+(ref:FigureSI1-cap) Schematic description of the island and divergence model. For the island model, adaptation occurs simultaneously in each population. For the island model, adaptation takes place in the branch leading to the second population. 
+
+```{r FigureSI1, results='asis', fig.cap='(ref:FigureSI1-cap)'}
+include_graphics("figure/FigureSI1.png")
+```
+
+(ref:FigureSI2-cap) Proportion of false discoveries and statistical power as a function of the number of principal components in a model of range expansion.
+
+```{r FigureSI2, fig.height=4, fig.cap='(ref:FigureSI2-cap)'}
+dt <- readRDS("data/rexp.rds")
+p <- ncol(data)
+K <- 4:9
+df <- data.frame(values = vector(mode = "numeric", 
+                                 length = 2 * length(K)),
+                 type = c(rep("FDR", length(K)), 
+                          rep("Power", length(K))),
+                 K = rep(K, 2))
+
+for (k in 1:length(K)) {
+  x <- pcadapt(dt$geno,
+               K = K[k],
+               ploidy = 1,
+               min.maf = 0)
+  qval <- qvalue(x$pvalues)$qvalues
+  rnk <- which(qval < 0.1)
+
+  if (length(rnk) > 0) {
+    df$values[df$type == "FDR"][k] <- sum(!(rnk %in% dt$ground.truth)) / length(rnk)
+  }
+  df$values[df$type == "Power"][k] <- sum(rnk %in% dt$ground.truth)/length(dt$ground.truth)
+}
+
+ggplot(data = df) + 
+  geom_line(size = 2,
+            aes(x = K,
+                y = values,
+                colour = type,
+                linetype = type)) + 
+  ylim(0,1) + 
+  scale_colour_manual("Curve",
+                      values = cbbPalette[c(7, 3)]) +
+  scale_linetype_manual(name = "Curve",
+                        values = c(3, 1)) +
+  guides(colour = guide_legend(nrow = 1), 
+         linetype = guide_legend(nrow = 1)) +
+  theme_bw() + 
+  theme(legend.position = "bottom",
+        legend.direction = "vertical",
+        axis.title.y = element_blank(),
+        legend.title.align = 0.5,
+        legend.key.width = unit(5, "line"))
+```
+
+(ref:FigureSI3-cap) Statistical power averaged over the expected proportion of false discoveries
+(ranging between 0% and 50%) for the island model.
+
+```{r FigureSI3, fig.height=4, fig.cap='(ref:FigureSI3-cap)'}
+readRDS("data/isldivrexp.rds") %>% 
+  filter(model == "isl") %>%
+  ggplot(aes(x = software,
+             y = measure,
+             fill = factor(type))) +
+  geom_bar(stat = "identity",
+           position = "dodge",
+           color = "black") +
+  ylim(0, 1) +
+  scale_fill_manual(values = c("lightblue", "darkblue"),
+                    labels = c("No admixture", "With admixture")) +
+  scale_x_discrete(labels = c("BayeScan",
+                              "hapflk",
+                              "OutFLANK",
+                              "pcadapt",
+                              "sNMF")) +
+  xlab("Software") + 
+  ylab("Power") + 
+  theme_bw() +
+  theme(axis.text.x = element_text(face = "italic"),
+        legend.title = element_blank(),
+        legend.position = c(0.125, 0.9),
+        legend.background = element_rect(fill = alpha("white", 0)))
+```
+
+\newpage
+
+(ref:FigureSI4-cap) Statistical power as a function of the proportion of false discoveries for the island model.
+
+```{r FigureSI4, fig.height=9, fig.cap='(ref:FigureSI4-cap)'}
+df <- readRDS("data/curves-fdrpower.rds") %>%
+  filter(model %in% c("isl", "islh")) %>%
+  droplevels()
+levels(df$model) <- c("No admixture", "With admixture")
+df %>%
+  ggplot(aes(x = fdr,
+             y = power)) +
+  facet_wrap(~model, ncol = 1) +
+  geom_line(aes(linetype = software, 
+                color = software),
+            size = 1.5, na.rm = TRUE) +
+  scale_color_manual("Software", 
+                     values = cbbPalette[c(7, 2, 4, 3, 8)],
+                     labels = c("BayeScan",
+                                "hapflk",
+                                "OutFLANK",
+                                "pcadapt",
+                                "sNMF")) +
+  scale_linetype_manual(name = "Software",
+                        labels = c("BayeScan",
+                                   "hapflk",
+                                   "OutFLANK",
+                                   "pcadapt",
+                                   "sNMF"),
+                        values = c("dotdash", 
+                                   "dotted",
+                                   "longdash",
+                                   "solid",
+                                   "dashed")) +
+  xlim(0, 0.6) + 
+  ylim(0, 1) +
+  guides(colour = guide_legend(nrow = 2), 
+         linetype = guide_legend(nrow = 2)) +
+  xlab("FDR") +
+  ylab("Power") +
+  theme_bw() +
+  theme(legend.position = "bottom",
+        legend.direction = "vertical",
+        legend.title.align = 0.5,
+        legend.text = element_text(face = "italic"),
+        legend.key.width = unit(5, "line"))
+```
+
+\newpage
+
+(ref:FigureSI5-cap) Statistical power as a function of the proportion of false discoveries for the divergence model.
+
+```{r FigureSI5, fig.height=9, fig.cap='(ref:FigureSI5-cap)'}
+df <- readRDS("data/curves-fdrpower.rds") %>%
+  filter(model %in% c("div", "divh")) %>%
+  droplevels()
+levels(df$model) <- c("No admixture", "With admixture")
+df %>%
+  ggplot(aes(x = fdr,
+             y = power)) +
+  facet_wrap(~model, ncol = 1) +
+  geom_line(aes(linetype = software, 
+                color = software),
+            size = 1.5, na.rm = TRUE) +
+  scale_color_manual("Software", 
+                     values = cbbPalette[c(7, 2, 4, 3, 8)],
+                     labels = c("BayeScan",
+                                "hapflk",
+                                "OutFLANK",
+                                "pcadapt",
+                                "sNMF")) +
+  scale_linetype_manual(name = "Software",
+                        labels = c("BayeScan",
+                                   "hapflk",
+                                   "OutFLANK",
+                                   "pcadapt",
+                                   "sNMF"),
+                        values = c("dotdash", 
+                                   "dotted",
+                                   "longdash",
+                                   "solid",
+                                   "dashed")) +
+  xlim(0, 0.6) + 
+  ylim(0, 1) +
+  guides(colour = guide_legend(nrow = 2), 
+         linetype = guide_legend(nrow = 2)) +
+  xlab("FDR") +
+  ylab("Power") +
+  theme_bw() +
+  theme(legend.position = "bottom",
+        legend.direction = "vertical",
+        legend.title.align = 0.5,
+        legend.text = element_text(face = "italic"),
+        legend.key.width = unit(5, "line"))
+```
+
+\newpage
+
+(ref:FigureSI6-cap) Statistical power as a function of the proportion of false discoveries for the
+model of range expansion.
+
+```{r FigureSI6, fig.height=5, fig.cap='(ref:FigureSI6-cap)'}
+df <- readRDS("data/curves-fdrpower.rds") %>%
+  filter(model == "rexp") %>%
+  droplevels()
+levels(df$model) <- c("No admixture", "With admixture")
+df %>%
+  ggplot(aes(x = fdr,
+             y = power)) +
+  geom_line(aes(linetype = software, 
+                color = software),
+            size = 1.5, na.rm = TRUE) +
+  scale_color_manual("Software", 
+                     values = cbbPalette[c(7, 2, 4, 3, 8)],
+                     labels = c("BayeScan",
+                                "hapflk",
+                                "OutFLANK",
+                                "pcadapt",
+                                "sNMF")) +
+  scale_linetype_manual(name = "Software",
+                        labels = c("BayeScan",
+                                   "hapflk",
+                                   "OutFLANK",
+                                   "pcadapt",
+                                   "sNMF"),
+                        values = c("dotdash", 
+                                   "dotted",
+                                   "longdash",
+                                   "solid",
+                                   "dashed")) +
+  xlim(0, 0.6) + 
+  ylim(0, 1) +
+  guides(colour = guide_legend(nrow = 2), 
+         linetype = guide_legend(nrow = 2)) +
+  xlab("FDR") +
+  ylab("Power") +
+  theme_bw() +
+  theme(legend.position = "bottom",
+        legend.direction = "vertical",
+        legend.title.align = 0.5,
+        legend.text = element_text(face = "italic"),
+        legend.key.width = unit(5, "line"))
+```
+
+(ref:FigureSI7-cap) Running times of the different computer programs. The different programs were run on genotype matrices containing 300 individuals and from 500 to 50,000 SNPs. The characteristics of the computer we used to perform comparisons are the following: OSX El Capitan 10.11.3, 2,5 GHz Intel Core i5, 8 Go 1600 MHz DDR3.
+
+```{r FigureSI7, fig.height=4, fig.cap='(ref:FigureSI7-cap)'}
+readRDS("data/runtime-molecol.rds") %>%
+  mutate(Runtime = log10(Runtime + 1)) %>%
+  ggplot(aes(x = nSNP,
+             y = Runtime,
+             colour = Software)) + 
+  scale_y_continuous(breaks = 0:3, labels = c(0, 10, 100, 1000)) +
+  scale_color_manual(values = cbbPalette[c(2, 4, 3, 8)]) +
+  guides(colour = guide_legend(nrow = 1)) + 
+  geom_point(size = 5) + 
+  geom_line(size = 2) + 
+  ylab("Running time (seconds)") +
+  xlab("Number of SNPs") +
+  theme_bw() + 
+  theme(legend.position = "bottom",
+        legend.direction = "vertical",
+        legend.title.align = 0.5,
+        legend.text = element_text(face = "italic"),
+        legend.key.width = unit(5, "line"))
+```
+
+
+# R
 
 This first appendix includes all of the R chunks of code that were hidden throughout the document (using the `include = FALSE` chunk tag) to help with readibility and/or setup.
 
-**In the main Rmd file**
+# Python
 
-```{r ref.label='include_packages', results='hide', echo = TRUE}
+```{python ref.label='simuPOP', results='hide', echo = TRUE}
 ```
-
-# The Second Appendix, for Fun
